@@ -3042,7 +3042,12 @@ let player = null;
 __bindPlayer = ()=>{
   const e = roster.get('charlis');
   player = e ? e.obj : (people[0] || null);
-  if(window.__pov && player) player.userData.player = true;
+  if(window.__pov && player){
+    player.userData.player = true;
+    /* renasceu pelo polling com o POV ligado: ele nasce no grupo do andar do
+       departamento (que some nos cortes) — traz pra raiz da cena na hora */
+    if(player.parent !== scene) scene.attach(player);
+  }
 };
 __bindPlayer();
 const pov = { on:false, first:false, yaw:0, pitch:.3, dist:7.5, keys:{}, joyX:0, joyY:0, moving:false };
@@ -3091,6 +3096,24 @@ function povStep(dt){
   const fl = Math.max(0, Math.min(3, Math.round(player.position.y / FH)));
   if(fl !== povFloor){ povFloor = fl; viewMode = 'cut'; cutFloor = fl; applyVisibility(); }
 }
+/* pose-alvo da câmera de 3ª pessoa — fonte única: o tick interpola até ela,
+   e enterPOV/teleporte ENCAIXAM nela na hora (sem depender de convergência) */
+function povCamPose(){
+  const headY = player.position.y + 1.62;
+  const cp = Math.cos(pov.pitch), sp2 = Math.sin(pov.pitch);
+  const cxp = player.position.x + Math.sin(pov.yaw) * cp * pov.dist;
+  const czp = player.position.z + Math.cos(pov.yaw) * cp * pov.dist;
+  const cyp = Math.max(.9, headY + sp2 * pov.dist);
+  /* anti-clip: a câmera desliza nas paredes/móveis em vez de atravessá-los */
+  const [ccx, ccz] = collide(cxp, czp, .35, activeFloors());
+  const cyF = Math.max(cyp, groundYAt(ccx, ccz, player.position.y) + .4);
+  return new THREE.Vector3(ccx, cyF, ccz);
+}
+function snapPovCam(){
+  if(!player || pov.first) return;
+  camera.position.copy(povCamPose());
+  camera.lookAt(player.position.x, player.position.y + 1.62 - .15, player.position.z);
+}
 function povTick(dt){
   /* sub-passos com o dt REAL: a velocidade não depende mais do fps
      (antes o dt travado em 0,06 fazia o andar "travar" em celular fraco) */
@@ -3103,16 +3126,9 @@ function povTick(dt){
     camera.position.set(player.position.x, headY, player.position.z);
     camera.lookAt(player.position.x - Math.sin(pov.yaw) * cp, headY - sp2, player.position.z - Math.cos(pov.yaw) * cp);
   } else {
-    const cp = Math.cos(pov.pitch), sp2 = Math.sin(pov.pitch);
-    const cxp = player.position.x + Math.sin(pov.yaw) * cp * pov.dist;
-    const czp = player.position.z + Math.cos(pov.yaw) * cp * pov.dist;
-    const cyp = Math.max(.9, headY + sp2 * pov.dist);
-    /* anti-clip: a câmera desliza nas paredes/móveis em vez de atravessá-los */
-    const [ccx, ccz] = collide(cxp, czp, .35, activeFloors());
-    const cyF = Math.max(cyp, groundYAt(ccx, ccz, player.position.y) + .4);
     /* lerp corrigido pelo tempo (não pelo nº de frames) */
     const k = 1 - Math.pow(.65, Math.max(1, dt * 60));
-    camera.position.lerp(new THREE.Vector3(ccx, cyF, ccz), k);
+    camera.position.lerp(povCamPose(), k);
     camera.lookAt(player.position.x, headY - .15, player.position.z);
   }
   if(selectedDept !== DEPTS[0]) selectedDept = DEPTS[0];
@@ -3120,14 +3136,22 @@ function povTick(dt){
 window.__povTick = povTick;
 const btnPOV = document.getElementById('btnPOV'), btnView = document.getElementById('btnView');
 function teleportToFloor(f){
+  /* defesa em profundidade: no POV o jogador vive na raiz da cena (longe do corte) */
+  if(player.parent !== scene) scene.attach(player);
   player.position.set(-0.5, f * FH, -4);
   player.rotation.y = 0;
   povFloor = f; pov.yaw = Math.PI; pov.pitch = .3;
   viewMode = 'cut'; cutFloor = f; applyVisibility();
+  snapPovCam();
 }
 function enterPOV(){
   pov.on = true; window.__pov = true; stopTour();
   player.userData.player = true; player.visible = true;
+  /* CAUSA DO BUG DO BONEQUINHO SUMIDO: o Charlis é filho do grupo do andar da
+     Diretoria (2º); nos cortes dos outros andares esse grupo fica invisível e
+     o three.js não renderiza filho de ancestral escondido — mesmo com
+     player.visible = true. Durante o POV ele vive na RAIZ da cena. */
+  if(player.parent !== scene) scene.attach(player);
   player.userData.body.position.y = 0;
   if(povSpawn === null){ player.position.set(0, 0, 36); povFloor = 0; player.rotation.y = Math.PI; pov.yaw = 0; }
   else { player.position.set(-0.5, povSpawn * FH, -4); povFloor = povSpawn; player.rotation.y = 0; pov.yaw = Math.PI; }
@@ -3135,7 +3159,7 @@ function enterPOV(){
   pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
   viewMode = 'cut'; cutFloor = povFloor; applyVisibility();
   controls.enabled = false;
-  camera.position.set(player.position.x + Math.sin(pov.yaw) * pov.dist, player.position.y + 4.2, player.position.z + Math.cos(pov.yaw) * pov.dist);
+  snapPovCam();
   btnPOV.textContent = '🚪 Sair do POV'; btnPOV.classList.add('on');
   btnView.style.display = ''; document.getElementById('povHint').style.display = 'block';
   document.getElementById('joy').style.display = 'block';
@@ -3145,6 +3169,10 @@ function enterPOV(){
 function exitPOV(){
   pov.on = false; window.__pov = false;
   const u = player.userData; u.player = false; player.visible = true;
+  /* devolve o jogador ao grupo do andar do departamento dele: fora do POV
+     ele volta a seguir o corte de andares como qualquer funcionário */
+  const homeGrp = floorGroups[(u.dept && u.dept.floor != null) ? u.dept.floor : 2];
+  if(player.parent !== homeGrp) homeGrp.attach(player);
   const s = u.seat;
   if(s){ player.position.set(s.x, u.baseY, s.z); player.rotation.y = s.rotY; }
   u.state = 'sit'; u.timer = 5 + Math.random()*5;
