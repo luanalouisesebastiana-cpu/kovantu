@@ -1944,7 +1944,7 @@ const wallSEGroups = [0,1,2].map(()=>{ const g = new THREE.Group(); scene.add(g)
 
 /* ============ ATLAS DE TEXTURAS PIXELADAS (canvas, grade 8×4 de tiles 16×16) ============ */
 function mulberry(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-const TILE = { GRASS_TOP:0, GRASS_SIDE:1, DIRT:2, STONE:3, PLANKS:4, LOG_SIDE:5, LOG_TOP:6, BRICK:7, GLASS:8, LEAVES:9, GRAVEL:10, BOOK:11, SCREEN:12, GLOW:13, QUARTZ:14, STONEBRICK:15, DARK:16, KGREEN:17 };
+const TILE = { GRASS_TOP:0, GRASS_SIDE:1, DIRT:2, STONE:3, PLANKS:4, LOG_SIDE:5, LOG_TOP:6, BRICK:7, GLASS:8, LEAVES:9, GRAVEL:10, BOOK:11, SCREEN:12, GLOW:13, QUARTZ:14, STONEBRICK:15, DARK:16, KGREEN:17, QUARTZ2:18 };
 const ACOLS = 8, AROWS = 4;
 const atlasCanvas = document.createElement('canvas'); atlasCanvas.width = 512; atlasCanvas.height = 256;
 {
@@ -2007,7 +2007,10 @@ const atlasCanvas = document.createElement('canvas'); atlasCanvas.width = 512; a
     g.fillStyle = '#ff7a45'; g.fillRect(ox+40, oy+18, 20, 12);
   }
   fillNoise(TILE.GLOW, ['#f7d774','#f5c542','#ffe89a','#eda93a','#fff3b0'], 111, [5,3,3,2,2]);
-  fillNoise(TILE.QUARTZ, ['#e9e7db','#e2e0d2','#efede3','#d9d7c9'], 122, [5,4,3,2]);
+  fillNoise(TILE.QUARTZ, ['#d8d2ba','#c9c2a6','#e2dcc8','#bab294'], 122, [5,4,3,2]);
+  fillNoise(TILE.QUARTZ2, ['#c4bda2','#b3ac90','#d0c8ae','#a29a7c'], 123, [5,4,3,2]);
+  /* rejunte: moldura escura em cada bloco de quartzo — o piso do corredor lê como ladrilho, não como branco chapado */
+  for(const t of [TILE.QUARTZ, TILE.QUARTZ2]) for(let i=0;i<16;i++){ put(t, i, 0, '#a29a7d'); put(t, i, 15, '#a29a7d'); put(t, 0, i, '#a29a7d'); put(t, 15, i, '#a29a7d'); }
   /* painel escuro (atrás da logo / letreiros) */
   fillNoise(TILE.DARK, ['#2e3138','#282b31','#35383f','#212429','#2a2d33'], 133, [5,4,3,2,3]);
   { const rnd = mulberry(134); for(let i=0;i<8;i++){ let x = Math.floor(rnd()*15), y = Math.floor(rnd()*15); for(let s=0;s<3;s++){ put(TILE.DARK, x, y, '#191b1f'); x += rnd()>.5?1:0; y += rnd()>.5?0:1; } } }
@@ -2032,7 +2035,7 @@ const BT = {
   grass:{ top:TILE.GRASS_TOP, bottom:TILE.DIRT, side:TILE.GRASS_SIDE },
   dirt:{ all:TILE.DIRT }, gravel:{ all:TILE.GRAVEL }, stone:{ all:TILE.STONE },
   planks:{ all:TILE.PLANKS }, log:{ top:TILE.LOG_TOP, bottom:TILE.LOG_TOP, side:TILE.LOG_SIDE },
-  brick:{ all:TILE.BRICK }, stonebrick:{ all:TILE.STONEBRICK }, quartz:{ all:TILE.QUARTZ },
+  brick:{ all:TILE.BRICK }, stonebrick:{ all:TILE.STONEBRICK }, quartz:{ all:TILE.QUARTZ }, quartz2:{ all:TILE.QUARTZ2 },
   leaves:{ all:TILE.LEAVES }, book:{ all:TILE.BOOK }, dark:{ all:TILE.DARK },
   glass:{ all:TILE.GLASS, glass:true }, glow:{ all:TILE.GLOW, glow:true },
   screen:{ all:TILE.SCREEN, glow:true }, kgreen:{ all:TILE.KGREEN, glow:true },
@@ -2319,7 +2322,7 @@ const inFoot = (x,z)=> x >= BLD.x0 && x <= BLD.x1 && z >= BLD.z0 && z <= BLD.z1;
 function zoneTypeAt(f, x, z){
   if(x === BLD.x0 || x === BLD.x1 || z === BLD.z0 || z === BLD.z1) return 'stonebrick';
   if(x >= CORE.x0 && x <= CORE.x1 && z >= CORE.z0 && z <= CORE.z1) return 'stone';
-  if(x >= WALK.x0 && x <= WALK.x1 && z >= WALK.z0 && z <= WALK.z1) return 'quartz';
+  if(x >= WALK.x0 && x <= WALK.x1 && z >= WALK.z0 && z <= WALK.z1) return ((x + z) & 1) === 0 ? 'quartz' : 'quartz2';   // xadrez do corredor/hall
   const d = DEPTS.find(dd=> dd.floor === f && x >= dd._L.x0 && x < dd._L.x1 && z >= dd._L.z0 && z < dd._L.z1);
   if(d) return d.id === 'diretoria' ? 'brick' : 'planks';
   return 'stone';
@@ -2428,6 +2431,9 @@ for(let s=0; s<3; s++){
 addCol(-1.15, 1.15, -24.15, -15.85, -1);   // divisor central da escada (sempre)
 /* marquise + porta dupla de vidro + letreiros da fachada */
 const quartzMat = new THREE.MeshLambertMaterial({ map: tileTexture(TILE.QUARTZ) });
+/* tapetes: MeshBasicMaterial de propósito — caixa fina sobre piso sombreado "escapa" da sombra do sol
+   (shadow-pop) e o Lambert estourava pra branco; o Basic crava a cor do tapete em qualquer luz */
+const rugMat = new THREE.MeshBasicMaterial({ color: 0x7f9271 });
 flatBox(floorGroups[0], 8, .35, 3.4, quartzMat, -0.5, 3.3, 23.6);
 [-4, 3].forEach(px=>{ for(let y=0;y<4;y++) setB(px, y, 24, 'log', '0'); });
 addCol(-4.15, -2.85, 23.85, 25.15, 0); addCol(2.85, 4.15, 23.85, 25.15, 0);
@@ -2612,7 +2618,7 @@ DEPTS.forEach(d=>{
     lines.forEach(([txt, col], i)=>{ g.fillStyle = col; g.font = (i % 2 === 0 || i === 0 ? "800 33px" : "600 30px") + " 'Segoe UI', sans-serif"; g.fillText(txt, 256, 122 + i * 50); });
   }
   const board = canvasPlane(dc, 2.3, 2.79); board.position.set(3.1, 1.8, 11.06); hall.add(board);
-  const rugH = box(10, .06, 7, lam(0x9db98a), -0.5, .03, 16.8, {shadow:false}); hall.add(rugH);
+  const rugH = box(10, .06, 7, rugMat, -0.5, .03, 16.8, {shadow:false}); hall.add(rugH);
   const sf1 = sofa(0x707a68); sf1.position.set(-5.2, 0, 17.2); sf1.rotation.y = Math.PI; hall.add(sf1);
   const sf2 = sofa(0x707a68); sf2.position.set(4.2, 0, 17.2); sf2.rotation.y = Math.PI; hall.add(sf2);
   const hp1 = plant(); hp1.position.set(-7.4, 0, 19.2); hall.add(hp1);
@@ -2630,13 +2636,13 @@ for(let f=1; f<=2; f++){
   const sf = sofa(0x5a6b7a); sf.position.set(-7.4, 0, 4); sf.rotation.y = Math.PI/2; cg.add(sf);
   const pl = plant(); pl.position.set(6.6, 0, 18.6); cg.add(pl);
   const lp = floorLamp(); lp.position.set(-7.6, 0, 18.6); cg.add(lp);
-  cg.add(box(8, .06, 10, lam(0xb9c4ad), -0.5, .03, 4, {shadow:false}));
+  cg.add(box(8, .06, 10, rugMat, -0.5, .03, 4, {shadow:false}));   // tapete verde-sálvia (rugMat Basic: imune ao shadow-pop que estourava o Lambert pra branco)
   cg.add(box(.5, 1.2, .5, lam(0xdfe8ee), 6.6, .6, -11));
   const bottle = new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.5,10), lam(0x9fd8ef));
   bottle.position.set(6.6, 1.45, -11); cg.add(bottle);
 }
 for(let f=0; f<4; f++){
-  const pl = plateSign(FLOOR_NAMES[f], '#2e7d12', 5.2);
+  const pl = plateSign(FLOOR_NAMES[f], '#2e7d12', 3.4);
   pl.position.set(5.9, f === 3 ? 15.95 : f*FH + 2.3, -12.94);
   floorGroups[f].add(pl);
 }
@@ -3101,19 +3107,18 @@ function povTick(dt){
 window.__povTick = povTick;
 const btnPOV = document.getElementById('btnPOV'), btnView = document.getElementById('btnView');
 function teleportToFloor(f){
-  player.position.set(-0.5, f * FH, -10.5);
-  player.rotation.y = Math.PI;
-  povFloor = f; pov.yaw = 0; pov.pitch = .3;
+  player.position.set(-0.5, f * FH, -4);
+  player.rotation.y = 0;
+  povFloor = f; pov.yaw = Math.PI; pov.pitch = .3;
   viewMode = 'cut'; cutFloor = f; applyVisibility();
 }
 function enterPOV(){
   pov.on = true; window.__pov = true; stopTour();
   player.userData.player = true; player.visible = true;
   player.userData.body.position.y = 0;
-  if(povSpawn === null){ player.position.set(0, 0, 36); povFloor = 0; }
-  else { player.position.set(-0.5, povSpawn * FH, -10.5); povFloor = povSpawn; }
-  player.rotation.y = Math.PI;
-  pov.yaw = 0; pov.pitch = .3;
+  if(povSpawn === null){ player.position.set(0, 0, 36); povFloor = 0; player.rotation.y = Math.PI; pov.yaw = 0; }
+  else { player.position.set(-0.5, povSpawn * FH, -4); povFloor = povSpawn; player.rotation.y = 0; pov.yaw = Math.PI; }
+  pov.pitch = .3;
   viewMode = 'cut'; cutFloor = povFloor; applyVisibility();
   controls.enabled = false;
   camera.position.set(player.position.x + Math.sin(pov.yaw) * pov.dist, player.position.y + 4.2, player.position.z + Math.cos(pov.yaw) * pov.dist);
