@@ -1,0 +1,392 @@
+{
+  "empresa": "Kovantu Digital",
+  "atualizadoEm": "2026-10-28T23:00:27-03:00",
+  "equipe": [
+    {
+      "id": "charlis",
+      "nome": "Charlis",
+      "cargo": "Dono / CEO",
+      "depto": "diretoria",
+      "status": "ativo",
+      "fazendo": "Aprova tudo que vai ao ar e decide onde investir.",
+      "tarefas": [
+        {
+          "nome": "Aprovações do dia",
+          "progresso": 82
+        },
+        {
+          "nome": "Relatório das frentes",
+          "progresso": 46
+        },
+        {
+          "nome": "Decisões de investimento",
+          "progresso": 30
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "titiku",
+      "nome": "Titiku",
+      "cargo": "Gerente-geral",
+      "depto": "diretoria",
+      "status": "ativo",
+      "fazendo": "Distribui tarefas, cobra funcionário parado e só entrega com prova.",
+      "tarefas": [
+        {
+          "nome": "Aprovações do dia",
+          "progresso": 82
+        },
+        {
+          "nome": "Relatório das frentes",
+          "progresso": 46
+        },
+        {
+          "nome": "Decisões de investimento",
+          "progresso": 30
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00",
+      "comportamento": "empe"
+    },
+    {
+      "id": "baltazar",
+      "nome": "Baltazar",
+      "cargo": "O escriba",
+      "depto": "abuelo",
+      "status": "ativo",
+      "fazendo": "Produzindo vídeos e infográficos do Abuelo Francisco em espanhol, a série Bebidas e respondendo comentários GUÍA.",
+      "tarefas": [
+        {
+          "nome": "Vídeo do dia",
+          "progresso": 64
+        },
+        {
+          "nome": "Infográfico FB/IG",
+          "progresso": 38
+        },
+        {
+          "nome": "Série Bebidas",
+          "progresso": 55
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "valdo",
+      "nome": "Valdomiro “Valdo”",
+      "cargo": "O caixa",
+      "depto": "hotmart",
+      "status": "ativo",
+      "fazendo": "Funil dos 6 infoprodutos em espanhol, hub de vendas e piloto GUÍA. A vigia da primeira venda está ligada.",
+      "tarefas": [
+        {
+          "nome": "Funil — 6 produtos ES",
+          "progresso": 71
+        },
+        {
+          "nome": "Hub de vendas",
+          "progresso": 88
+        },
+        {
+          "nome": "Vigia da 1ª venda",
+          "progresso": 100
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "assistente-hotmart",
+      "nome": "Assistente",
+      "cargo": "Assistente de vendas",
+      "depto": "hotmart",
+      "status": "ativo",
+      "fazendo": "Apoia o Valdo: organiza o hub de vendas, confere os 6 infoprodutos e mantém a vigia da primeira venda ligada.",
+      "tarefas": [
+        {
+          "nome": "Funil — 6 produtos ES",
+          "progresso": 71
+        },
+        {
+          "nome": "Hub de vendas",
+          "progresso": 88
+        },
+        {
+          "nome": "Vigia da 1ª venda",
+          "progresso": 100
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "iris",
+      "nome": "Íris",
+      "cargo": "O olho",
+      "depto": "stock",
+      "status": "ativo",
+      "fazendo": "Gerando imagens e vídeos por IA. O lote piloto de 20 imagens está em moderação na Adobe Stock.",
+      "tarefas": [
+        {
+          "nome": "Lote piloto — 20 imagens",
+          "progresso": 100
+        },
+        {
+          "nome": "Moderação Adobe",
+          "progresso": 35
+        },
+        {
+          "nome": "Próximo lote IA",
+          "progresso": 22
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "plinio",
+      "nome": "Plínio",
+      "cargo": "O cronista",
+      "depto": "blogs",
+      "status": "ativo",
+      "fazendo": "Blog 1 do Abuelo rumo a 30 posts, Blog 2 Dinero Claro lançado com 3 artigos agendados e Blog 3 em preparação.",
+      "tarefas": [
+        {
+          "nome": "Blog 1 — sprint 30 posts",
+          "progresso": 40
+        },
+        {
+          "nome": "Blog 2 — artigos agendados",
+          "progresso": 90
+        },
+        {
+          "nome": "Blog 3 — estrutura",
+          "progresso": 30
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "assistente-blogs",
+      "nome": "Assistente",
+      "cargo": "Assistente de conteúdo",
+      "depto": "blogs",
+      "status": "ativo",
+      "fazendo": "Apoia o Plínio: revisa rascunhos, agenda publicações e organiza a pauta dos três blogs.",
+      "tarefas": [
+        {
+          "nome": "Blog 1 — sprint 30 posts",
+          "progresso": 40
+        },
+        {
+          "nome": "Blog 2 — artigos agendados",
+          "progresso": 90
+        },
+        {
+          "nome": "Blog 3 — estrutura",
+          "progresso": 30
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "fliper",
+      "nome": "Fliper",
+      "cargo": "O fliperama",
+      "depto": "arcade",
+      "status": "ativo",
+      "fazendo": "Games HTML5: 4 jogos jogáveis no Facebook em teste — e a meta nova do CEO: 20 jogos na conta, em lotes de 4.",
+      "tarefas": [
+        {
+          "nome": "Jogos no Facebook (4/20)",
+          "progresso": 20
+        },
+        {
+          "nome": "Lote 1 — 4 jogos novos",
+          "progresso": 35
+        },
+        {
+          "nome": "Kit dos portais",
+          "progresso": 60
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "otavio",
+      "nome": "Otávio",
+      "cargo": "O diretor dark",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "Canal Dinero Claro (finanças ES). Roteiro piloto de crédito/FICO entregue, aguardando o OK do Charlis. Equipe de 9 sub-agentes.",
+      "tarefas": [
+        {
+          "nome": "Roteiro piloto — entregue",
+          "progresso": 100
+        },
+        {
+          "nome": "Treinamento da equipe",
+          "progresso": 92
+        },
+        {
+          "nome": "Produção do piloto",
+          "progresso": 10
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "severo",
+      "nome": "Severo",
+      "cargo": "Pesquisa",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "Pesquisa temas, dados e referências pros roteiros do Dinero Claro.",
+      "tarefas": [
+        {
+          "nome": "Roteiro piloto — entregue",
+          "progresso": 100
+        },
+        {
+          "nome": "Treinamento da equipe",
+          "progresso": 92
+        },
+        {
+          "nome": "Produção do piloto",
+          "progresso": 10
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "rui",
+      "nome": "Rui",
+      "cargo": "Roteiro",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "Escreve e revisa os roteiros do canal Dinero Claro.",
+      "tarefas": [
+        {
+          "nome": "Roteiro piloto — entregue",
+          "progresso": 100
+        },
+        {
+          "nome": "Treinamento da equipe",
+          "progresso": 92
+        },
+        {
+          "nome": "Produção do piloto",
+          "progresso": 10
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "teodoro",
+      "nome": "Teodoro",
+      "cargo": "O editor",
+      "depto": "kdp",
+      "status": "pausado",
+      "fazendo": "Pausado por ordem do CEO. Backlog de 11 livros de colorir prontos — só religa com o upload do livro de Natal confirmado.",
+      "tarefas": [
+        {
+          "nome": "Backlog — 11 livros",
+          "progresso": 100
+        },
+        {
+          "nome": "Upload livro de Natal",
+          "progresso": 0
+        },
+        {
+          "nome": "Novos livros",
+          "progresso": 0
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00",
+      "comportamento": "dormindo"
+    },
+    {
+      "id": "tonhao",
+      "nome": "Tonhão",
+      "cargo": "O montador",
+      "depto": "apps",
+      "status": "ativo",
+      "fazendo": "Apps Android sob demanda: cada pedido do CEO vira app testado e provado no aparelho antes de entregar.",
+      "tarefas": [
+        {
+          "nome": "Apps sob demanda",
+          "progresso": 58
+        },
+        {
+          "nome": "Prova no binário",
+          "progresso": 74
+        },
+        {
+          "nome": "Fila de pedidos",
+          "progresso": 33
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "assistente-apps",
+      "nome": "Assistente",
+      "cargo": "Assistente de testes",
+      "depto": "apps",
+      "status": "ativo",
+      "fazendo": "Apoia o Tonhão: testa cada app no aparelho e organiza a fila de pedidos do CEO.",
+      "tarefas": [
+        {
+          "nome": "Apps sob demanda",
+          "progresso": 58
+        },
+        {
+          "nome": "Prova no binário",
+          "progresso": 74
+        },
+        {
+          "nome": "Fila de pedidos",
+          "progresso": 33
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    },
+    {
+      "id": "rex",
+      "nome": "Rex",
+      "cargo": "O farejador",
+      "depto": "farejador",
+      "status": "ativo",
+      "fazendo": "Farejando novas fontes de renda e propondo ranqueado por ROI no relatório de segunda ~09:18. Ele propõe, a empresa executa.",
+      "tarefas": [
+        {
+          "nome": "Varredura semanal",
+          "progresso": 67
+        },
+        {
+          "nome": "Relatório por ROI",
+          "progresso": 45
+        },
+        {
+          "nome": "Radar de tendências",
+          "progresso": 80
+        }
+      ],
+      "desde": "2026-10-27",
+      "atualizadoEm": "2026-10-28T23:00:27-03:00"
+    }
+  ]
+}
