@@ -7,8 +7,8 @@
 <!-- Torre Kovantu v3 — elenco dirigido por equipe.json (polling 30s, fallback embutido) -->
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{width:100%;height:100%;overflow:hidden;background:#79a85b;font-family:'Segoe UI',system-ui,sans-serif;color:#1d2b16}
-  #scene{position:fixed;inset:0} canvas{display:block}
+  html,body{width:100%;height:100%;overflow:hidden;overscroll-behavior:none;background:#79a85b;font-family:'Segoe UI',system-ui,sans-serif;color:#1d2b16}
+  #scene{position:fixed;inset:0} canvas{display:block;touch-action:none}
 
   #hud{position:fixed;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;z-index:10;gap:10px}
   .brand{pointer-events:auto;display:flex;gap:11px;align-items:center;background:linear-gradient(180deg,#fdfef8,#e8f3dc);border:3px solid #2e5d23;border-radius:10px;padding:8px 15px 8px 9px;box-shadow:0 8px 22px rgba(20,50,10,.35)}
@@ -29,13 +29,13 @@
   @keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(88,204,2,.55)}50%{box-shadow:0 0 0 6px rgba(88,204,2,0)}}
 
   #actions{position:fixed;top:86px;right:12px;display:flex;flex-direction:column;gap:7px;z-index:10}
-  #actions button{cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#fdfef8,#dff0cb);color:#24551a;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;box-shadow:0 5px 14px rgba(20,50,10,.3);transition:.15s;text-align:left}
+  #actions button{touch-action:manipulation;cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#fdfef8,#dff0cb);color:#24551a;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;box-shadow:0 5px 14px rgba(20,50,10,.3);transition:.15s;text-align:left}
   #actions button:hover{transform:translateX(-3px);background:linear-gradient(180deg,#fff,#cdeeb2)}
   #actions button.on{background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3)}
 
   #floors{position:fixed;top:342px;right:12px;display:flex;flex-direction:column;gap:7px;z-index:10}
   #floors .flabel{font-size:9.5px;font-weight:900;letter-spacing:1.6px;color:#eaf7da;text-shadow:0 1px 3px rgba(10,30,5,.8);text-align:right;padding-right:2px}
-  #floors button{cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#fdfef8,#dff0cb);color:#24551a;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;box-shadow:0 5px 14px rgba(20,50,10,.3);transition:.15s;text-align:left}
+  #floors button{touch-action:manipulation;cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#fdfef8,#dff0cb);color:#24551a;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;box-shadow:0 5px 14px rgba(20,50,10,.3);transition:.15s;text-align:left}
   #floors button:hover{transform:translateX(-3px);background:linear-gradient(180deg,#fff,#cdeeb2)}
   #floors button.on{background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3)}
 
@@ -89,7 +89,7 @@
   #loader .plumbob{width:44px;height:44px;background:conic-gradient(#7ec850 0 25%,#8a5f3c 0 25% 55%,#67b73c 0 55% 80%,#7a5230 0 80%);border:3px solid #2e4634;border-radius:4px;animation:spinb 1.1s steps(4) infinite;image-rendering:pixelated}
   @keyframes spinb{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
   #loader p{color:#17301c;font-weight:800;letter-spacing:2px;font-size:13px}
-  @media(max-width:760px){ .stats{display:none} #hint{display:none} #panel{bottom:118px} #actions{top:80px} #floors{top:auto;bottom:238px} #floors button{padding:6px 10px;font-size:11.5px} }
+  @media(max-width:760px){ .stats{display:none} #hint{display:none} #panel{bottom:118px} #actions{top:80px} #actions button{min-height:44px} #floors{top:auto;bottom:238px} #floors button{padding:6px 10px;font-size:11.5px;min-height:44px} #povHint{white-space:normal;max-width:94vw;text-align:center} }
 </style>
 </head>
 <body>
@@ -161,7 +161,7 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
   <div id="pTasks"></div>
 </div>
 
-<div id="povHint">🚶 Você é o <b>Charlis</b> &bull; WASD/setas anda &bull; <b>Shift</b> corre &bull; arrastar o mouse olha &bull; <b>ESC</b> sai</div>
+<div id="povHint">🚶 Você é o <b>Charlis</b> &bull; <b>joystick</b> anda &bull; <b>arrastar</b> olha &bull; no PC: WASD + mouse &bull; <b>ESC</b> sai</div>
 <div id="joy"><div id="joyKnob"></div></div>
 <div id="toast" style="position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:30;display:none;background:rgba(13,34,19,.94);border:2px solid #58cc02;color:#d7ecc6;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:10px"></div>
 <div id="simbar"></div>
@@ -2967,6 +2967,7 @@ let downAt = 0;
 function chainVisible(o){ while(o){ if(!o.visible) return false; o = o.parent; } return true; }
 renderer.domElement.addEventListener('pointerdown', ()=>{ downAt = performance.now(); focusCam = null; });
 renderer.domElement.addEventListener('pointerup', e=>{
+  if(pov.on) return;
   if(performance.now() - downAt > 220) return;
   mouse.set((e.clientX/innerWidth)*2 - 1, -(e.clientY/innerHeight)*2 + 1);
   ray.setFromCamera(mouse, camera);
@@ -3069,7 +3070,7 @@ function activeFloors(){
   }
   return s;
 }
-function povTick(dt){
+function povStep(dt){
   let ix = (pov.keys['KeyD'] || pov.keys['ArrowRight'] ? 1 : 0) - (pov.keys['KeyA'] || pov.keys['ArrowLeft'] ? 1 : 0) + pov.joyX;
   let iy = (pov.keys['KeyW'] || pov.keys['ArrowUp'] ? 1 : 0) - (pov.keys['KeyS'] || pov.keys['ArrowDown'] ? 1 : 0) + pov.joyY;
   const len = Math.hypot(ix, iy); if(len > 1){ ix /= len; iy /= len; }
@@ -3089,6 +3090,13 @@ function povTick(dt){
   }
   const fl = Math.max(0, Math.min(3, Math.round(player.position.y / FH)));
   if(fl !== povFloor){ povFloor = fl; viewMode = 'cut'; cutFloor = fl; applyVisibility(); }
+}
+function povTick(dt){
+  /* sub-passos com o dt REAL: a velocidade não depende mais do fps
+     (antes o dt travado em 0,06 fazia o andar "travar" em celular fraco) */
+  const steps = Math.max(1, Math.min(10, Math.ceil(dt / (1/30))));
+  const sdt = dt / steps;
+  for(let i = 0; i < steps; i++) povStep(sdt);
   const headY = player.position.y + 1.62;
   if(pov.first){
     const cp = Math.cos(pov.pitch), sp2 = Math.sin(pov.pitch);
@@ -3099,7 +3107,12 @@ function povTick(dt){
     const cxp = player.position.x + Math.sin(pov.yaw) * cp * pov.dist;
     const czp = player.position.z + Math.cos(pov.yaw) * cp * pov.dist;
     const cyp = Math.max(.9, headY + sp2 * pov.dist);
-    camera.position.lerp(new THREE.Vector3(cxp, cyp, czp), .35);
+    /* anti-clip: a câmera desliza nas paredes/móveis em vez de atravessá-los */
+    const [ccx, ccz] = collide(cxp, czp, .35, activeFloors());
+    const cyF = Math.max(cyp, groundYAt(ccx, ccz, player.position.y) + .4);
+    /* lerp corrigido pelo tempo (não pelo nº de frames) */
+    const k = 1 - Math.pow(.65, Math.max(1, dt * 60));
+    camera.position.lerp(new THREE.Vector3(ccx, cyF, ccz), k);
     camera.lookAt(player.position.x, headY - .15, player.position.z);
   }
   if(selectedDept !== DEPTS[0]) selectedDept = DEPTS[0];
@@ -3119,6 +3132,7 @@ function enterPOV(){
   if(povSpawn === null){ player.position.set(0, 0, 36); povFloor = 0; player.rotation.y = Math.PI; pov.yaw = 0; }
   else { player.position.set(-0.5, povSpawn * FH, -4); povFloor = povSpawn; player.rotation.y = 0; pov.yaw = Math.PI; }
   pov.pitch = .3;
+  pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
   viewMode = 'cut'; cutFloor = povFloor; applyVisibility();
   controls.enabled = false;
   camera.position.set(player.position.x + Math.sin(pov.yaw) * pov.dist, player.position.y + 4.2, player.position.z + Math.cos(pov.yaw) * pov.dist);
@@ -3134,6 +3148,8 @@ function exitPOV(){
   const s = u.seat;
   if(s){ player.position.set(s.x, u.baseY, s.z); player.rotation.y = s.rotY; }
   u.state = 'sit'; u.timer = 5 + Math.random()*5;
+  pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
+  document.getElementById('joyKnob').style.transform = 'translate(0px,0px)';
   povSpawn = null;
   controls.enabled = true;
   showExterior();
@@ -3153,40 +3169,93 @@ addEventListener('keydown', e=>{
   if(pov.on && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) e.preventDefault();
 });
 addEventListener('keyup', e=>{ pov.keys[e.code] = false; });
-let lookDrag = null;
-renderer.domElement.addEventListener('pointerdown', e=>{ if(pov.on) lookDrag = { x:e.clientX, y:e.clientY }; });
-addEventListener('pointermove', e=>{
-  if(!lookDrag || !pov.on) return;
-  pov.yaw -= (e.clientX - lookDrag.x) * .0052;
-  pov.pitch = Math.max(-.55, Math.min(1.15, pov.pitch + (e.clientY - lookDrag.y) * .004));
-  lookDrag = { x:e.clientX, y:e.clientY };
+/* ============ INPUT DO POV — Pointer Events unificados, um dedo por função ============
+   Olhar e joystick têm pointerId próprio: dá pra ANDAR e OLHAR ao mesmo tempo
+   (multi-toque de verdade), e o gesto de um nunca contamina o outro. */
+const cnv = renderer.domElement;
+cnv.style.touchAction = 'none';
+let lookId = null, lookLast = null;
+function lookStart(id, x, y){ if(pov.on && lookId === null){ lookId = id; lookLast = { x, y }; } }
+function lookMove(id, x, y){
+  if(!pov.on || id !== lookId || !lookLast) return;
+  pov.yaw -= (x - lookLast.x) * .0052;
+  pov.pitch = Math.max(-.55, Math.min(1.15, pov.pitch + (y - lookLast.y) * .004));
+  lookLast = { x, y };
+}
+function lookStop(id){ if(id === lookId){ lookId = null; lookLast = null; } }
+cnv.addEventListener('pointerdown', e=>{
+  if(!pov.on) return;
+  lookStart(e.pointerId, e.clientX, e.clientY);
+  try{ cnv.setPointerCapture(e.pointerId); }catch(_){ }
+  if(e.pointerType !== 'mouse') e.preventDefault();
 });
-addEventListener('pointerup', ()=>{ lookDrag = null; });
+cnv.addEventListener('pointermove', e=>{
+  if(e.pointerId === lookId && pov.on){ lookMove(e.pointerId, e.clientX, e.clientY); if(e.pointerType !== 'mouse') e.preventDefault(); }
+});
+cnv.addEventListener('pointerup', e=> lookStop(e.pointerId));
+cnv.addEventListener('pointercancel', e=> lookStop(e.pointerId));
 renderer.domElement.addEventListener('wheel', e=>{ if(pov.on && !pov.first){ pov.dist = Math.max(3.5, Math.min(13, pov.dist + e.deltaY * .01)); } }, { passive:true });
 /* joystick (celular) */
 const joy = document.getElementById('joy'), knob = document.getElementById('joyKnob');
 let joyId = null;
-joy.addEventListener('pointerdown', e=>{ joyId = e.pointerId; joy.setPointerCapture(e.pointerId); joyMove(e); });
-joy.addEventListener('pointermove', e=>{ if(e.pointerId === joyId) joyMove(e); });
-const joyEnd = e=>{ if(e.pointerId === joyId){ joyId = null; pov.joyX = 0; pov.joyY = 0; knob.style.transform = 'translate(0px,0px)'; } };
-joy.addEventListener('pointerup', joyEnd); joy.addEventListener('pointercancel', joyEnd);
-function joyMove(e){
+function joyMove(x, y){
   const r = joy.getBoundingClientRect(), cx = r.left + r.width/2, cy = r.top + r.height/2;
-  let dx = (e.clientX - cx) / (r.width/2), dy = (e.clientY - cy) / (r.height/2);
+  let dx = (x - cx) / (r.width/2), dy = (y - cy) / (r.height/2);
   const l = Math.hypot(dx, dy); if(l > 1){ dx /= l; dy /= l; }
   pov.joyX = dx; pov.joyY = -dy;
   knob.style.transform = `translate(${dx*32}px, ${dy*32}px)`;
 }
+function joyStop(id){ if(id === joyId){ joyId = null; pov.joyX = 0; pov.joyY = 0; knob.style.transform = 'translate(0px,0px)'; } }
+joy.addEventListener('pointerdown', e=>{
+  if(joyId !== null) return;
+  joyId = e.pointerId;
+  try{ joy.setPointerCapture(e.pointerId); }catch(_){ }
+  e.preventDefault();
+  joyMove(e.clientX, e.clientY);
+});
+joy.addEventListener('pointermove', e=>{ if(e.pointerId === joyId){ e.preventDefault(); joyMove(e.clientX, e.clientY); } });
+joy.addEventListener('pointerup', e=> joyStop(e.pointerId));
+joy.addEventListener('pointercancel', e=> joyStop(e.pointerId));
+/* Fallback p/ WebViews sem Pointer Events: mesmos gestos via Touch Events */
+if(!window.PointerEvent){
+  const tFind = (list, id)=>{ for(const t of list) if(t.identifier === id) return t; return null; };
+  cnv.addEventListener('touchstart', e=>{
+    const t = e.changedTouches[0]; if(t) lookStart('t' + t.identifier, t.clientX, t.clientY);
+    if(pov.on) e.preventDefault();
+  }, { passive:false });
+  cnv.addEventListener('touchmove', e=>{
+    if(lookId !== null && typeof lookId === 'string'){ const t = tFind(e.changedTouches, +lookId.slice(1)); if(t) lookMove(lookId, t.clientX, t.clientY); }
+    if(pov.on) e.preventDefault();
+  }, { passive:false });
+  const tEnd = e=>{ for(const t of e.changedTouches){ lookStop('t' + t.identifier); joyStop('t' + t.identifier); } };
+  cnv.addEventListener('touchend', tEnd); cnv.addEventListener('touchcancel', tEnd);
+  joy.addEventListener('touchstart', e=>{
+    const t = e.changedTouches[0]; if(!t || joyId !== null) return;
+    joyId = 't' + t.identifier; e.preventDefault(); joyMove(t.clientX, t.clientY);
+  }, { passive:false });
+  joy.addEventListener('touchmove', e=>{
+    if(typeof joyId === 'string'){ const t = tFind(e.changedTouches, +joyId.slice(1)); if(t){ e.preventDefault(); joyMove(t.clientX, t.clientY); } }
+  }, { passive:false });
+  joy.addEventListener('touchend', tEnd); joy.addEventListener('touchcancel', tEnd);
+}
+/* Cinto de segurança: WebViews que ignoram touch-action não roubam o gesto do POV */
+addEventListener('touchmove', e=>{
+  if(!pov.on || !e.cancelable) return;
+  const t = e.target;
+  if(t === cnv || t === joy || joy.contains(t)) e.preventDefault();
+}, { passive:false });
+addEventListener('gesturestart', e=>{ if(pov.on) e.preventDefault(); });
 
 /* ============ LOOP ============ */
 let firstFrame = true;
 window.__kovStarted = true;
 applyVisibility();
 renderer.setAnimationLoop(()=>{
-  const dt = Math.min(clock3.getDelta(), .06), t = clock3.elapsedTime;
+  const rawDt = clock3.getDelta();
+  const dt = Math.min(rawDt, .06), t = clock3.elapsedTime;
   animated.forEach(fn=>fn(t, dt));
   animatePeople(t, dt);
-  if(window.__pov && window.__povTick) window.__povTick(dt);
+  if(window.__pov && window.__povTick) window.__povTick(Math.min(rawDt, .25));
   else {
     if(focusTarget) controls.target.lerp(focusTarget, .055);
     if(focusCam){ camera.position.lerp(focusCam, .045); if(camera.position.distanceTo(focusCam) < .6) focusCam = null; }
