@@ -16,6 +16,11 @@ Sede voxel da **Kovantu Digital**, publicada no GitHub Pages:
   o ticker e os balões na hora.
 - Campos opcionais por pessoa: `comportamento` — `sentado` (padrão), `empe`
   (fica em pé, ex.: Titiku) ou `dormindo` (dorme no sofá do depto, ex.: Teodoro).
+- Uniformes (passe de 29/out): o padrão é camisa na cor do departamento + calça
+  escura + mini-K verde no peito. Exceções via `uniforme`: `blazer-preto`
+  (Charlis) ou `blazer-cinza` (Titiku) — blazer com camisa branca e gravata.
+  `genero`: `F` liga o visual feminino (rosto com cílios/boca marcada, corte da
+  blusa) e `cabelo`: `longo` | `coque` | `rabo` (só faz efeito com `genero: "F"`).
 - Departamentos válidos (`depto`): `diretoria`, `abuelo`, `hotmart`, `stock`,
   `blogs`, `arcade`, `youtube`, `kdp`, `apps`, `farejador`.
   Se um departamento lotar as mesas, a pessoa extra fica em pé na área do depto —
