@@ -31,6 +31,36 @@ Sede voxel da **Kovantu Digital**, publicada no GitHub Pages:
 - Atualize também o campo `atualizadoEm` (topo do JSON, ISO com fuso -03:00) a
   cada edição — é ele que aparece no selo.
 
+## Versão e atualização automática (sem truque de `?v=`)
+
+O celular do dono vivia servindo a cópia velha em cache a cada correção.
+Agora a página se atualiza sozinha:
+
+- O HTML carrega a constante **`PAGE_VERSION`** (formato `AAAA-MM-DD.N`,
+  ex.: `2026-10-29.6` — data + sequencial do dia).
+- Ao lado da página mora o **`versao.json`**: `{ "v": "<versão>", "publicadoEm": "<ISO>" }`.
+- A cada polling (30s), junto da busca do `equipe.json`, a página busca o
+  `versao.json` com cache-busting e compara com o seu `PAGE_VERSION`. Se
+  divergir, ela mostra um toast ("🔄 Atualizando…") e **se recarrega uma
+  única vez** navegando pra mesma URL com `?v=<versão nova>` — URL nova
+  fura o cache do navegador e baixa o HTML fresco.
+- Anti-loop: no máximo **um reload por versão por sessão** (a tentativa
+  fica em `sessionStorage`). Se o CDN demorar a trocar o HTML, ela só
+  tenta de novo após ~10 ciclos (~5 min) de divergência contínua, ou
+  quando o `versao.json` mudar outra vez. Falha de fetch (ex.: arquivo
+  aberto direto do disco, sem os arquivos ao lado) = silêncio total:
+  nenhum reload, a página segue no modo embutido.
+
+**⚠️ REGRA DE PUBLICAÇÃO — toda vez que o `index.html` mudar:**
+1. Suba o sequencial do `PAGE_VERSION` dentro do HTML.
+2. Grave a **mesma** versão no `versao.json` (e atualize o `publicadoEm`).
+3. Commit dos dois juntos + push. Sem isso, quem já tem a página aberta
+   não recebe a versão nova — e com os dois diferentes sem querer, as
+   páginas abertas recarregam à toa.
+
+Mudança **só no `equipe.json`** (elenco/status/tarefas) NÃO precisa mexer
+na versão — o polling de dados já entrega sem reload.
+
 ## Atualizar
 
 Edite `equipe.json` → commit → push pra `main`. O Pages republica sozinho.

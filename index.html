@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>KOVANTU DIGITAL — Torre Kovantu AO VIVO</title>
-<!-- Torre Kovantu v3 — elenco dirigido por equipe.json (polling 30s, fallback embutido) -->
+<!-- Torre Kovantu v3 — elenco dirigido por equipe.json (polling 30s, fallback embutido) + atualização automática de versão via versao.json (ver PAGE_VERSION) -->
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:100%;height:100%;overflow:hidden;overscroll-behavior:none;background:#79a85b;font-family:'Segoe UI',system-ui,sans-serif;color:#1d2b16}
@@ -1342,6 +1342,15 @@ DEPTS.forEach(d=>{
 });
 const deptById = id => DEPTS.find(d=> d.id === id);
 
+/* ============ VERSÃO DESTA PÁGINA (atualização automática) ============
+   PAGE_VERSION identifica ESTE HTML. Ao publicar uma versão nova, suba
+   esta constante E grave a MESMA versão no arquivo versao.json ao lado
+   da página (ver README do repo). A página compara os dois a cada
+   polling (30s): se o versao.json for mais novo, ela se recarrega uma
+   única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
+   navegador, que é o que servia a cópia velha no celular do dono. */
+const PAGE_VERSION = '2026-10-29.6';
+
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
    sozinha na torre no próximo polling (30s), sem tocar neste HTML.
@@ -1908,6 +1917,43 @@ async function pollEquipe(){
     const j = await r.json();
     if(applyEquipe(j, 'live')) setLive(true, j.atualizadoEm);
   }catch(err){ setLive(false); }
+  checkVersion(); /* a cada ciclo, junto do polling (não bloqueia: é async) */
+}
+
+/* ============ ATUALIZAÇÃO AUTOMÁTICA DE VERSÃO ============
+   Regra anti-loop (NÃO mude sem pensar):
+   - No máximo UM reload por versão alvo por sessão: a versão tentada
+     fica em sessionStorage ('kovantuVerTry'). Se depois do reload as
+     versões ainda divergirem (lag do CDN servindo o HTML velho), NÃO
+     recarrega de novo em seguida.
+   - Retentativa tardia: se a MESMA versão continuar divergindo por
+     VER_RETRY_CYCLES ciclos seguidos (~5 min), permite mais UMA
+     tentativa (e o contador zera). Se o versao.json mudar pra outra
+     versão, o alvo muda e a tentativa é imediata.
+   - Falha de fetch (modo arquivo/sem rede): silêncio total — sem
+     reload, sem erro, a página segue com a cópia embutida. */
+const VER_RETRY_CYCLES = 10;
+let verLagCycles = 0;
+async function checkVersion(){
+  let alvo = null;
+  try{
+    const r = await fetch('versao.json?t=' + Date.now(), { cache:'no-store' });
+    if(!r.ok) return;                    /* sem versao.json: silêncio */
+    const j = await r.json();
+    if(!j || typeof j.v !== 'string' || !j.v) return;
+    alvo = j.v;
+  }catch(e){ return; }                    /* modo arquivo: silêncio */
+  if(alvo === PAGE_VERSION){ verLagCycles = 0; return; }
+  /* divergiu: o site publicou uma versão mais nova que este HTML */
+  let tentada = null;
+  try{ tentada = sessionStorage.getItem('kovantuVerTry'); }catch(e){}
+  if(tentada === alvo){
+    if(++verLagCycles < VER_RETRY_CYCLES) return;  /* já tentou: espera */
+    verLagCycles = 0;                              /* lag longo: 1 retentativa */
+  }
+  try{ sessionStorage.setItem('kovantuVerTry', alvo); }catch(e){}
+  toast('🔄 Atualizando pra versão nova da Torre…');
+  setTimeout(()=>{ location.replace(location.pathname + '?v=' + encodeURIComponent(alvo)); }, 350);
 }
 
 
@@ -3323,6 +3369,7 @@ window.__KOV = { THREE, scene, camera, renderer, controls, DEPTS, people, roster
   playerNow: ()=> player,
   EQUIPE: ()=> EQUIPE_ATUAL,
   live: ()=>({ on: LIVE.on, atualizadoEm: LIVE.atualizadoEm, count: roster.size }),
+  PAGE_VERSION, checkVersion,
   collide:(x, z, r)=> collide(x, z, r, new Set([0,1,2,3])),
   view:()=>({ mode: viewMode, cut: cutFloor }),
   stats:{ blocks: vox.size, voxelFaces, people: people.length, clickables: clickables.length, colliders: colliders.length, bucketFaces } };
