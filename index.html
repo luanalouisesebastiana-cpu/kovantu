@@ -3046,11 +3046,34 @@ __bindPlayer = ()=>{
     player.userData.player = true;
     /* renasceu pelo polling com o POV ligado: ele nasce no grupo do andar do
        departamento (que some nos cortes) — traz pra raiz da cena na hora */
-    if(player.parent !== scene) scene.attach(player);
+    if(player.parent !== scene){
+      scene.attach(player);
+      /* attach dessincroniza Euler×quaternion: ressincroniza pelo rumo renderizado */
+      player.updateWorldMatrix(true, false);
+      const _e = player.matrixWorld.elements;
+      setPlayerYaw(Math.atan2(_e[8], _e[10]));
+    }
   }
 };
 __bindPlayer();
 const pov = { on:false, first:false, yaw:0, pitch:.3, dist:7.5, keys:{}, joyX:0, joyY:0, moving:false };
+/* RUMO DO JOGADOR — escrever SEMPRE nos dois lados da rotação (Euler + quaternion).
+   Causa do "andando de costas": o scene.attach() que tirou o jogador do grupo do
+   andar dessincroniza rotation×quaternion neste three embutido — o decompose do
+   attach reescreve o quaternion sem ressincronizar o Euler, e as escritas
+   seguintes em rotation.y compunham sobre o quaternion PRESO na orientação da
+   cadeira (RotY π): a fórmula atan2(mx,mz) estava certa, mas não era ela que
+   renderizava. Gravando os dois lados com o valor puro, o rumo é determinístico. */
+function setPlayerYaw(a){
+  if(!player) return;
+  player.rotation.set(0, a, 0);
+  player.quaternion.set(0, Math.sin(a / 2), 0, Math.cos(a / 2));
+  /* o set() do quaternion pode devolver o Euler pelo ramo equivalente
+     (π,0,π): fecha reescrevendo o Euler canônico (0,a,0), senão as escritas
+     por componente do animatePeople (sentado/andando como NPC) corrompem
+     a orientação depois que ele sai do POV */
+  player.rotation.set(0, a, 0);
+}
 window.__pov = false;
 let povFloor = 0, povSpawn = null;
 function playerAnim(p, t, dt){
@@ -3089,7 +3112,7 @@ function povStep(dt){
     [nx, nz] = collide(nx, nz, .5, activeFloors());
     player.position.x = nx; player.position.z = nz;
     player.position.y = groundYAt(nx, nz, player.position.y);
-    player.rotation.y = Math.atan2(mx, mz);
+    setPlayerYaw(Math.atan2(mx, mz));
   } else {
     player.position.y = groundYAt(player.position.x, player.position.z, player.position.y);
   }
@@ -3139,7 +3162,7 @@ function teleportToFloor(f){
   /* defesa em profundidade: no POV o jogador vive na raiz da cena (longe do corte) */
   if(player.parent !== scene) scene.attach(player);
   player.position.set(-0.5, f * FH, -4);
-  player.rotation.y = 0;
+  setPlayerYaw(0);
   povFloor = f; pov.yaw = Math.PI; pov.pitch = .3;
   viewMode = 'cut'; cutFloor = f; applyVisibility();
   snapPovCam();
@@ -3153,8 +3176,8 @@ function enterPOV(){
      player.visible = true. Durante o POV ele vive na RAIZ da cena. */
   if(player.parent !== scene) scene.attach(player);
   player.userData.body.position.y = 0;
-  if(povSpawn === null){ player.position.set(0, 0, 36); povFloor = 0; player.rotation.y = Math.PI; pov.yaw = 0; }
-  else { player.position.set(-0.5, povSpawn * FH, -4); povFloor = povSpawn; player.rotation.y = 0; pov.yaw = Math.PI; }
+  if(povSpawn === null){ player.position.set(0, 0, 36); povFloor = 0; setPlayerYaw(Math.PI); pov.yaw = 0; }
+  else { player.position.set(-0.5, povSpawn * FH, -4); povFloor = povSpawn; setPlayerYaw(0); pov.yaw = Math.PI; }
   pov.pitch = .3;
   pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
   viewMode = 'cut'; cutFloor = povFloor; applyVisibility();
@@ -3174,7 +3197,7 @@ function exitPOV(){
   const homeGrp = floorGroups[(u.dept && u.dept.floor != null) ? u.dept.floor : 2];
   if(player.parent !== homeGrp) homeGrp.attach(player);
   const s = u.seat;
-  if(s){ player.position.set(s.x, u.baseY, s.z); player.rotation.y = s.rotY; }
+  if(s){ player.position.set(s.x, u.baseY, s.z); setPlayerYaw(s.rotY); }
   u.state = 'sit'; u.timer = 5 + Math.random()*5;
   pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
   document.getElementById('joyKnob').style.transform = 'translate(0px,0px)';
