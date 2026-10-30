@@ -64,8 +64,14 @@
   #pTasks .tk{font-size:12px;color:#33502c;display:flex;justify-content:space-between;gap:8px}
   #pTasks .tk b{color:#43a400}
 
-  /* ===== barra de personagens ===== */
-  #simbar{position:fixed;left:50%;transform:translateX(-50%);bottom:44px;z-index:10;display:flex;gap:7px;background:linear-gradient(180deg,rgba(23,54,32,.92),rgba(13,34,19,.95));border:2.5px solid #58cc02;border-radius:12px;padding:8px 10px;max-width:calc(100vw - 16px);overflow-x:auto;box-shadow:0 14px 34px rgba(0,0,0,.45)}
+  /* ===== barra de personagens: dock próprio acima do ticker, fundo OPACO
+     (o #hint vazava por trás dos chips: mesma faixa + fundo translúcido) ===== */
+  #peopleDock{position:fixed;left:0;right:0;bottom:40px;z-index:11;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+  #peopleDock>*{pointer-events:auto}
+  #btnPeople{align-self:flex-end;margin-right:10px;min-height:38px;padding:8px 16px;border-radius:999px;border:2px solid #58cc02;background:#0d2213;color:#d7ecc6;font-weight:800;font-size:12.5px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+  #btnPeople:active{transform:scale(.97)}
+  #peopleDock.closed #simbar{display:none}
+  #simbar{display:flex;gap:7px;background:linear-gradient(180deg,#173620,#0d2213);border:2.5px solid #58cc02;border-radius:12px;padding:8px 10px;max-width:calc(100vw - 16px);overflow-x:auto;box-shadow:0 14px 34px rgba(0,0,0,.45)}
   .sim{flex:0 0 auto;cursor:pointer;text-align:center;background:none;border:none;width:62px}
   .sim .face{width:46px;height:46px;margin:0 auto;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:23px;border:3px solid #46684f;transition:.15s;position:relative}
   .sim.sel .face{border-color:#58cc02;transform:scale(1.12);box-shadow:0 0 0 3px rgba(88,204,2,.35)}
@@ -79,7 +85,7 @@
   #tickMove b{color:#fff}
   @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-  #hint{position:fixed;left:12px;bottom:44px;z-index:9;background:rgba(253,254,248,.9);border:2px solid #2e5d23;color:#47663c;font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:8px}
+  #hint{position:fixed;left:12px;bottom:176px;z-index:9;background:rgba(253,254,248,.9);border:2px solid #2e5d23;color:#47663c;font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:8px}
   #hint b{color:#33750a}
   #joy{position:fixed;left:18px;bottom:120px;width:118px;height:118px;border-radius:50%;background:rgba(253,254,248,.16);border:2.5px solid rgba(253,254,248,.55);z-index:12;display:none;touch-action:none}
   #joyKnob{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:rgba(253,254,248,.85);border:2.5px solid #2e5d23}
@@ -108,7 +114,7 @@
   #loader .kv-bar{margin-top:18px;width:min(420px,80vw);height:10px;border:3px solid #1B2B1A;border-radius:6px;overflow:hidden;opacity:0;animation:kvfadeUp .5s .8s forwards}
   #loader .kv-bar i{display:block;height:100%;width:0;background:#1B2B1A;animation:kvfill 2.9s .8s cubic-bezier(.22,.8,.36,1) forwards}
   @keyframes kvfill{to{width:100%}}
-  @media(max-width:760px){ .stats{display:none} #hint{display:none} #panel{bottom:118px} #actions{top:80px} #actions button{min-height:44px} #floors{top:auto;bottom:238px} #floors button{padding:6px 10px;font-size:11.5px;min-height:44px} #povHint{white-space:normal;max-width:94vw;text-align:center} }
+  @media(max-width:760px){ .stats{display:none} #hint{display:none} #panel{bottom:118px} #actions{top:80px} #actions button{min-height:44px} #floors{top:auto;bottom:238px} #floors button{padding:6px 10px;font-size:11.5px;min-height:44px} #povHint{white-space:normal;max-width:94vw;text-align:center} #btnPeople{min-height:44px;padding:10px 16px} }
 </style>
 </head>
 <body>
@@ -190,8 +196,8 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
 <div id="povHint">🚶 Você é o <b>Charlis</b> &bull; <b>joystick</b> anda &bull; <b>arrastar</b> olha &bull; no PC: WASD + mouse &bull; <b>ESC</b> sai</div>
 <div id="joy"><div id="joyKnob"></div></div>
 <div id="toast" style="position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:30;display:none;background:rgba(13,34,19,.94);border:2px solid #58cc02;color:#d7ecc6;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:10px"></div>
-<div id="simbar"></div>
-<div id="hint">🖱️ Arraste pra girar 🖱️ Arraste pra girar &bull; <b>Clique numa pessoa, cômodo ou retrato</b> pra acompanharbull; <b>Clique numa pessoa, cômodo ou retrato</b> 🖱️ Arraste pra girar &bull; <b>Clique numa pessoa, cômodo ou retrato</b> pra acompanharbull; botões de andar entram na torre</div>
+<div id="peopleDock"><button id="btnPeople" aria-expanded="true" title="Ocultar/mostrar a barra de pessoas">👥 Pessoas ▾</button><div id="simbar"></div></div>
+<div id="hint">🖱️ Arraste pra girar &bull; <b>Clique numa pessoa, cômodo ou retrato</b> pra acompanhar &bull; botões de andar entram na torre</div>
 <div id="ticker"><div class="tag">NA KOVANTU AGORA</div><div style="overflow:hidden;flex:1"><span id="tickMove"></span></div></div>
 
 
@@ -1375,7 +1381,7 @@ const deptById = id => DEPTS.find(d=> d.id === id);
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-30.3';
+const PAGE_VERSION = '2026-10-30.4';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -3176,6 +3182,7 @@ function clearSpeech(p){
 }
 function showSpeech(p, text, dur = 3.4){
   const u = p.userData; if(!text) return;
+  if(onStairs(p)) return;   /* sem falas sobre degraus/patamar do poço da escada */
   clearSpeech(p);
   const sp = textSprite(text, { fs:34, color:'#17301c', bg:'rgba(253,254,248,0.96)', scale:.0082 });
   if(sp.scale.x > 5.6){ const k = 5.6 / sp.scale.x; sp.scale.x = 5.6; sp.scale.y *= k; }
@@ -3242,6 +3249,49 @@ function maybeSpeak(p, kind, partner, force = false){
   if(!force && (autoNow < (u.nextSpeechAt || 0) || AUTO.activeSpeeches >= 4)) return;
   showSpeech(p, phraseFor(u, kind, partner), kind === 'conversa' ? 4.2 : 3.4);
   u.nextSpeechAt = autoNow + 13 + autoRand(u)*18;
+}
+/* poço da escada: Y intermediária (degraus/patamar) ou dentro do retângulo do poço */
+function onStairs(p){
+  if(!p || !p.position) return false;
+  const k = p.position.y / FH;
+  if(Math.abs(k - Math.round(k)) > .03) return true;
+  const x = p.position.x, z = p.position.z;
+  return x > -7.4 && x < 6.4 && z < -13.4 && z > -27;
+}
+/* Governador dos sprites de cabeça (etiqueta + balão): TETO de tamanho NA TELA.
+   O sprite do three.js cresce sem teto quando a câmera aproxima — era o balão
+   gigante cobrindo a visão no print do dono. Aqui a escala encolhe com a
+   distância (tamanho aparente constante a partir do ponto de corte) e o balão
+   fica EMPILHADO acima da etiqueta, com folga — nunca sobrepostos. */
+const _headV = new THREE.Vector3();
+function governHeadSprites(){
+  const tanH = Math.tan(THREE.MathUtils.degToRad((camera.fov || 55) / 2));
+  const aspect = camera.aspect || 1.6;
+  for(const p of people){
+    const u = p.userData, lab = u.labelObj, bub = u.bubbleSprite;
+    if(!lab && !bub) continue;
+    let labH = 0;
+    if(lab){
+      if(!lab.userData.base) lab.userData.base = { w: lab.scale.x, h: lab.scale.y };
+      lab.getWorldPosition(_headV);
+      const d = Math.max(.6, camera.position.distanceTo(_headV));
+      const k = Math.min(1, d / 4.6);
+      lab.scale.set(lab.userData.base.w * k, lab.userData.base.h * k, 1);
+      labH = lab.userData.base.h * k;
+    }
+    if(bub){
+      if(!bub.userData.base) bub.userData.base = { w: bub.scale.x, h: bub.scale.y };
+      bub.getWorldPosition(_headV);
+      const d = Math.max(.6, camera.position.distanceTo(_headV));
+      let k = Math.min(1, d / 7.4);
+      const maxW = .35 * 2 * d * tanH * aspect;   /* ≤ 35% da largura da tela (folga pra distorção de borda) */
+      if(bub.userData.base.w * k > maxW) k = maxW / bub.userData.base.w;
+      const maxH = .15 * 2 * d * tanH;            /* ≤ 15% da altura da tela */
+      if(bub.userData.base.h * k > maxH) k = maxH / bub.userData.base.h;
+      bub.scale.set(bub.userData.base.w * k, bub.userData.base.h * k, 1);
+      bub.position.y = 2.3 + labH / 2 + (bub.userData.base.h * k) / 2 + .14;
+    }
+  }
 }
 
 /* ----- grade caminhável ----- */
@@ -3383,6 +3433,7 @@ function choosePartner(u){
 }
 function startConversation(p, partnerE){
   const u = p.userData, po = partnerE.obj, pu = po.userData;
+  if(onStairs(p) || onStairs(po)) return false;   /* conversa só em piso plano */
   let anchor;
   if(pu.mode === 'work' && pu.workMode === 'sit' && pu.seat) anchor = seatApproachPoint(pu.seat);
   else { const dd = Math.max(1, Math.hypot(p.position.x - po.position.x, p.position.z - po.position.z));
@@ -3390,6 +3441,7 @@ function startConversation(p, partnerE){
   const face = pu.mode === 'work' && pu.workMode === 'sit' && pu.seat ? (pu.seat.rotY === Math.PI ? 0 : Math.PI) : null;
   pu.reservedFor = u.personId;
   const begin = () => {
+    if(onStairs(p) || onStairs(po)){ pu.reservedFor = null; enterWork(p, .5); return; }
     if(Math.hypot(po.position.x - p.position.x, po.position.z - p.position.z) > 2.6 && !u.partnerRetried){
       u.partnerRetried = true;
       const a2 = pu.mode === 'work' && pu.workMode === 'sit' && pu.seat ? seatApproachPoint(pu.seat) : { x:po.position.x, z:po.position.z };
@@ -3486,6 +3538,7 @@ function checkGreetings(){
     const p = e.obj, u = p.userData;
     if(!u.autoInit || u.player || u.mode === 'sleep' || u.mode === 'greet' || u.mode === 'converse' || u.autonomyDisabled) continue;
     if(autoNow < (u.greetCooldownUntil || 0)) continue;
+    if(onStairs(p) || onStairs(boss)) continue;   /* na escada não: dispara em piso plano */
     const dx = boss.position.x - p.position.x, dz = boss.position.z - p.position.z;
     if(Math.abs(boss.position.y - p.position.y) < 2.6 && Math.hypot(dx, dz) <= 4.8) startGreet(p, boss);
   }
@@ -3496,6 +3549,7 @@ function animatePeople(t, dt){
   greetClock -= dt; if(greetClock <= 0){ greetClock = .25; checkGreetings(); }
   AUTO.activeSpeeches = 0;
   for(const p of people) if(p.userData.bubbleSprite) AUTO.activeSpeeches++;
+  governHeadSprites();
   for(const p of people){
     const u = p.userData;
     if(u.player){ playerAnim(p, t, dt); continue; }
@@ -3503,7 +3557,7 @@ function animatePeople(t, dt){
       const e = roster.get(u.personId); if(e) initAutonomy(p, e.rec, deptById(e.rec.depto), u.seat || { x:p.position.x, z:p.position.z, rotY:0, stand:true });
     }
     if(u.bubbleShow > 0){ u.bubbleShow -= dt; if(u.bubbleShow <= 0) clearSpeech(p); }
-    if(u.replyAt && autoNow >= u.replyAt){ const pe = roster.get(u.replyPartner); if(pe) showSpeech(pe.obj, phraseFor(pe.obj.userData, 'conversa', (roster.get(u.personId)||{}).rec?.nome), 3.8); u.replyAt = 0; }
+    if(u.replyAt && autoNow >= u.replyAt){ const pe = roster.get(u.replyPartner); if(pe && !onStairs(pe.obj) && !onStairs(p)) showSpeech(pe.obj, phraseFor(pe.obj.userData, 'conversa', (roster.get(u.personId)||{}).rec?.nome), 3.8); u.replyAt = 0; }
     if(!u.statesSeen.includes(u.mode)) u.statesSeen.push(u.mode);
     u.simState = u.mode;
 
@@ -3698,6 +3752,17 @@ function selectDept(d, focus=true, cut=true){
 document.getElementById('pClose').onclick = ()=> panel.classList.add('hidden');
 
 /* barra de retratos (uma por pessoa, dirigida por dados) */
+/* ocultar/desocultar a barra de pessoas (estado lembrado durante a sessão) */
+const peopleDock = document.getElementById('peopleDock');
+const btnPeople = document.getElementById('btnPeople');
+function setPeopleBar(open){
+  peopleDock.classList.toggle('closed', !open);
+  btnPeople.textContent = open ? '👥 Pessoas ▾' : '👥 Pessoas ▸';
+  btnPeople.setAttribute('aria-expanded', open ? 'true' : 'false');
+  try{ sessionStorage.setItem('kovPeopleBar', open ? '1' : '0'); }catch(e){}
+}
+btnPeople.addEventListener('click', ()=> setPeopleBar(peopleDock.classList.contains('closed')));
+try{ if(sessionStorage.getItem('kovPeopleBar') === '0') setPeopleBar(false); }catch(e){}
 const simbar = document.getElementById('simbar');
 function buildSimbar(){
   simbar.innerHTML = '';
@@ -3947,6 +4012,7 @@ function enterPOV(){
   else { player.position.set(-0.5, povSpawn * FH, -4); povFloor = povSpawn; setPlayerYaw(0); pov.yaw = Math.PI; }
   pov.pitch = .3;
   pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
+  clearSpeech(player);   /* POV não herda balão da vida de NPC do Charlis */
   viewMode = 'cut'; cutFloor = povFloor; applyVisibility();
   controls.enabled = false;
   snapPovCam();
@@ -4111,7 +4177,7 @@ window.__KOV = { THREE, scene, camera, renderer, controls, DEPTS, people, roster
   playerNow: ()=> player,
   EQUIPE: ()=> EQUIPE_ATUAL,
   live: ()=>({ on: LIVE.on, atualizadoEm: LIVE.atualizadoEm, count: roster.size }),
-  PAGE_VERSION, checkVersion, autonomy:{ snapshot:autoSnapshot, simulate:autoSimulate, stats:()=> ({ ...AUTO }) }, colliders,
+  PAGE_VERSION, checkVersion, showSpeech, clearSpeech, onStairs, startConversation, autonomy:{ snapshot:autoSnapshot, simulate:autoSimulate, stats:()=> ({ ...AUTO }) }, colliders,
   collide:(x, z, r)=> collide(x, z, r, new Set([0,1,2,3])),
   camFree:(x, y, z)=> camFree(x, y, z), clampCamPos:(v)=> clampCamPos(v), surfacesAt:(x, z)=> surfacesAt(x, z),
   view:()=>({ mode: viewMode, cut: cutFloor }),
