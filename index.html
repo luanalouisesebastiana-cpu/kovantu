@@ -1375,7 +1375,7 @@ const deptById = id => DEPTS.find(d=> d.id === id);
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-30.1';
+const PAGE_VERSION = '2026-10-30.2';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -1384,7 +1384,7 @@ const PAGE_VERSION = '2026-10-30.1';
    embutida abaixo e o selo mostra MODO ARQUIVO. */
 const EQUIPE_EMBUTIDA = {
  "empresa": "Kovantu Digital",
- "atualizadoEm": "2026-10-29T08:22:00-03:00",
+ "atualizadoEm": "2026-10-30T11:55:00-03:00",
  "equipe": [
   {
    "id": "charlis",
@@ -1693,6 +1693,181 @@ const EQUIPE_EMBUTIDA = {
    "genero": "M"
   },
   {
+   "id": "tito",
+   "nome": "Tito",
+   "cargo": "Títulos",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Fecha o par título+capa de cada vídeo do Dinero Claro: 5 opções por vídeo, espanhol pros hispanos dos EUA, curiosidade sem clickbait.",
+   "tarefas": [
+    {
+     "nome": "5 títulos do próximo vídeo",
+     "progresso": 45
+    },
+    {
+     "nome": "Par título+capa com o Miro",
+     "progresso": 30
+    },
+    {
+     "nome": "Palavra-chave de busca ES",
+     "progresso": 55
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M"
+  },
+  {
+   "id": "miro",
+   "nome": "Miro",
+   "cargo": "Thumbnails",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Desenha as capas do Dinero Claro: 3 conceitos por vídeo, julgados pela rubrica oficial da casa — abaixo de 85, volta pra prancheta.",
+   "tarefas": [
+    {
+     "nome": "3 conceitos de capa",
+     "progresso": 40
+    },
+    {
+     "nome": "Rubrica da capa (mín. 85)",
+     "progresso": 25
+    },
+    {
+     "nome": "QA em 3 tamanhos",
+     "progresso": 60
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M"
+  },
+  {
+   "id": "beto",
+   "nome": "Beto",
+   "cargo": "Imagens",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Gera as imagens de apoio dos vídeos do Dinero Claro no estilo visual único do canal, 16:9, sem texto dentro da imagem.",
+   "tarefas": [
+    {
+     "nome": "Imagens do próximo vídeo",
+     "progresso": 50
+    },
+    {
+     "nome": "Base das capas do Miro",
+     "progresso": 35
+    },
+    {
+     "nome": "Cenas próprias do canal",
+     "progresso": 20
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M"
+  },
+  {
+   "id": "tom",
+   "nome": "Tom",
+   "cargo": "Áudio e voz",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "A voz do Dinero Claro: narração em espanhol natural com a voz fixa do canal, trilha licenciada por baixo da voz.",
+   "tarefas": [
+    {
+     "nome": "Narração do próximo vídeo",
+     "progresso": 30
+    },
+    {
+     "nome": "Trilha e SFX licenciados",
+     "progresso": 65
+    },
+    {
+     "nome": "Pronúncia ES conferida",
+     "progresso": 80
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M"
+  },
+  {
+   "id": "vitor",
+   "nome": "Vítor",
+   "cargo": "Vídeo e stock",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "O material em movimento do Dinero Claro: stock livre com licença registrada e clips gerados casando com a narração, segundo a segundo.",
+   "tarefas": [
+    {
+     "nome": "Clips do próximo vídeo",
+     "progresso": 42
+    },
+    {
+     "nome": "Licenças registradas",
+     "progresso": 90
+    },
+    {
+     "nome": "Cenas geradas por IA",
+     "progresso": 28
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M"
+  },
+  {
+   "id": "edson",
+   "nome": "Edson",
+   "cargo": "Edição",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Monta os vídeos do Dinero Claro: troca visual a cada 3–6s, gráfico sempre que sai um número, legenda ES e áudio em -14 LUFS.",
+   "tarefas": [
+    {
+     "nome": "Montagem do próximo vídeo",
+     "progresso": 22
+    },
+    {
+     "nome": "Gráficos e legendas ES",
+     "progresso": 38
+    },
+    {
+     "nome": "Loudness -14 LUFS",
+     "progresso": 70
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M"
+  },
+  {
+   "id": "decio",
+   "nome": "Décio",
+   "cargo": "Descrição e SEO",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Descrição, capítulos e SEO de cada vídeo do Dinero Claro: texto único por vídeo, com o disclaimer financeiro em espanhol.",
+   "tarefas": [
+    {
+     "nome": "Descrição do próximo vídeo",
+     "progresso": 15
+    },
+    {
+     "nome": "Capítulos conferidos",
+     "progresso": 48
+    },
+    {
+     "nome": "Tags e comentário fixado",
+     "progresso": 33
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M"
+  },
+  {
    "id": "teodoro",
    "nome": "Teodoro",
    "cargo": "O editor",
@@ -1834,8 +2009,10 @@ function registerPersonClick(obj, rec, dept){
 function updateLabel(e){
   const u = e.obj.userData;
   if(u.labelObj) e.obj.remove(u.labelObj);
-  const label = textSprite(String(e.rec.nome || '').split(' — ')[0].split(' ')[0], { fs:38, color:'#17301c', bg:'rgba(253,254,248,0.92)', scale:.0095 });
-  label.position.set(0, 2.3, 0); e.obj.add(label); u.labelObj = label;
+  const label = textSprite(String(e.rec.nome || '').split(' — ')[0].split(' ')[0], { fs:38, color:'#17301c', bg:'rgba(253,254,248,0.92)', scale:.0105 });
+  label.position.set(0, 2.3, 0); label.renderOrder = 60; e.obj.add(label); u.labelObj = label;
+  const dd = deptById(e.rec.depto);
+  if(dd && window.__cutView && !window.__pov && dd.floor === window.__cutFloor) label.material.depthTest = false;
 }
 function spawnPerson(rec){
   const d = deptById(rec.depto) || DEPTS[0];
@@ -1872,6 +2049,7 @@ function spawnPerson(rec){
   people.push(p);
   registerPersonClick(p, rec, d);
   roster.set(rec.id, { rec, obj: p, seatIdx: idx });
+  if(u.labelObj && window.__cutView && !window.__pov && d.floor === window.__cutFloor) u.labelObj.material.depthTest = false;
   return p;
 }
 function despawnPerson(id){
@@ -2017,7 +2195,7 @@ const wallSEGroups = [0,1,2].map(()=>{ const g = new THREE.Group(); scene.add(g)
 
 /* ============ ATLAS DE TEXTURAS PIXELADAS (canvas, grade 8×4 de tiles 16×16) ============ */
 function mulberry(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-const TILE = { GRASS_TOP:0, GRASS_SIDE:1, DIRT:2, STONE:3, PLANKS:4, LOG_SIDE:5, LOG_TOP:6, BRICK:7, GLASS:8, LEAVES:9, GRAVEL:10, BOOK:11, SCREEN:12, GLOW:13, QUARTZ:14, STONEBRICK:15, DARK:16, KGREEN:17, QUARTZ2:18 };
+const TILE = { GRASS_TOP:0, GRASS_SIDE:1, DIRT:2, STONE:3, PLANKS:4, LOG_SIDE:5, LOG_TOP:6, BRICK:7, GLASS:8, LEAVES:9, GRAVEL:10, BOOK:11, SCREEN:12, GLOW:13, QUARTZ:14, STONEBRICK:15, DARK:16, KGREEN:17, QUARTZ2:18, PANEL:19, GRAPHITE:20, PANELG:21, GLASSBLUE:22 };
 const ACOLS = 8, AROWS = 4;
 const atlasCanvas = document.createElement('canvas'); atlasCanvas.width = 512; atlasCanvas.height = 256;
 {
@@ -2087,6 +2265,23 @@ const atlasCanvas = document.createElement('canvas'); atlasCanvas.width = 512; a
   /* painel escuro (atrás da logo / letreiros) */
   fillNoise(TILE.DARK, ['#2e3138','#282b31','#35383f','#212429','#2a2d33'], 133, [5,4,3,2,3]);
   { const rnd = mulberry(134); for(let i=0;i<8;i++){ let x = Math.floor(rnd()*15), y = Math.floor(rnd()*15); for(let s=0;s<3;s++){ put(TILE.DARK, x, y, '#191b1f'); x += rnd()>.5?1:0; y += rnd()>.5?0:1; } } }
+  /* ===== PELE NOVA DA FACHADA (redesign 30/out): painéis corporativos claros,
+     base grafite, filete verde da marca e vidro azul-acinzentado espelhado ===== */
+  fillNoise(TILE.PANEL, ['#e9e7e0','#e1dfd6','#efede6','#dad7cc'], 151, [5,4,3,2]);
+  for(let i=0;i<16;i++){ put(TILE.PANEL, i, 15, '#b0ada0'); put(TILE.PANEL, 15, i, '#b0ada0'); put(TILE.PANEL, i, 0, '#f8f6f0'); }
+  fillNoise(TILE.GRAPHITE, ['#33373d','#2d3138','#3a3f46','#272b31'], 152, [5,4,3,2]);
+  for(let i=0;i<16;i++){ put(TILE.GRAPHITE, i, 15, '#1e2126'); put(TILE.GRAPHITE, 15, i, '#1e2126'); put(TILE.GRAPHITE, i, 0, '#454b54'); }
+  fillNoise(TILE.PANELG, ['#e9e7e0','#e1dfd6','#efede6','#dad7cc'], 153, [5,4,3,2]);
+  for(let i=0;i<16;i++){ put(TILE.PANELG, i, 0, '#f8f6f0'); put(TILE.PANELG, 15, i, '#b0ada0'); put(TILE.PANELG, i, 15, '#8a877b'); put(TILE.PANELG, i, 13, '#58cc02'); put(TILE.PANELG, i, 14, '#58cc02'); }
+  { const ox = (TILE.GLASSBLUE % ACOLS) * 64, oy = Math.floor(TILE.GLASSBLUE / ACOLS) * 64;
+    g.clearRect(ox, oy, 64, 64);
+    g.fillStyle = 'rgba(96,138,175,0.92)'; g.fillRect(ox, oy, 64, 64);
+    g.fillStyle = 'rgba(64,96,128,0.55)'; g.fillRect(ox, oy+44, 64, 20);
+    g.fillStyle = 'rgba(235,245,252,0.95)';
+    g.fillRect(ox, oy, 64, 4); g.fillRect(ox, oy+60, 64, 4); g.fillRect(ox, oy, 4, 64); g.fillRect(ox+60, oy, 4, 64);
+    g.fillStyle = 'rgba(255,255,255,0.5)';
+    for(let i=0;i<5;i++){ g.fillRect(ox + 8 + i*4, oy + 36 - i*4, 9, 4); g.fillRect(ox + 26 + i*4, oy + 44 - i*4, 9, 4); }
+  }
   /* verde da marca, emissivo (o K da fachada e o letreiro da cobertura) */
   fillNoise(TILE.KGREEN, ['#58cc02','#4fb802','#63d40f','#52b802','#5ac704'], 144, [5,3,3,2,3]);
   { const rnd = mulberry(145); for(let i=0;i<20;i++) put(TILE.KGREEN, Math.floor(rnd()*16), Math.floor(rnd()*16), '#8fe63f'); }
@@ -2109,6 +2304,7 @@ const BT = {
   dirt:{ all:TILE.DIRT }, gravel:{ all:TILE.GRAVEL }, stone:{ all:TILE.STONE },
   planks:{ all:TILE.PLANKS }, log:{ top:TILE.LOG_TOP, bottom:TILE.LOG_TOP, side:TILE.LOG_SIDE },
   brick:{ all:TILE.BRICK }, stonebrick:{ all:TILE.STONEBRICK }, quartz:{ all:TILE.QUARTZ }, quartz2:{ all:TILE.QUARTZ2 },
+  panel:{ all:TILE.PANEL }, graphite:{ all:TILE.GRAPHITE }, panelg:{ all:TILE.PANELG }, glassblue:{ all:TILE.GLASSBLUE, glass:true },
   leaves:{ all:TILE.LEAVES }, book:{ all:TILE.BOOK }, dark:{ all:TILE.DARK },
   glass:{ all:TILE.GLASS, glass:true }, glow:{ all:TILE.GLOW, glow:true },
   screen:{ all:TILE.SCREEN, glow:true }, kgreen:{ all:TILE.KGREEN, glow:true },
@@ -2469,7 +2665,7 @@ function hWallZ(z, xFrom, xTo, y0, gaps, colFloor, type='stonebrick', height=4, 
 const LOT = { x0:-56, x1:56, z0:-48, z1:48 };
 const inFoot = (x,z)=> x >= BLD.x0 && x <= BLD.x1 && z >= BLD.z0 && z <= BLD.z1;
 function zoneTypeAt(f, x, z){
-  if(x === BLD.x0 || x === BLD.x1 || z === BLD.z0 || z === BLD.z1) return 'stonebrick';
+  if(x === BLD.x0 || x === BLD.x1 || z === BLD.z0 || z === BLD.z1) return 'graphite';   // faixa da laje = grafite (pele nova)
   if(x >= CORE.x0 && x <= CORE.x1 && z >= CORE.z0 && z <= CORE.z1) return 'stone';
   if(x >= WALK.x0 && x <= WALK.x1 && z >= WALK.z0 && z <= WALK.z1) return ((x + z) & 1) === 0 ? 'quartz' : 'quartz2';   // xadrez do corredor/hall
   const d = DEPTS.find(dd=> dd.floor === f && x >= dd._L.x0 && x < dd._L.x1 && z >= dd._L.z0 && z < dd._L.z1);
@@ -2486,24 +2682,29 @@ for(let x = LOT.x0; x < LOT.x1; x++) for(let z = LOT.z0; z < LOT.z1; z++){
 /* lajes dos andares e da cobertura */
 for(let f=1; f<=2; f++) for(let x = BLD.x0; x <= BLD.x1; x++) for(let z = BLD.z0; z <= BLD.z1; z++) setB(x, f*FH - 1, z, zoneTypeAt(f, x, z));
 for(let x = BLD.x0; x <= BLD.x1; x++) for(let z = BLD.z0; z <= BLD.z1; z++)
-  setB(x, 14, z, (x === BLD.x0 || x === BLD.x1 || z === BLD.z0 || z === BLD.z1) ? 'stonebrick' : 'stone');
+  setB(x, 14, z, (x === BLD.x0 || x === BLD.x1 || z === BLD.z0 || z === BLD.z1) ? 'graphite' : 'stone');
 
-/* paredes externas (janelas de vidro em ritmo; porta no térreo) */
+/* paredes externas — PELE NOVA (30/out): térreo em grafite (base corporativa),
+   andares em painel claro com filete verde na fileira do piso (sul/leste),
+   janelas MAIORES de vidro azul-espelhado (3 de cada 4 colunas); porta no térreo.
+   Só muda o TIPO dos blocos: posições e colisores são os mesmos de antes. */
 for(let f=0; f<3; f++){
-  const y0 = f * FH, mat = f === 0 ? 'stonebrick' : 'brick';
-  const winX = x => ((x - BLD.x0) % 4) < 2, winZ = z => ((z - BLD.z0) % 4) < 2;
+  const y0 = f * FH, mat = f === 0 ? 'graphite' : 'panel';
+  const winX = x => ((x - BLD.x0) % 4) < 3, winZ = z => ((z - BLD.z0) % 4) < 3;
   for(let x = BLD.x0; x <= BLD.x1; x++){
     for(let h=0; h<4; h++){
       const win = (h === 1 || h === 2) && winX(x);
-      if(!(f === 0 && (x === -1 || x === 0) && h < 3)) setB(x, y0 + h, BLD.z1, win ? 'glass' : mat);   // frente (sul)
-      setB(x, y0 + h, BLD.z0, win ? 'glass' : mat);                                                    // fundo (norte)
+      const faceS = win ? 'glassblue' : (h === 0 && f > 0 ? 'panelg' : mat);
+      if(!(f === 0 && (x === -1 || x === 0) && h < 3)) setB(x, y0 + h, BLD.z1, faceS);   // frente (sul)
+      setB(x, y0 + h, BLD.z0, win ? 'glassblue' : mat);                                  // fundo (norte)
     }
   }
   for(let z = BLD.z0 + 1; z < BLD.z1; z++){
     for(let h=0; h<4; h++){
       const win = (h === 1 || h === 2) && winZ(z);
-      setB(BLD.x0, y0 + h, z, win ? 'glass' : mat);   // oeste
-      setB(BLD.x1, y0 + h, z, win ? 'glass' : mat);   // leste
+      const faceE = win ? 'glassblue' : (h === 0 && f > 0 ? 'panelg' : mat);
+      setB(BLD.x0, y0 + h, z, win ? 'glassblue' : mat);   // oeste
+      setB(BLD.x1, y0 + h, z, faceE);                     // leste
     }
   }
   /* colisores do perímetro deste andar */
@@ -2519,9 +2720,9 @@ for(let f=0; f<3; f++){
   addCol(BLD.x0 - .15, -1.15, BLD.z1 - .15, BLD.z1 + 1.15, 0);
   addCol(1.15, BLD.x1 + 1.15, BLD.z1 - .15, BLD.z1 + 1.15, 0);
 }
-/* parapeito da cobertura */
-for(let x = BLD.x0; x <= BLD.x1; x++){ setB(x, 15, BLD.z0, 'stonebrick'); setB(x, 15, BLD.z1, (x % 6 === 0) ? 'glow' : 'stonebrick'); }
-for(let z = BLD.z0 + 1; z < BLD.z1; z++){ setB(BLD.x0, 15, z, 'stonebrick'); setB(BLD.x1, 15, z, 'stonebrick'); }
+/* parapeito da cobertura (grafite; marcos na cor da marca na frente) */
+for(let x = BLD.x0; x <= BLD.x1; x++){ setB(x, 15, BLD.z0, 'graphite'); setB(x, 15, BLD.z1, (x % 6 === 0) ? 'kgreen' : 'graphite'); }
+for(let z = BLD.z0 + 1; z < BLD.z1; z++){ setB(BLD.x0, 15, z, 'graphite'); setB(BLD.x1, 15, z, 'graphite'); }
 addCol(BLD.x0 - .15, BLD.x1 + 1.15, BLD.z0 - .15, BLD.z0 + 1.15, 3);
 addCol(BLD.x0 - .15, BLD.x1 + 1.15, BLD.z1 - .15, BLD.z1 + 1.15, 3);
 addCol(BLD.x0 - .15, BLD.x0 + 1.15, BLD.z0, BLD.z1 + 1, 3);
@@ -2548,9 +2749,9 @@ for(let f=0; f<3; f++){
 /* parede-painel da logo no hall (térreo) */
 hWallZ(10, -6, 5, 0, [], 0, 'dark');
 /* cerca do núcleo na cobertura */
-hWallX(-10, -29, -15, 15, [], 3, 'stonebrick', 2);
-hWallX(  8, -29, -15, 15, [], 3, 'stonebrick', 2);
-hWallZ(-14, -9, 8, 15, [[-3,3]], 3, 'stonebrick', 2);
+hWallX(-10, -29, -15, 15, [], 3, 'graphite', 2);
+hWallX(  8, -29, -15, 15, [], 3, 'graphite', 2);
+hWallZ(-14, -9, 8, 15, [[-3,3]], 3, 'graphite', 2);
 
 /* cerca do lote + árvores + portão (bucket fixo '0': são do jardim, não de um andar) */
 for(let x = LOT.x0; x < LOT.x1; x++){ setB(x, 0, LOT.z0, 'stone', '0'); if(!(x >= -2 && x <= 1)) setB(x, 0, LOT.z1 - 1, 'stone', '0'); }
@@ -2562,8 +2763,10 @@ function tree(x, z){
   addCol(x - .1, x + 1.1, z - .1, z + 1.1, 0);
 }
 [[-52,-44],[52,-44],[-52,40],[52,40],[-52,-2],[52,-8],[-26,44],[26,44],[-38,-44],[38,44]].forEach(([x,z])=> tree(x,z));
-[-4, 3].forEach(px=>{ for(let y=0;y<4;y++) setB(px, y, 44, 'log', '0'); });
-for(let x=-4;x<=3;x++) setB(x, 4, 44, 'planks', '0');
+/* portão NOVO (30/out): pilares de grafite FORA da largura da placa e viga-painel
+   escura atrás dela — a madeira antiga cobria o "K" e o "AL" do letreiro */
+[-6, 5].forEach(px=>{ for(let y=0;y<4;y++) setB(px, y, 44, 'graphite', '0'); });
+for(let x=-6;x<=5;x++) setB(x, 4, 44, 'dark', '0');
 
 /* escada em U (visual): 3 lances duplos, um por andar */
 const stairMat = planksDarkMat;
@@ -2583,17 +2786,20 @@ const quartzMat = new THREE.MeshLambertMaterial({ map: tileTexture(TILE.QUARTZ) 
 /* tapetes: MeshBasicMaterial de propósito — caixa fina sobre piso sombreado "escapa" da sombra do sol
    (shadow-pop) e o Lambert estourava pra branco; o Basic crava a cor do tapete em qualquer luz */
 const rugMat = new THREE.MeshBasicMaterial({ color: 0x7f9271 });
-flatBox(floorGroups[0], 8, .35, 3.4, quartzMat, -0.5, 3.3, 23.6);
-[-4, 3].forEach(px=>{ for(let y=0;y<4;y++) setB(px, y, 24, 'log', '0'); });
-addCol(-4.15, -2.85, 23.85, 25.15, 0); addCol(2.85, 4.15, 23.85, 25.15, 0);
+/* marquise NOVA (30/out): laje escura larga com filete verde na borda frontal e
+   pilares de grafite afastados — nada de madeira na frente da placa */
+flatBox(floorGroups[0], 11, .35, 3.4, darkMat, -0.5, 3.3, 23.6);
+flatBox(floorGroups[0], 11, .1, .1, new THREE.MeshBasicMaterial({ color:0x58cc02 }), -0.5, 3.16, 25.33);
+[-5, 4].forEach(px=>{ for(let y=0;y<4;y++) setB(px, y, 24, 'graphite', '0'); });
+addCol(-5.15, -3.85, 23.85, 25.15, 0); addCol(3.85, 5.15, 23.85, 25.15, 0);
 {
   const doorMat = new THREE.MeshLambertMaterial({ color:0xbfe3f2, transparent:true, opacity:.5 });
   const leafL = box(.95, 2.9, .07, doorMat, -1.55, 1.45, 20.55, {shadow:false}); leafL.rotation.y = .1; floorGroups[0].add(leafL);
   const leafR = box(.95, 2.9, .07, doorMat,  0.55, 1.45, 20.55, {shadow:false}); leafR.rotation.y = -.1; floorGroups[0].add(leafR);
-  const signMain = canvasPlane(logoCanvas(1024, 176), 13, 2.24); signMain.position.set(-0.5, 5.15, 21.62); floorGroups[1].add(signMain);
-  const signMarq = canvasPlane(logoCanvas(1024, 96), 7.2, .68); signMarq.position.set(-0.5, 3.3, 25.32); floorGroups[0].add(signMarq);
-  const gateSign = canvasPlane(logoCanvas(1024, 176), 9, 1.55); gateSign.position.set(-0.5, 3.9, 44.62); scene.add(gateSign);
-  const gateSign2 = gateSign.clone(); gateSign2.rotation.y = Math.PI; gateSign2.position.z = 43.38; scene.add(gateSign2);
+  const signMain = canvasPlane(logoCanvas(1024, 176), 13, 2.24); signMain.position.set(-0.5, 5.15, 22.15); floorGroups[1].add(signMain);
+  const signMarq = canvasPlane(logoCanvas(1024, 96), 7.2, .68); signMarq.position.set(-0.5, 3.3, 25.45); floorGroups[0].add(signMarq);
+  const gateSign = canvasPlane(logoCanvas(1024, 176), 9, 1.55); gateSign.position.set(-0.5, 3.9, 45.2); scene.add(gateSign);
+  const gateSign2 = gateSign.clone(); gateSign2.rotation.y = Math.PI; gateSign2.position.z = 43.8; scene.add(gateSign2);
 }
 /* letreiro luminoso KOVANTU na cobertura */
 const FONT3 = { K:['101','101','110','101','101'], O:['010','101','101','101','010'], V:['101','101','101','101','010'],
@@ -2944,8 +3150,8 @@ function makePerson(dept, name, seed, opts={}){
       body.add(box(.16,.44,.1, hairMat, 0, 1.76, -.33));
     }
   }
-  const label = textSprite(name.split(' — ')[0].split(' ')[0], { fs:38, color:'#17301c', bg:'rgba(253,254,248,0.92)', scale:.0095 });
-  label.position.set(0, 2.3, 0); g.add(label);
+  const label = textSprite(name.split(' — ')[0].split(' ')[0], { fs:38, color:'#17301c', bg:'rgba(253,254,248,0.92)', scale:.0105 });
+  label.position.set(0, 2.3, 0); label.renderOrder = 60; g.add(label);
   const ring = new THREE.Mesh(new THREE.CircleGeometry(.55, 22), new THREE.MeshBasicMaterial({ color: dept.color, transparent:true, opacity:.5, side:THREE.DoubleSide }));
   ring.rotation.x = -Math.PI/2; ring.position.y = .03; g.add(ring);
   g.userData = { isPerson:true, dept, name, body, armL, armR, legL, legR, head, phase:Math.random()*Math.PI*2, baseY: dept.baseY,
@@ -3138,6 +3344,17 @@ function applyVisibility(){
   for(let i=0;i<4;i++) floorGroups[i].visible = viewMode === 'exterior' ? true : i <= cutFloor;
   for(let n=0;n<3;n++) wallSEGroups[n].visible = viewMode === 'exterior' ? true : n < cutFloor;
   plumbob.visible = viewMode === 'exterior' || (selectedDept && selectedDept.floor <= cutFloor);
+  /* na vista de corte, as etiquetas de quem está NO andar aberto atravessam a
+     mobília (dono tem que ABRIR o andar e VER a galera); etiquetas dos outros
+     andares e no exterior/POV mantêm profundidade normal */
+  window.__cutView = (viewMode === 'cut');
+  window.__cutFloor = cutFloor;
+  const labelsOnTop = window.__cutView && !window.__pov;
+  for(const e of roster.values()){
+    const lo = e.obj.userData.labelObj; if(!lo) continue;
+    const fl = (deptById(e.rec.depto) || {}).floor;
+    lo.material.depthTest = !(labelsOnTop && fl === cutFloor);
+  }
   updateFloorButtons();
 }
 function setCut(f){ viewMode = 'cut'; cutFloor = f; applyVisibility(); }

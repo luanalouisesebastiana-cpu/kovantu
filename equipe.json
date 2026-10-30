@@ -1,6 +1,6 @@
 {
   "empresa": "Kovantu Digital",
-  "atualizadoEm": "2026-10-29T08:22:00-03:00",
+  "atualizadoEm": "2026-10-30T11:55:00-03:00",
   "equipe": [
     {
       "id": "charlis",
@@ -306,6 +306,181 @@
       ],
       "desde": "2026-10-27",
       "atualizadoEm": "2026-10-28T23:00:27-03:00",
+      "genero": "M"
+    },
+    {
+      "id": "tito",
+      "nome": "Tito",
+      "cargo": "Títulos",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "Fecha o par título+capa de cada vídeo do Dinero Claro: 5 opções por vídeo, espanhol pros hispanos dos EUA, curiosidade sem clickbait.",
+      "tarefas": [
+        {
+          "nome": "5 títulos do próximo vídeo",
+          "progresso": 45
+        },
+        {
+          "nome": "Par título+capa com o Miro",
+          "progresso": 30
+        },
+        {
+          "nome": "Palavra-chave de busca ES",
+          "progresso": 55
+        }
+      ],
+      "desde": "2026-10-28",
+      "atualizadoEm": "2026-10-30T11:55:00-03:00",
+      "genero": "M"
+    },
+    {
+      "id": "miro",
+      "nome": "Miro",
+      "cargo": "Thumbnails",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "Desenha as capas do Dinero Claro: 3 conceitos por vídeo, julgados pela rubrica oficial da casa — abaixo de 85, volta pra prancheta.",
+      "tarefas": [
+        {
+          "nome": "3 conceitos de capa",
+          "progresso": 40
+        },
+        {
+          "nome": "Rubrica da capa (mín. 85)",
+          "progresso": 25
+        },
+        {
+          "nome": "QA em 3 tamanhos",
+          "progresso": 60
+        }
+      ],
+      "desde": "2026-10-28",
+      "atualizadoEm": "2026-10-30T11:55:00-03:00",
+      "genero": "M"
+    },
+    {
+      "id": "beto",
+      "nome": "Beto",
+      "cargo": "Imagens",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "Gera as imagens de apoio dos vídeos do Dinero Claro no estilo visual único do canal, 16:9, sem texto dentro da imagem.",
+      "tarefas": [
+        {
+          "nome": "Imagens do próximo vídeo",
+          "progresso": 50
+        },
+        {
+          "nome": "Base das capas do Miro",
+          "progresso": 35
+        },
+        {
+          "nome": "Cenas próprias do canal",
+          "progresso": 20
+        }
+      ],
+      "desde": "2026-10-28",
+      "atualizadoEm": "2026-10-30T11:55:00-03:00",
+      "genero": "M"
+    },
+    {
+      "id": "tom",
+      "nome": "Tom",
+      "cargo": "Áudio e voz",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "A voz do Dinero Claro: narração em espanhol natural com a voz fixa do canal, trilha licenciada por baixo da voz.",
+      "tarefas": [
+        {
+          "nome": "Narração do próximo vídeo",
+          "progresso": 30
+        },
+        {
+          "nome": "Trilha e SFX licenciados",
+          "progresso": 65
+        },
+        {
+          "nome": "Pronúncia ES conferida",
+          "progresso": 80
+        }
+      ],
+      "desde": "2026-10-28",
+      "atualizadoEm": "2026-10-30T11:55:00-03:00",
+      "genero": "M"
+    },
+    {
+      "id": "vitor",
+      "nome": "Vítor",
+      "cargo": "Vídeo e stock",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "O material em movimento do Dinero Claro: stock livre com licença registrada e clips gerados casando com a narração, segundo a segundo.",
+      "tarefas": [
+        {
+          "nome": "Clips do próximo vídeo",
+          "progresso": 42
+        },
+        {
+          "nome": "Licenças registradas",
+          "progresso": 90
+        },
+        {
+          "nome": "Cenas geradas por IA",
+          "progresso": 28
+        }
+      ],
+      "desde": "2026-10-28",
+      "atualizadoEm": "2026-10-30T11:55:00-03:00",
+      "genero": "M"
+    },
+    {
+      "id": "edson",
+      "nome": "Edson",
+      "cargo": "Edição",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "Monta os vídeos do Dinero Claro: troca visual a cada 3–6s, gráfico sempre que sai um número, legenda ES e áudio em -14 LUFS.",
+      "tarefas": [
+        {
+          "nome": "Montagem do próximo vídeo",
+          "progresso": 22
+        },
+        {
+          "nome": "Gráficos e legendas ES",
+          "progresso": 38
+        },
+        {
+          "nome": "Loudness -14 LUFS",
+          "progresso": 70
+        }
+      ],
+      "desde": "2026-10-28",
+      "atualizadoEm": "2026-10-30T11:55:00-03:00",
+      "genero": "M"
+    },
+    {
+      "id": "decio",
+      "nome": "Décio",
+      "cargo": "Descrição e SEO",
+      "depto": "youtube",
+      "status": "ativo",
+      "fazendo": "Descrição, capítulos e SEO de cada vídeo do Dinero Claro: texto único por vídeo, com o disclaimer financeiro em espanhol.",
+      "tarefas": [
+        {
+          "nome": "Descrição do próximo vídeo",
+          "progresso": 15
+        },
+        {
+          "nome": "Capítulos conferidos",
+          "progresso": 48
+        },
+        {
+          "nome": "Tags e comentário fixado",
+          "progresso": 33
+        }
+      ],
+      "desde": "2026-10-28",
+      "atualizadoEm": "2026-10-30T11:55:00-03:00",
       "genero": "M"
     },
     {
