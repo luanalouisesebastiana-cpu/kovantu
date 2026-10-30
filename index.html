@@ -1340,6 +1340,7 @@ const DEPTS = [
  { id:'hotmart', name:'Vendas Hotmart', emoji:'🔥', color:0xff7a45, css:'#e05a1d', bubble:['🔥','💵','📈','🛒'] },
  { id:'stock', name:'Stock IA', emoji:'🖼️', color:0xb78bff, css:'#8a5cf0', bubble:['🖼️','🎨','👁️','✨'] },
  { id:'blogs', name:'Rede de Blogs', emoji:'✒️', color:0x7ee787, css:'#2f9e44', bubble:['✒️','📝','📰','☕'] },
+ { id:'trafego', name:'Tráfego Pago', emoji:'📊', color:0xff4fc3, css:'#e84393', bubble:['📊','📈','🎯','💬'] },
  { id:'arcade', name:'Kovantu Games', emoji:'🕹️', color:0x39c5ff, css:'#0f96c9', bubble:['🕹️','👾','🏆','🎮'] },
  { id:'youtube', name:'YouTube Dark', emoji:'🎬', color:0xff5b6a, css:'#e03144', bubble:['🎬','🎙️','▶️','💡'] },
  { id:'kdp', name:'Editora KDP', emoji:'📚', color:0xffd166, css:'#c9930a', bubble:['💤','📚','😴','📖'] },
@@ -1357,9 +1358,10 @@ const WALK = { x0:-8, x1:7, z0:-13, z1:20 };            // hall (térreo) / corr
 const LAYOUT = {  // retângulos INTERIORES de cada departamento [x0, x1, z0, z1) + andar
   arcade:    { f:0, r:[-33,-10,-29, 21] },
   apps:      { f:0, r:[  9, 32,-29, 21] },
-  abuelo:    { f:1, r:[-33,-10,-29, -5] },
+  abuelo:    { f:1, r:[-33,-10,-29,-11], doorZ:-11.5, laneOff:4.5, entryGapX:-18.7 },
   hotmart:   { f:1, r:[  9, 32,-29, -5] },
-  stock:     { f:1, r:[-33,-10, -3, 21] },
+  trafego:   { f:1, r:[-33,-10, -9,  5], doorZ:-0.5, laneOff:3.5 },
+  stock:     { f:1, r:[-33,-10,  7, 21], laneOff:3.5, entryGapX:-18.7 },
   blogs:     { f:1, r:[  9, 32, -3, 21] },
   diretoria: { f:2, r:[-33,-10,-29, -5] },
   youtube:   { f:2, r:[  9, 32,-29, -5] },
@@ -1368,11 +1370,14 @@ const LAYOUT = {  // retângulos INTERIORES de cada departamento [x0, x1, z0, z1
 };
 DEPTS.forEach(d=>{
   const lay = LAYOUT[d.id], [x0, x1, z0, z1] = lay.r;
-  d.floor = lay.f; d.baseY = lay.f * FH;
+  d.floor = lay.f; d.baseY = lay.f * FH; d.doorZ = lay.doorZ; d.laneOff = lay.laneOff; d.entryGapX = lay.entryGapX;
   d.x = (x0 + x1 - 1) / 2; d.z = (z0 + z1 - 1) / 2; d.w = x1 - x0; d.d = z1 - z0;
   d._L = { x0, z0, x1, z1, cx:d.x, cz:d.z, w:x1 - x0, d:z1 - z0 };
 });
 const deptById = id => DEPTS.find(d=> d.id === id);
+/* porta de cada depto: padrão por posição (fundo=-8.5, frente=7.5, térreo=1.5);
+   deptos com retângulo fora do padrão declaram doorZ próprio no LAYOUT */
+function doorZOf(d){ return d.doorZ != null ? d.doorZ : (d.floor === 0 ? 1.5 : (d._L.z1 <= -5 ? -8.5 : 7.5)); }
 
 /* ============ VERSÃO DESTA PÁGINA (atualização automática) ============
    PAGE_VERSION identifica ESTE HTML. Ao publicar uma versão nova, suba
@@ -1381,7 +1386,7 @@ const deptById = id => DEPTS.find(d=> d.id === id);
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-30.4';
+const PAGE_VERSION = '2026-10-30.6';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -1390,7 +1395,7 @@ const PAGE_VERSION = '2026-10-30.4';
    embutida abaixo e o selo mostra MODO ARQUIVO. */
 const EQUIPE_EMBUTIDA = {
  "empresa": "Kovantu Digital",
- "atualizadoEm": "2026-10-30T11:55:00-03:00",
+ "atualizadoEm": "2026-10-30T16:52:00-03:00",
  "equipe": [
   {
    "id": "charlis",
@@ -1597,6 +1602,31 @@ const EQUIPE_EMBUTIDA = {
    "atualizadoEm": "2026-10-29T08:22:00-03:00",
    "genero": "F",
    "cabelo": "longo"
+  },
+  {
+   "id": "vetor",
+   "nome": "VETOR",
+   "cargo": "O gestor de tráfego",
+   "depto": "trafego",
+   "status": "ativo",
+   "fazendo": "Gestor de tráfego da Kovantu (Kusmich + BPM + Sobral, era Andromeda). Cliente ativo: Ilumine — funil Instagram → link da bio → WhatsApp no ar, anúncio VETOR 01 ativo e medindo.",
+   "tarefas": [
+    {
+     "nome": "Ilumine — funil da bio (VETOR 01)",
+     "progresso": 60
+    },
+    {
+     "nome": "Relatório semanal de tráfego",
+     "progresso": 25
+    },
+    {
+     "nome": "Novos conceitos de criativo",
+     "progresso": 40
+    }
+   ],
+   "desde": "2026-10-30",
+   "atualizadoEm": "2026-10-30T16:52:00-03:00",
+   "genero": "M"
   },
   {
    "id": "fliper",
@@ -2744,11 +2774,17 @@ K_GRID.forEach((row, r)=>{
 /* divisórias dos andares + núcleo */
 for(let f=0; f<3; f++){
   const y0 = f * FH;
-  const sideGaps = f === 0 ? [[0,3]] : [[-10,-7],[6,9]];
-  hWallX(-10, -29, 20, y0, sideGaps, f);
-  hWallX(  8, -29, 20, y0, sideGaps, f);
+  const gapsE = f === 0 ? [[0,3]] : [[-10,-7],[6,9]];
+  /* 1º andar oeste tem TRÊS salas (abuelo/tráfego/stock): três portas no corredor */
+  const gapsW = f === 1 ? [[-13,-10],[-2,1],[6,9]] : gapsE;
+  hWallX(-10, -29, 20, y0, gapsW, f);
+  hWallX(  8, -29, 20, y0, gapsE, f);
   hWallZ(-14, -9, 8, y0, [[-3,3]], -1, 'stonebrick', 4, f === 0);   // frente do núcleo (colisor único, sempre)
-  if(f > 0){
+  if(f === 1){
+    hWallZ(-10, -33, -11, y0, [[-22,-19]], f);   // abuelo | tráfego pago
+    hWallZ(  6, -33, -11, y0, [[-22,-19]], f);   // tráfego pago | stock
+    hWallZ( -4,   9,  32, y0, [[ 19, 22]], f);   // hotmart | blogs
+  } else if(f > 0){
     hWallZ(-4, -33, -11, y0, [[-22,-19]], f);
     hWallZ(-4,   9,  32, y0, [[ 19, 22]], f);
   }
@@ -2852,7 +2888,7 @@ DEPTS.forEach(d=>{
   const art = textSprite(d.emoji, { fs:120, scale:.02 }); art.position.set(L.x0 + 3.4, 2.1, L.z0 + .8); grp.add(art);
   grp.add(box(1.9,1.9,.1, lam(0xffffff), L.x0 + 3.4, 2.1, L.z0 + .35, {shadow:false}));
   /* placa do departamento ao lado da porta (lado do hall/corredor) */
-  const doorZ = d.floor === 0 ? 1.5 : (L.z1 <= -5 ? -8.5 : 7.5);
+  const doorZ = doorZOf(d);
   const ds = plateSign(d.emoji + ' ' + d.name, d.css, 6.5);
   if(L.x1 === -10){ ds.position.set(-9.44, 2.6, doorZ); ds.rotation.y = Math.PI/2; }
   else { ds.position.set(7.44, 2.6, doorZ); ds.rotation.y = -Math.PI/2; }
@@ -2914,6 +2950,28 @@ DEPTS.forEach(d=>{
     const pen = textSprite('✒️', { fs:90, scale:.016 }); pen.position.set(L.cx + 5.5, 2.3, L.cz + 3.2); P.add(pen);
     animated.push(t=>{ pen.position.y = 2.3 + Math.sin(t*1.5)*.15; });
   }
+  if(d.id === 'trafego'){
+    /* dois monitores de campanha na parede do fundo + quadro de métricas na parede do corredor */
+    const dashA = screenBox(d, 4.4, 2.1); dashA.position.set(L.cx - 3.6, 2.0, L.z0 + .75); P.add(dashA);
+    const dashB = screenBox(d, 4.4, 2.1); dashB.position.set(L.cx + 3.6, 2.0, L.z0 + .75); P.add(dashB);
+    const mc = document.createElement('canvas'); mc.width = 512; mc.height = 300;
+    { const g = mc.getContext('2d');
+      g.fillStyle = '#0d1522'; g.fillRect(0,0,512,300);
+      g.fillStyle = '#ff4fc3'; g.font = "800 32px 'Segoe UI', sans-serif"; g.textAlign = 'left';
+      g.fillText('📊 CAMPANHAS — ILUMINE', 24, 46);
+      const bars = [.35,.5,.42,.66,.8,.95];
+      bars.forEach((v,i)=>{ g.fillStyle = i === bars.length - 1 ? '#58cc02' : '#2f9fd8'; g.fillRect(36 + i*52, 248 - v*132, 36, v*132); });
+      g.strokeStyle = '#ffd94d'; g.lineWidth = 6; g.beginPath();
+      bars.forEach((v,i)=>{ const px = 54 + i*52, py = 240 - v*132; i ? g.lineTo(px,py) : g.moveTo(px,py); }); g.stroke();
+      g.fillStyle = '#e8e8e8'; g.font = "700 25px 'Segoe UI', sans-serif";
+      g.fillText('CTR ↑   CPC ↓   CONVERSAS ↑', 24, 288);
+    }
+    const mtex = new THREE.CanvasTexture(mc); mtex.encoding = THREE.sRGBEncoding;
+    const board = new THREE.Mesh(new THREE.PlaneGeometry(4.6, 2.7), new THREE.MeshBasicMaterial({ map: mtex }));
+    board.position.set(L.x1 - .62, 1.9, L.cz); board.rotation.y = -Math.PI/2; P.add(board);
+    const chart = textSprite('📈', { fs:90, scale:.016 }); chart.position.set(L.cx, 3.4, L.cz + 1); P.add(chart);
+    animated.push(t=>{ chart.position.y = 3.4 + Math.sin(t*1.6)*.14; });
+  }
   if(d.id === 'arcade'){
     const cabCols = [0x1a2440,0x2c1440,0x0e2c28], scrCols = ['#39c5ff','#ff5bd8','#3ddc84'];
     for(let i=0;i<3;i++){
@@ -2973,7 +3031,7 @@ DEPTS.forEach(d=>{
     g.fillText('QUEM FICA ONDE', 256, 58);
     const lines = [
       ['🚪 TÉRREO', '#2e7d12'], ['Hall • 🕹️ Games • 📱 Apps', '#33502c'],
-      ['1️⃣ 1º ANDAR', '#2e7d12'], ['🌿 Abuelo • 🔥 Hotmart', '#33502c'], ['🖼️ Stock IA • ✒️ Blogs', '#33502c'],
+      ['1️⃣ 1º ANDAR', '#2e7d12'], ['🌿 Abuelo • 🔥 Hotmart', '#33502c'], ['🖼️ Stock • ✒️ Blogs • 📊 Tráfego', '#33502c'],
       ['2️⃣ 2º ANDAR', '#2e7d12'], ['👑 Diretoria • 🎬 YouTube', '#33502c'], ['🔍 Prospecção • 📚 KDP', '#33502c'],
       ['☀️ COBERTURA', '#2e7d12'], ['Terraço + letreiro Kovantu', '#33502c'],
     ];
@@ -3319,14 +3377,15 @@ function buildAutoGraph(){
     } else aChain([c(16), c(8), c(3), c(-4), c(-10), `${f}:stair`]);
     for(const d of DEPTS.filter(x => x.floor === f)){
       const K = deptNodeKeys(d), side = d._L.x1 <= -10 ? -1 : 1, kind = deptDoorKind(d);
-      const doorZ = kind === 'full' ? 1.5 : kind === 'north' ? -8.5 : 7.5;
+      const doorZ = doorZOf(d);
       aNode(K.out, f, side*7, doorZ); aNode(K.cross, f, side*10.5, doorZ); aNode(K.inside, f, side*14, doorZ);
       const hub = d.id === 'diretoria' ? { x:d.x, z:d.z - 6.5 } : { x:d.x, z:d.z + .5 };
       aNode(K.center, f, hub.x, hub.z);
       aNode(K.pause, f, d.x, d._L.z1 <= -5 ? d._L.z0 + 4.8 : d._L.z1 - 4.8);
       const laneW = `${f}:${d.id}:laneW`, laneE = `${f}:${d.id}:laneE`, midN = `${f}:${d.id}:midN`, midS = `${f}:${d.id}:midS`;
       aNode(laneW, f, d.x - d.w * .28, d.z); aNode(laneE, f, d.x + d.w * .28, d.z);
-      aNode(midN, f, d.x, d.z - 6.5); aNode(midS, f, d.x, d.z + 6.5);
+      const laneOff = d.laneOff != null ? d.laneOff : 6.5;   /* salas estreitas: faixa central menor, senão a rota cruza as mesas */
+      aNode(midN, f, d.x, d.z - laneOff); aNode(midS, f, d.x, d.z + laneOff);
       if(d.id === 'diretoria'){
         /* retângulo ao redor da mesa de reunião: nada de diagonal roçando a mesa */
         const NW = `${f}:${d.id}:cNW`, NE = `${f}:${d.id}:cNE`, SW = `${f}:${d.id}:cSW`, SE = `${f}:${d.id}:cSE`;
@@ -3335,7 +3394,14 @@ function buildAutoGraph(){
         aChain([midN, NW, laneW, SW, midS]); aChain([midN, NE, laneE, SE, midS]);
       } else { aChain([K.center, laneW, midN]); aChain([K.center, laneE, midN]); aChain([laneW, midS]); aChain([laneE, midS]); }
       const corKey = f === 0 && Math.abs(doorZ - 3) < 3 ? c(3) : Math.abs(doorZ + 10) < 3 ? c(-10) : c(3);
-      aChain([corKey, K.out, K.cross, K.inside, midS]); aEdge(K.center, K.pause);
+      if(d.entryGapX != null){
+        /* salas do 1º oeste (abuelo/stock): a porta cai ao lado da fileira de mesas;
+           a entrada desce pelo vão entre as mesas (entryGapX) em vez de cortar a fileira */
+        const eg1 = `${f}:${d.id}:eg1`, eg2 = `${f}:${d.id}:eg2`;
+        aNode(eg1, f, d.entryGapX, doorZ); aNode(eg2, f, d.entryGapX, d.z + laneOff);
+        aChain([corKey, K.out, K.cross, K.inside, eg1, eg2, midS]);
+      } else aChain([corKey, K.out, K.cross, K.inside, midS]);
+      aEdge(K.center, K.pause);
       d._seats.forEach((seat, i) => {
         const key = `${f}:${d.id}:seat${i}`;
         const app = seat.rotY === Math.PI ? { x:seat.x, z:seat.z + 1.25 } : { x:seat.x, z:seat.z - 1.25 };

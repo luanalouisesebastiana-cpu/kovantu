@@ -1,6 +1,6 @@
 {
   "empresa": "Kovantu Digital",
-  "atualizadoEm": "2026-10-30T11:55:00-03:00",
+  "atualizadoEm": "2026-10-30T17:15:21-03:00",
   "equipe": [
     {
       "id": "charlis",
@@ -207,6 +207,31 @@
       "atualizadoEm": "2026-10-29T08:22:00-03:00",
       "genero": "F",
       "cabelo": "longo"
+    },
+    {
+      "id": "vetor",
+      "nome": "VETOR",
+      "cargo": "O gestor de tráfego",
+      "depto": "trafego",
+      "status": "ativo",
+      "fazendo": "Gestor de tráfego da Kovantu (Kusmich + BPM + Sobral, era Andromeda). Cliente ativo: Ilumine — funil Instagram → link da bio → WhatsApp no ar, anúncio VETOR 01 ativo e medindo.",
+      "tarefas": [
+        {
+          "nome": "Ilumine — funil da bio (VETOR 01)",
+          "progresso": 60
+        },
+        {
+          "nome": "Relatório semanal de tráfego",
+          "progresso": 25
+        },
+        {
+          "nome": "Novos conceitos de criativo",
+          "progresso": 40
+        }
+      ],
+      "desde": "2026-10-30",
+      "atualizadoEm": "2026-10-30T16:52:00-03:00",
+      "genero": "M"
     },
     {
       "id": "fliper",
