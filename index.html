@@ -85,10 +85,29 @@
   #joyKnob{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:rgba(253,254,248,.85);border:2.5px solid #2e5d23}
   #povHint{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:12;display:none;background:rgba(13,34,19,.92);border:2px solid #58cc02;color:#d7ecc6;font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:10px;white-space:nowrap}
   #povHint b{color:#8fe63f}
-  #loader{position:fixed;inset:0;background:#5d9c3f;z-index:50;display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;transition:.6s}
-  #loader .plumbob{width:44px;height:44px;background:conic-gradient(#7ec850 0 25%,#8a5f3c 0 25% 55%,#67b73c 0 55% 80%,#7a5230 0 80%);border:3px solid #2e4634;border-radius:4px;animation:spinb 1.1s steps(4) infinite;image-rendering:pixelated}
-  @keyframes spinb{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-  #loader p{color:#17301c;font-weight:800;letter-spacing:2px;font-size:13px}
+  #loader{position:fixed;inset:0;background:#5d9c3f;z-index:50;display:flex;flex-direction:column;gap:0;align-items:center;justify-content:center;transition:opacity .6s;font-family:Arial,Helvetica,sans-serif;overflow:hidden;padding:20px}
+  #loader .kv-word{display:flex;gap:clamp(6px,1.4vw,16px)}
+  #loader .kv-blk{width:clamp(44px,11vw,124px);height:clamp(44px,11vw,124px);background:#182417;border:5px solid #1B2B1A;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#58CC02;font-weight:900;font-size:clamp(22px,5.6vw,72px);opacity:0;animation:kvdrop .5s cubic-bezier(.28,.84,.42,1) forwards,kvglow 1.6s 2.4s infinite;position:relative}
+  #loader .kv-blk::before{content:"";position:absolute;top:5px;left:8px;right:8px;height:14%;background:#344A32;border-radius:3px}
+  #loader .kv-blk:nth-child(1){animation-delay:.25s,.25s}
+  #loader .kv-blk:nth-child(2){animation-delay:.52s,.52s}
+  #loader .kv-blk:nth-child(3){animation-delay:.79s,.79s}
+  #loader .kv-blk:nth-child(4){animation-delay:1.06s,1.06s}
+  #loader .kv-blk:nth-child(5){animation-delay:1.33s,1.33s}
+  #loader .kv-blk:nth-child(6){animation-delay:1.60s,1.60s}
+  #loader .kv-blk:nth-child(7){animation-delay:1.87s,1.87s}
+  @keyframes kvdrop{0%{transform:translateY(-50vh);opacity:0}15%{opacity:1}70%{transform:translateY(6px)}85%{transform:translateY(-4px)}100%{transform:translateY(0);opacity:1}}
+  @keyframes kvglow{0%,100%{box-shadow:0 0 0 0 rgba(150,235,95,0)}50%{box-shadow:0 0 0 3px rgba(150,235,95,.85)}}
+  #loader .kv-ground{width:min(92vw,1060px);height:6px;background:#1B2B1A;border-radius:3px;animation:kvgrow .4s ease-out both;transform-origin:center}
+  @keyframes kvgrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  #loader .kv-digital{margin-top:30px;color:#1B2B1A;font-weight:800;letter-spacing:26px;text-indent:26px;font-size:clamp(14px,2.6vw,30px);opacity:0;animation:kvfadeUp .5s 2.5s forwards}
+  #loader .kv-msg{margin-top:56px;color:#1B2B1A;font-weight:800;letter-spacing:2px;font-size:clamp(13px,2.2vw,25px);opacity:0;animation:kvfadeUp .5s .7s forwards}
+  #loader .kv-dots::after{content:"";animation:kvdots 1.2s steps(4) infinite}
+  @keyframes kvdots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+  @keyframes kvfadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  #loader .kv-bar{margin-top:18px;width:min(420px,80vw);height:10px;border:3px solid #1B2B1A;border-radius:6px;overflow:hidden;opacity:0;animation:kvfadeUp .5s .8s forwards}
+  #loader .kv-bar i{display:block;height:100%;width:0;background:#1B2B1A;animation:kvfill 2.9s .8s cubic-bezier(.22,.8,.36,1) forwards}
+  @keyframes kvfill{to{width:100%}}
   @media(max-width:760px){ .stats{display:none} #hint{display:none} #panel{bottom:118px} #actions{top:80px} #actions button{min-height:44px} #floors{top:auto;bottom:238px} #floors button{padding:6px 10px;font-size:11.5px;min-height:44px} #povHint{white-space:normal;max-width:94vw;text-align:center} }
 </style>
 </head>
@@ -96,8 +115,9 @@
 <script>
 window.__kovStarted = false;
 function __kovShowErr(msg){
-  var l = document.getElementById('loader'); if(!l) return;
-  l.style.opacity = 1;
+  var l = document.getElementById('loader');
+  if(!l){ l = document.createElement('div'); l.id = 'loader'; document.body.appendChild(l); }
+  l.style.opacity = 1; l.style.visibility = 'visible'; l.style.pointerEvents = 'auto';
   l.innerHTML = '<div style="max-width:520px;padding:22px;background:#fdfef8;border:3px solid #c0392b;border-radius:16px;color:#5b1a12;font-family:sans-serif">'
     + '<div style="font-weight:900;font-size:17px;margin-bottom:8px">\u26A0\uFE0F A sede trope\u00E7ou num erro</div>'
     + '<div style="font-size:13px;line-height:1.5;word-break:break-word">' + msg + '</div>'
@@ -108,7 +128,13 @@ window.addEventListener('unhandledrejection', function(e){ __kovShowErr('Promise
 setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3o deu sinal em 10 segundos. Feche e abra o arquivo de novo; se repetir, manda print pro Titiku.'); }, 10000);
 </script>
 <div id="scene"></div>
-<div id="loader"><div class="plumbob"></div><p>LEVANTANDO A TORRE KOVANTU…</p></div>
+<div id="loader">
+  <div class="kv-word"><div class="kv-blk">K</div><div class="kv-blk">O</div><div class="kv-blk">V</div><div class="kv-blk">A</div><div class="kv-blk">N</div><div class="kv-blk">T</div><div class="kv-blk">U</div></div>
+  <div class="kv-ground"></div>
+  <div class="kv-digital">DIGITAL</div>
+  <div class="kv-msg">LEVANTANDO A TORRE<span class="kv-dots"></span></div>
+  <div class="kv-bar"><i></i></div>
+</div>
 
 <div id="hud">
   <div class="brand">
@@ -1349,7 +1375,7 @@ const deptById = id => DEPTS.find(d=> d.id === id);
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-29.6';
+const PAGE_VERSION = '2026-10-30.1';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -1775,7 +1801,7 @@ let UI_READY = false;
 let selectedPersonId = null;
 let __bindPlayer = null;
 const roster = new Map();   /* id -> { rec, obj, seatIdx } */
-const LIVE = { on:false, atualizadoEm:null };
+const LIVE = { on:false, atualizadoEm:null, resolved:false };
 
 function hashId(s){ let h = 7; for(let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
 function firstName(n){ return String(n || '').split(' ')[0].replace('“', ''); }
@@ -1917,6 +1943,7 @@ async function pollEquipe(){
     const j = await r.json();
     if(applyEquipe(j, 'live')) setLive(true, j.atualizadoEm);
   }catch(err){ setLive(false); }
+  LIVE.resolved = true;   /* pro loader: dados resolvidos (vivo OU fallback arquivo) */
   checkVersion(); /* a cada ciclo, junto do polling (não bloqueia: é async) */
 }
 
@@ -2199,6 +2226,82 @@ function groundYAt(x, z, curY){
   let best = curY, bd = 1.3;
   for(const c of cands){ const d = Math.abs(c - curY); if(d < bd){ bd = d; best = c; } }
   return best;
+}
+
+/* ============ CÂMERA DE 3ª PESSOA: onde ela PODE ficar ============
+   Causa do bug "subo as escadas e a câmera quebra" (prints do dono, 30/out):
+   a pose da câmera era um braço fixo de 7,5 com colisão SÓ em XZ (collide) e
+   piso de altura ABSOLUTO (0,9). No poço da escada o braço atravessava os
+   degraus (tela 100% madeira), parava do lado de fora da parede do núcleo
+   (jogador escondido) e, com o pitch pra baixo no meio do lance, despencava
+   pro tornozelo do andar de baixo (o "mar de piso xadrez" do print 2) —
+   enquanto a projeção (NDC) seguia "enquadrada": matemática ≠ visibilidade. */
+function surfacesAt(x, z){
+  const inB = x >= BLD.x0 && x <= BLD.x1 + 1 && z >= BLD.z0 && z <= BLD.z1 + 1;
+  const out = [0];
+  if(inB) out.push(5, 10, 15);
+  if(inShaft(x, z)){
+    const inWest = x >= -8 && x < -1 && z >= -21 && z <= -16;
+    const inLand = x >= -8 && x <= 1 && z >= -28 && z < -21;
+    const inEast = x > 1 && x <= 7 && z >= -24 && z <= -19;
+    for(let s=0; s<3; s++){
+      const b = s * FH;
+      if(inWest) out.push(b + (-16 - z) * 0.5);
+      if(inLand) out.push(b + 2.5);
+      if(inEast) out.push(b + 2.5 + (z + 24) * 0.5);
+      if(x >= 1 && x <= 7 && z > -19 && z <= -14) out.push(b + FH);
+    }
+  }
+  return out;
+}
+/* um ponto é LIVRE pra câmera se não estiver: abaixo dos pés do jogador,
+   abaixo do piso local, dentro de parede/móvel (na faixa de altura daquele
+   andar) ou dentro da laje/degrau logo acima do jogador */
+function camFree(x, y, z){
+  if(!player) return true;
+  const py = player.position.y;
+  if(y < py + .3) return false;
+  if(y < groundYAt(x, z, py) + .35) return false;
+  const floors = activeFloors();
+  for(const c of colliders){
+    if(c.floor !== -1 && !floors.has(c.floor)) continue;
+    if(x > c.x0 - .3 && x < c.x1 + .3 && z > c.z0 - .3 && z < c.z1 + .3){
+      const b0 = c.floor === -1 ? -.2 : c.floor * FH - .2;
+      const b1 = c.floor === -1 ? 19.4 : c.floor * FH + 4.2;
+      if(y > b0 && y < b1) return false;
+    }
+  }
+  const shaft = inShaft(x, z);
+  for(const s of surfacesAt(x, z)){
+    /* dentro do vão da escada a laje plana NÃO é teto: o corte de andares a
+       esconde e os lances de cima é que mandam — sem essa exceção a marcha
+       travava no patamar e a câmera caía pro fallback dentro da cabeça */
+    if(shaft && (s === 5 || s === 10 || s === 15)) continue;
+    if(s > py + 1.6 && y > s - 1.05 && y < s + .05) return false;
+  }
+  return true;
+}
+/* encurta o braço: marcha da cabeça do jogador até o alvo e para no último
+   ponto livre — a câmera se aproxima em vez de atravessar a geometria */
+function clampCamPos(p){
+  if(!player) return p;
+  const head = new THREE.Vector3(player.position.x, player.position.y + 1.62, player.position.z);
+  const dir = p.clone().sub(head);
+  const len = dir.length();
+  if(len < .01) return p;
+  dir.divideScalar(len);
+  let last = head.clone().addScaledVector(dir, Math.min(.35, len));
+  if(!camFree(last.x, last.y, last.z)){
+    /* nem colado ele pode ficar: sobe meio metro — vê o jogador de cima,
+       em vez da tela preta de dentro da cabeça */
+    return head.clone().add(new THREE.Vector3(0, .5, 0));
+  }
+  for(let d = .55; d <= len; d += .2){
+    const q = head.clone().addScaledVector(dir, d);
+    if(!camFree(q.x, q.y, q.z)) break;
+    last = q;
+  }
+  return last;
 }
 
 /* ============ HELPERS DE TEXTO / CAIXAS ============ */
@@ -3172,11 +3275,13 @@ function povCamPose(){
   const cp = Math.cos(pov.pitch), sp2 = Math.sin(pov.pitch);
   const cxp = player.position.x + Math.sin(pov.yaw) * cp * pov.dist;
   const czp = player.position.z + Math.cos(pov.yaw) * cp * pov.dist;
-  const cyp = Math.max(.9, headY + sp2 * pov.dist);
+  /* piso da câmera RELATIVO ao jogador: com pitch pra baixo ela parava em
+     0,9 ABSOLUTO — tornozelo de outro andar, o "mar de piso" dos prints */
+  const cyp = Math.max(player.position.y + .5, headY + sp2 * pov.dist);
   /* anti-clip: a câmera desliza nas paredes/móveis em vez de atravessá-los */
   const [ccx, ccz] = collide(cxp, czp, .35, activeFloors());
   const cyF = Math.max(cyp, groundYAt(ccx, ccz, player.position.y) + .4);
-  return new THREE.Vector3(ccx, cyF, ccz);
+  return clampCamPos(new THREE.Vector3(ccx, cyF, ccz));
 }
 function snapPovCam(){
   if(!player || pov.first) return;
@@ -3198,6 +3303,7 @@ function povTick(dt){
     /* lerp corrigido pelo tempo (não pelo nº de frames) */
     const k = 1 - Math.pow(.65, Math.max(1, dt * 60));
     camera.position.lerp(povCamPose(), k);
+    camera.position.copy(clampCamPos(camera.position));   // o lerp corta caminho reto: revalida o ponto final
     camera.lookAt(player.position.x, headY - .15, player.position.z);
   }
   if(selectedDept !== DEPTS[0]) selectedDept = DEPTS[0];
@@ -3343,6 +3449,26 @@ addEventListener('touchmove', e=>{
 }, { passive:false });
 addEventListener('gesturestart', e=>{ if(pov.on) e.preventDefault(); });
 
+/* ============ ABERTURA KOVANTU (loader dos blocos) ============
+   Sai quando: cena renderizou (1º frame) + dados resolvidos (vivo ou
+   fallback) + mínimo de 2,4s na tela (a palavra KOVANTU monta inteira).
+   FAILSAFE independente: some aos 6s de qualquer jeito — nunca tela presa.
+   Toque/clique depois do mínimo pula a espera. */
+let loaderSceneReady = false, loaderHidden = false;
+function hideLoader(){
+  if(loaderHidden) return; loaderHidden = true;
+  const l = document.getElementById('loader'); if(!l) return;
+  l.style.opacity = '0'; l.style.pointerEvents = 'none';
+  setTimeout(()=>{ l.style.visibility = 'hidden'; }, 700);
+}
+function loaderGate(){
+  if(loaderHidden) return;
+  if(loaderSceneReady && LIVE.resolved && performance.now() >= 2400) hideLoader();
+}
+setInterval(loaderGate, 150);
+setTimeout(hideLoader, 6000);
+document.getElementById('loader').addEventListener('click', ()=>{ if(performance.now() >= 2400) hideLoader(); });
+
 /* ============ LOOP ============ */
 let firstFrame = true;
 window.__kovStarted = true;
@@ -3359,7 +3485,7 @@ renderer.setAnimationLoop(()=>{
     controls.update();
   }
   renderer.render(scene, camera);
-  if(firstFrame){ firstFrame = false; const l = document.getElementById('loader'); l.style.opacity = 0; setTimeout(()=>l.remove(), 650);
+  if(firstFrame){ firstFrame = false; loaderSceneReady = true; loaderGate();
     setTimeout(()=>{ selectDept(DEPTS[0], false, false); toast('🏢 Torre Kovantu pronta: ' + people.length + ' pessoas em 3 andares + cobertura'); }, 500); }
 });
 addEventListener('resize', ()=>{ camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
@@ -3371,6 +3497,7 @@ window.__KOV = { THREE, scene, camera, renderer, controls, DEPTS, people, roster
   live: ()=>({ on: LIVE.on, atualizadoEm: LIVE.atualizadoEm, count: roster.size }),
   PAGE_VERSION, checkVersion,
   collide:(x, z, r)=> collide(x, z, r, new Set([0,1,2,3])),
+  camFree:(x, y, z)=> camFree(x, y, z), clampCamPos:(v)=> clampCamPos(v), surfacesAt:(x, z)=> surfacesAt(x, z),
   view:()=>({ mode: viewMode, cut: cutFloor }),
   stats:{ blocks: vox.size, voxelFaces, people: people.length, clickables: clickables.length, colliders: colliders.length, bucketFaces } };
 
