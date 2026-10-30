@@ -1375,7 +1375,7 @@ const deptById = id => DEPTS.find(d=> d.id === id);
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-30.2';
+const PAGE_VERSION = '2026-10-30.3';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -2047,6 +2047,7 @@ function spawnPerson(rec){
   }
   floorGroups[d.floor].add(p);
   people.push(p);
+  initAutonomy(p, rec, d, seat);
   registerPersonClick(p, rec, d);
   roster.set(rec.id, { rec, obj: p, seatIdx: idx });
   if(u.labelObj && window.__cutView && !window.__pov && d.floor === window.__cutFloor) u.labelObj.material.depthTest = false;
@@ -3167,77 +3168,453 @@ const plumbob = box(.34,.34,.34, new THREE.MeshLambertMaterial({ color:0x58cc02,
 scene.add(plumbob);
 let selectedDept = DEPTS[0];
 
-/* balõezinhos de pensamento */
-function showBubble(p){
-  const list = p.userData.dept.bubble; const emo = list[Math.floor(Math.random()*list.length)];
-  if(p.userData.bubbleSprite){ p.remove(p.userData.bubbleSprite); p.userData.bubbleSprite.material.map.dispose(); p.userData.bubbleSprite.material.dispose(); }
-  const sp = textSprite(emo, { fs:64, bg:'rgba(253,254,248,0.95)', scale:.013 });
-  sp.position.set(.55, 2.85, 0); p.add(sp); p.userData.bubbleSprite = sp; p.userData.bubbleShow = 2.4;
+/* balõezinhos de fala/opinião */
+function clearSpeech(p){
+  const u = p.userData;
+  if(u.bubbleSprite){ p.remove(u.bubbleSprite); u.bubbleSprite.material.map.dispose(); u.bubbleSprite.material.dispose(); u.bubbleSprite = null; }
+  u.bubbleShow = 0;
+}
+function showSpeech(p, text, dur = 3.4){
+  const u = p.userData; if(!text) return;
+  clearSpeech(p);
+  const sp = textSprite(text, { fs:34, color:'#17301c', bg:'rgba(253,254,248,0.96)', scale:.0082 });
+  if(sp.scale.x > 5.6){ const k = 5.6 / sp.scale.x; sp.scale.x = 5.6; sp.scale.y *= k; }
+  sp.position.set(0, 2.88, 0); sp.renderOrder = 80; sp.material.depthTest = false;
+  p.add(sp); u.bubbleSprite = sp; u.bubbleShow = dur; u.lastSpeech = text; u.lastSpeechAt = autoNow;
+  u.recentPhrases = u.recentPhrases || []; u.recentPhrases.push(text); if(u.recentPhrases.length > 7) u.recentPhrases.shift();
+}
+function showBubble(p){ showSpeech(p, (p.userData.dept.bubble || ['💭'])[Math.floor(Math.random()*((p.userData.dept.bubble || ['💭']).length))], 2.2); }
+
+/* ============ AUTONOMIA DOS FUNCIONÁRIOS ============
+   Cada NPC tem rotina própria: trabalha, conversa, pausa, circula, visita
+   outro depto e (com trava global) viaja pela escada. A navegação usa uma
+   grade de waypoints por andar (corredor, portas, salas e lances da escada)
+   com BFS; o movimento valida o chão com groundYAt e os colisores com
+   collide(), como o jogador. Decisões acontecem em intervalos — o laço por
+   frame só move/anima. */
+let autoNow = 0;
+const clock3 = new THREE.Clock();
+const AUTO = { travelers: 0, violations: 0, greetings: 0, conversations: 0, trips: 0, activeSpeeches: 0 };
+const AUTO_OPINIONS = {
+  generic: ['acho que hoje a casa rende', 'pra mim, foco resolve quase tudo', 'essa semana tá puxada, mas boa', 'alguém mais quer café?', 'gostei do ritmo de hoje', 'pra mim, prova vale mais que promessa', 'a Torre tá ficando bonita', 'hoje eu tô inspirado'],
+  diretoria: ['aprovação boa evita retrabalho', 'pra mim, prioridade é receita', 'decisão sem prova não anda', 'a casa tá crescendo organizada'],
+  abuelo: ['a pauta de hoje tá forte', 'remédio natural pede cuidado', 'o Abuelo fala com carinho', 'acho o espanhol da casa bonito'],
+  hotmart: ['esse funil tá quase lá, falta a primeira venda', 'pra mim, oferta clara vende melhor', 'o hub precisa ficar redondo', 'primeira venda muda o jogo'],
+  stock: ['imagem boa se vende sozinha', 'pra mim, lote pequeno testa melhor', 'o olhar da capa importa muito', 'IA boa é IA revisada'],
+  blogs: ['artigo bom envelhece bem', 'pra mim, constância vence pressa', 'a pauta de hoje tá forte', 'SEO é paciência e método'],
+  arcade: ['pra mim o próximo jogo tinha que ser de corrida', 'jogo bom testa no dedo', 'vinte jogos é meta séria', 'portal certo muda a receita'],
+  youtube: ['a pauta de hoje tá forte', 'pra mim, retenção manda no vídeo', 'título e capa são meio vídeo', 'canal dark pede constância'],
+  kdp: ['livro parado não vende', 'pra mim, capa manda na prateleira'],
+  apps: ['app bom prova no aparelho', 'pra mim, teste evita vergonha', 'fila andando, chefe feliz', 'cada app é um produto'],
+  farejador: ['tem oportunidade escondida aí', 'pra mim, ROI decide a fila', 'radar ligado o dia todo', 'novidade boa aparece cedo'],
+};
+function autoRand(u){
+  u.rngState = ((u.rngState || (hashId(u.personId || u.name || 'npc') + 17)) * 1664525 + 1013904223) >>> 0;
+  return u.rngState / 4294967296;
+}
+function autoPick(u, arr){ return arr[Math.floor(autoRand(u) * arr.length) % arr.length]; }
+function setNPCYaw(p, a){
+  p.rotation.set(0, a, 0); p.quaternion.set(0, Math.sin(a/2), 0, Math.cos(a/2)); p.rotation.set(0, a, 0);
+}
+function simActivity(p){
+  const u = p && p.userData; if(!u) return '—';
+  if(u.player) return '🚶 andando pela sede (é você!)';
+  if(u.mode === 'sleep') return '💤 dormindo no sofá';
+  return u.activity || '💻 trabalhando na mesa';
+}
+function phraseFor(u, kind, partner){
+  const rec = (roster.get(u.personId) || {}).rec || {};
+  const tasks = normTarefas(rec.tarefas || []), task = tasks.length ? tasks[Math.floor(autoRand(u)*tasks.length)][0] : '';
+  let pool = [];
+  if(kind === 'conversa'){
+    pool = [`${partner ? firstName(partner) + ', ' : ''}olha isso comigo?`, task ? `tô fechando ${task.toLowerCase()}` : 'tô fechando uma etapa aqui', 'boa, isso destrava meu lado', 'concordo, vamos por esse caminho', 'me ajuda a revisar isso?', 'isso aqui tá ficando bom', 'fechou, me avisa', 'isso me ajuda muito', 'bora alinhar isso agora', 'boa ideia, gostei'];
+  } else if(kind === 'pausa') pool = ['só um café e volto', 'pausa rápida pra cabeça respirar', 'olhando a vista um minuto', 'já volto pra mesa', 'respirando um pouco aqui', 'cinco minutos e volto', 'esticando as pernas um pouco', 'pausa curta e volto voando'];
+  else {
+    pool = [...(AUTO_OPINIONS[u.homeDeptId] || []), ...AUTO_OPINIONS.generic];
+    if(task && autoRand(u) < .35) pool.push(`acho que ${task.toLowerCase()} merece prioridade`, `pra mim, ${task.toLowerCase()} tá no caminho`);
+  }
+  const recent = u.recentPhrases || [];
+  const fresh = pool.filter(x => !recent.includes(x));
+  return autoPick(u, fresh.length ? fresh : pool);
+}
+function maybeSpeak(p, kind, partner, force = false){
+  const u = p.userData;
+  if(!force && (autoNow < (u.nextSpeechAt || 0) || AUTO.activeSpeeches >= 4)) return;
+  showSpeech(p, phraseFor(u, kind, partner), kind === 'conversa' ? 4.2 : 3.4);
+  u.nextSpeechAt = autoNow + 13 + autoRand(u)*18;
 }
 
-/* ============ COMPORTAMENTO DAS PESSOAS ============ */
-const clock3 = new THREE.Clock();
-function wanderTarget(p){
-  const L = p.userData.dept._L;
-  return new THREE.Vector3(L.x0 + 3.4 + Math.random() * (L.w - 6.8), p.userData.baseY, L.z0 + 3.8 + Math.random() * (L.d - 7.6));
+/* ----- grade caminhável ----- */
+const AUTO_NODES = new Map(), AUTO_EDGES = new Map();
+function aNode(key, f, x, z){ if(!AUTO_NODES.has(key)) AUTO_NODES.set(key, { key, f, x, z }); return AUTO_NODES.get(key); }
+function aEdge(a, b){ if(!AUTO_EDGES.has(a)) AUTO_EDGES.set(a, new Set()); if(!AUTO_EDGES.has(b)) AUTO_EDGES.set(b, new Set()); AUTO_EDGES.get(a).add(b); AUTO_EDGES.get(b).add(a); }
+function aChain(keys){ for(let i=1;i<keys.length;i++) aEdge(keys[i-1], keys[i]); }
+function deptDoorKind(d){
+  if(d.floor === 0) return 'full';
+  return d._L.z1 <= -5 ? 'north' : 'south';
 }
+function deptNodeKeys(d){
+  const side = d._L.x1 <= -10 ? 'w' : 'e', kind = deptDoorKind(d), pre = `${d.floor}:${d.id}`;
+  return { center:`${pre}:center`, pause:`${pre}:pause`, out:`${pre}:out`, cross:`${pre}:cross`, inside:`${pre}:in` };
+}
+function buildAutoGraph(){
+  if(AUTO_NODES.size) return;
+  for(let f=0; f<3; f++){
+    const c = z => `${f}:cor:${z}`;
+    [16,8,3,-4,-10].forEach(z => aNode(c(z), f, 0, z));
+    aNode(`${f}:stair`, f, 0, -15.3);
+    if(f === 0){
+      aNode(`${f}:hallE`, f, 6.2, 12.5); aNode(`${f}:hallE2`, f, 6.2, 8);
+      aChain([c(16), `${f}:hallE`, `${f}:hallE2`, c(8), c(3), c(-4), c(-10), `${f}:stair`]);
+    } else aChain([c(16), c(8), c(3), c(-4), c(-10), `${f}:stair`]);
+    for(const d of DEPTS.filter(x => x.floor === f)){
+      const K = deptNodeKeys(d), side = d._L.x1 <= -10 ? -1 : 1, kind = deptDoorKind(d);
+      const doorZ = kind === 'full' ? 1.5 : kind === 'north' ? -8.5 : 7.5;
+      aNode(K.out, f, side*7, doorZ); aNode(K.cross, f, side*10.5, doorZ); aNode(K.inside, f, side*14, doorZ);
+      const hub = d.id === 'diretoria' ? { x:d.x, z:d.z - 6.5 } : { x:d.x, z:d.z + .5 };
+      aNode(K.center, f, hub.x, hub.z);
+      aNode(K.pause, f, d.x, d._L.z1 <= -5 ? d._L.z0 + 4.8 : d._L.z1 - 4.8);
+      const laneW = `${f}:${d.id}:laneW`, laneE = `${f}:${d.id}:laneE`, midN = `${f}:${d.id}:midN`, midS = `${f}:${d.id}:midS`;
+      aNode(laneW, f, d.x - d.w * .28, d.z); aNode(laneE, f, d.x + d.w * .28, d.z);
+      aNode(midN, f, d.x, d.z - 6.5); aNode(midS, f, d.x, d.z + 6.5);
+      if(d.id === 'diretoria'){
+        /* retângulo ao redor da mesa de reunião: nada de diagonal roçando a mesa */
+        const NW = `${f}:${d.id}:cNW`, NE = `${f}:${d.id}:cNE`, SW = `${f}:${d.id}:cSW`, SE = `${f}:${d.id}:cSE`;
+        aNode(NW, f, d.x - d.w * .28, d.z - 6.5); aNode(NE, f, d.x + d.w * .28, d.z - 6.5);
+        aNode(SW, f, d.x - d.w * .28, d.z + 6.5); aNode(SE, f, d.x + d.w * .28, d.z + 6.5);
+        aChain([midN, NW, laneW, SW, midS]); aChain([midN, NE, laneE, SE, midS]);
+      } else { aChain([K.center, laneW, midN]); aChain([K.center, laneE, midN]); aChain([laneW, midS]); aChain([laneE, midS]); }
+      const corKey = f === 0 && Math.abs(doorZ - 3) < 3 ? c(3) : Math.abs(doorZ + 10) < 3 ? c(-10) : c(3);
+      aChain([corKey, K.out, K.cross, K.inside, midS]); aEdge(K.center, K.pause);
+      d._seats.forEach((seat, i) => {
+        const key = `${f}:${d.id}:seat${i}`;
+        const app = seat.rotY === Math.PI ? { x:seat.x, z:seat.z + 1.25 } : { x:seat.x, z:seat.z - 1.25 };
+        aNode(key, f, app.x, app.z); aEdge(seat.z < d.z ? midN : midS, key); d._seatNode = d._seatNode || {}; d._seatNode[i] = key;
+      });
+    }
+    /* lances da escada deste andar pro próximo */
+    if(f < 2){
+      const pts = [ [`${f}:stair`,0,-15.3,f], [`s${f}:w0`,-4.5,-15.3,f], [`s${f}:w1`,-4.5,-18,f], [`s${f}:w2`,-4.5,-21.5,f],
+        [`s${f}:lw`,-4.5,-25.6,f], [`s${f}:le`,4,-25.6,f], [`s${f}:e1`,4,-23,f], [`s${f}:e2`,4,-20,f], [`s${f}:e3`,4,-16.8,f],
+        [`s${f}:arr`,4,-15.3,f], [`${f+1}:stair`,0,-15.3,f+1] ];
+      pts.forEach(([k,x,z,ff]) => aNode(k, ff, x, z)); aChain(pts.map(x => x[0]));
+    }
+  }
+}
+function nearestAutoKey(p){
+  const u = p.userData, f = u.currentFloor;
+  const d = deptById(u.homeDeptId);
+  const insideHome = d && p.position.x >= d._L.x0 && p.position.x < d._L.x1 && p.position.z >= d._L.z0 && p.position.z < d._L.z1 && f === d.floor;
+  if(inShaft(p.position.x, p.position.z)) return `${Math.min(2, Math.max(0, Math.round(p.position.y / FH)))}:stair`;
+  if(insideHome) return deptNodeKeys(d).center;
+  if(p.position.x >= -9 && p.position.x <= 8 && p.position.z >= -15 && p.position.z <= 20){
+    const zs = [16,8,3,-4,-10]; let best = zs[0], bd = 1e9;
+    for(const z of zs){ const dd = Math.abs(z - p.position.z); if(dd < bd){ bd = dd; best = z; } }
+    return `${f}:cor:${best}`;
+  }
+  /* dentro de outro depto (visita): sai pelo centro dele */
+  const host = DEPTS.find(x => x.floor === f && p.position.x >= x._L.x0 && p.position.x < x._L.x1 && p.position.z >= x._L.z0 && p.position.z < x._L.z1);
+  return host ? deptNodeKeys(host).center : `${f}:cor:3`;
+}
+function findRoute(p, targetKey, finalPoint){
+  buildAutoGraph();
+  const startKey = nearestAutoKey(p);
+  if(!AUTO_NODES.has(startKey) || !AUTO_NODES.has(targetKey)) return null;
+  const prev = new Map([[startKey, null]]), q = [startKey];
+  while(q.length){
+    const cur = q.shift(); if(cur === targetKey) break;
+    for(const nx of (AUTO_EDGES.get(cur) || [])) if(!prev.has(nx)){ prev.set(nx, cur); q.push(nx); }
+  }
+  if(!prev.has(targetKey)) return null;
+  const keys = []; let cur = targetKey; while(cur){ keys.push(cur); cur = prev.get(cur); } keys.reverse();
+  const pts = keys.map(k => { const n = AUTO_NODES.get(k); return { x:n.x, z:n.z, f:n.f, key:k }; });
+  if(finalPoint) pts.push({ x:finalPoint.x, z:finalPoint.z, f:finalPoint.f != null ? finalPoint.f : (pts.length ? pts[pts.length-1].f : p.userData.currentFloor) });
+  /* não volta pro ponto onde já está */
+  while(pts.length > 1 && Math.hypot(pts[0].x - p.position.x, pts[0].z - p.position.z) < .3) pts.shift();
+  return pts;
+}
+function seatApproachPoint(seat){ return seat.rotY === Math.PI ? { x:seat.x, z:seat.z + 1.25 } : { x:seat.x, z:seat.z - 1.25 }; }
+function workPointOf(e){
+  const u = e.obj.userData;
+  return { key: (deptById(u.homeDeptId)._seatNode || {})[e.seatIdx], point: u.workMode === 'sit' ? seatApproachPoint(u.seat) : null, anchor: u.workAnchor };
+}
+function startRoute(p, dest, label){
+  const u = p.userData;
+  const route = findRoute(p, dest.key, dest.point || null);
+  if(!route || !route.length){ return false; }
+  u.route = route; u.routeIdx = 0; u.mode = 'walk'; u.state = 'walk'; u.onArrive = dest.onArrive || null;
+  u.activity = label; u.stuckT = 0; u.blockedT = 0; u.tripFloorChange = dest.key.includes(':stair') || route.some(pt => pt.f !== u.currentFloor);
+  if(u.tripFloorChange) AUTO.trips++;
+  return true;
+}
+function goWork(p, label){
+  const e = roster.get(p.userData.personId); if(!e) return false;
+  const w = workPointOf(e), u = p.userData;
+  const arrive = () => {
+    if(u.workMode === 'sit' && u.seat){ p.position.set(u.seat.x, u.homeFloor * FH, u.seat.z); setNPCYaw(p, u.seat.rotY); }
+    else if(u.workMode === 'stand'){ p.position.set(u.workAnchor.x, u.homeFloor * FH, u.workAnchor.z); if(u.seat) setNPCYaw(p, u.seat.rotY); }
+    if(u.isTraveler){ u.isTraveler = false; AUTO.travelers = Math.max(0, AUTO.travelers - 1); }
+    enterWork(p, 0);
+  };
+  if(Math.hypot(p.position.x - u.workAnchor.x, p.position.z - u.workAnchor.z) < .45 && u.currentFloor === u.homeFloor){ arrive(); return true; }
+  return startRoute(p, { key: w.key || deptNodeKeys(deptById(u.homeDeptId)).center, point: u.workMode === 'sit' ? { x:u.seat.x, z:u.seat.z, f:u.homeFloor } : { x:u.workAnchor.x, z:u.workAnchor.z, f:u.homeFloor }, onArrive: arrive }, label || '🚶 voltando pra mesa');
+}
+function workDuration(u){
+  const c = u.comportamento || '';
+  if(u.personId === 'charlis') return 17 + autoRand(u)*16;
+  if(c === 'focado') return 19 + autoRand(u)*16;
+  if(c === 'agitado' || c === 'empe') return 6 + autoRand(u)*8;
+  return 9 + autoRand(u)*14;
+}
+function enterWork(p, scale = 1){
+  const u = p.userData;
+  u.mode = 'work'; u.state = u.workMode === 'sit' ? 'sit' : 'stand'; u.route = null; u.onArrive = null;
+  u.workT = workDuration(u) * scale; u.activity = '💻 trabalhando na mesa';
+  u.body.position.y = u.workMode === 'sit' ? -.26 : 0;
+}
+function choosePartner(u){
+  const peers = [];
+  for(const e of roster.values()){
+    const o = e.obj, ou = o.userData;
+    if(e.rec.id === u.personId || ou.player || ou.mode === 'sleep' || ou.autonomyDisabled) continue;
+    if(e.rec.depto === u.homeDeptId && ou.currentFloor === u.currentFloor && !ou.reservedFor && (ou.mode === 'work' || ou.mode === 'pause')) peers.push(e);
+  }
+  return peers.length ? peers[Math.floor(autoRand(u)*peers.length)] : null;
+}
+function startConversation(p, partnerE){
+  const u = p.userData, po = partnerE.obj, pu = po.userData;
+  let anchor;
+  if(pu.mode === 'work' && pu.workMode === 'sit' && pu.seat) anchor = seatApproachPoint(pu.seat);
+  else { const dd = Math.max(1, Math.hypot(p.position.x - po.position.x, p.position.z - po.position.z));
+         anchor = { x:po.position.x + (p.position.x - po.position.x) / dd * 1.15, z:po.position.z + (p.position.z - po.position.z) / dd * 1.15 }; }
+  const face = pu.mode === 'work' && pu.workMode === 'sit' && pu.seat ? (pu.seat.rotY === Math.PI ? 0 : Math.PI) : null;
+  pu.reservedFor = u.personId;
+  const begin = () => {
+    if(Math.hypot(po.position.x - p.position.x, po.position.z - p.position.z) > 2.6 && !u.partnerRetried){
+      u.partnerRetried = true;
+      const a2 = pu.mode === 'work' && pu.workMode === 'sit' && pu.seat ? seatApproachPoint(pu.seat) : { x:po.position.x, z:po.position.z };
+      startRoute(p, { key: deptNodeKeys(deptById(pu.homeDeptId)).center, point:{ x:a2.x, z:a2.z, f:pu.currentFloor }, onArrive: begin }, `🚶 indo conversar com ${firstName(partnerE.rec.nome)}`);
+      return;
+    }
+    pu.reservedFor = null;
+    u.mode = 'converse'; u.state = 'stand'; u.activity = `💬 conversando com ${firstName(partnerE.rec.nome)}`;
+    u.converseT = 5.5 + autoRand(u)*3; u.partnerId = partnerE.rec.id;
+    if(face != null) setNPCYaw(p, face); else setNPCYaw(p, Math.atan2(po.position.x - p.position.x, po.position.z - p.position.z));
+    pu.resumeMode = pu.mode; pu.mode = 'converse'; pu.state = 'stand'; pu.activity = `💬 conversando com ${firstName((roster.get(u.personId)||{}).rec?.nome || u.name)}`;
+    pu.converseT = u.converseT; pu.partnerId = u.personId; pu.route = null;
+    setNPCYaw(po, Math.atan2(p.position.x - po.position.x, p.position.z - po.position.z));
+    AUTO.conversations++;
+    showSpeech(p, phraseFor(u, 'conversa', partnerE.rec.nome), 4.4); u.nextSpeechAt = autoNow + 16;
+    u.replyAt = autoNow + 2.6; u.replyPartner = partnerE.rec.id;
+  };
+  const d = deptById(u.homeDeptId);
+  return startRoute(p, { key: deptNodeKeys(d).center, point: { x:anchor.x, z:anchor.z, f:pu.currentFloor }, onArrive: begin }, `🚶 indo conversar com ${firstName(partnerE.rec.nome)}`);
+}
+function decide(p){
+  const u = p.userData;
+  if(u.mode !== 'work' || u.player || u.autonomyDisabled) return;
+  const roll = autoRand(u);
+  const partner = roll < .40 ? choosePartner(u) : null;
+  if(partner && startConversation(p, partner)) return;
+  if(roll < .58){
+    const d = deptById(u.homeDeptId), K = deptNodeKeys(d);
+    if(startRoute(p, { key: K.pause, onArrive: () => { u.mode = 'pause'; u.state = 'stand'; u.pauseT = 4.5 + autoRand(u)*4; u.activity = '☕ em pausa perto da janela'; setNPCYaw(p, d._L.z1 <= -5 ? Math.PI : 0); maybeSpeak(p, 'pausa', null, true); } }, '☕ indo pra pausa')) return;
+  }
+  if(roll < .74){
+    const d = deptById(u.homeDeptId), K = deptNodeKeys(d);
+    if(startRoute(p, { key: K.center, point:{ x:d.x + (autoRand(u)-.5)*5, z:d.z + (autoRand(u)-.5)*4, f:d.floor }, onArrive: () => { u.mode = 'pause'; u.state = 'stand'; u.pauseT = 2.5 + autoRand(u)*3; u.activity = '👀 circulando pela sala'; } }, '🚶 circulando pela sala')) return;
+  }
+  /* visita: mesmo andar, ou outro andar pela escada (1 viajante por vez) */
+  const wantTrip = roll >= .90 && AUTO.travelers <= 0 && autoNow > (u.nextTripAt || 0);
+  const options = DEPTS.filter(d => d.id !== u.homeDeptId && (wantTrip ? d.floor !== u.currentFloor : d.floor === u.currentFloor));
+  if(options.length){
+    const d = autoPick(u, options), K = deptNodeKeys(d);
+    const wasTrip = d.floor !== u.currentFloor;
+    if(startRoute(p, { key: K.center, onArrive: () => { u.mode = 'visit'; u.state = 'stand'; u.pauseT = 4.5 + autoRand(u)*3.5; u.activity = `🤝 visitando ${d.name}`; { const vp = [`vim acompanhar ${d.name.toLowerCase()}`, `passei pra ver ${d.name.toLowerCase()}`, `vim trocar ideia com ${d.name.toLowerCase()}`].filter(x => !(u.recentPhrases || []).includes(x)); showSpeech(p, autoPick(u, vp.length ? vp : [`vim acompanhar ${d.name.toLowerCase()}`]), 3.6); } } }, `${wasTrip ? '🛗' : '🚶'} indo pra ${d.name}`)){
+      if(wasTrip){ u.isTraveler = true; AUTO.travelers++; u.nextTripAt = autoNow + 75 + autoRand(u)*70; }
+      return;
+    }
+  }
+  enterWork(p, .55);
+}
+function initAutonomy(p, rec, d, seat){
+  const u = p.userData;
+  u.personId = rec.id; u.homeDeptId = d.id; u.homeFloor = d.floor; u.currentFloor = d.floor;
+  u.seat = seat; u.workAnchor = { x:p.position.x, z:p.position.z };
+  u.workMode = (rec.comportamento === 'dormindo' || rec.status === 'pausado') ? 'sleep' : (seat && !seat.stand && rec.comportamento !== 'empe') ? 'sit' : 'stand';
+  u.comportamento = rec.comportamento || ''; u.rngState = hashId(rec.id) + 23;
+  u.recentPhrases = []; u.nextSpeechAt = 4 + autoRand(u)*16; u.greetCooldownUntil = -999; u.lastGreetAt = -999; u.greetCount = 0;
+  u.totalDistance = 0; u.statesSeen = []; u.route = null; u.routeIdx = 0; u.autoInit = true;
+  u.autonomyDisabled = rec.status === 'pausado' && rec.comportamento !== 'dormindo' ? true : false;
+  if(rec.comportamento === 'dormindo' || rec.status === 'pausado'){ u.mode = 'sleep'; u.activity = '💤 dormindo no sofá'; }
+  else { u.mode = 'work'; u.workT = workDuration(u) * (0.45 + autoRand(u)*.8); u.activity = '💻 trabalhando na mesa'; }
+  u.simState = u.mode;
+}
+function autoSyncParent(p){
+  const u = p.userData;
+  const f = Math.max(0, Math.min(3, Math.round(p.position.y / FH)));
+  if(f !== u.currentFloor && f <= 2){
+    const yaw = Math.atan2(Math.sin(p.rotation.y), Math.cos(p.rotation.y));
+    floorGroups[f].attach(p); u.currentFloor = f; setNPCYaw(p, yaw);
+    if(window.__cutView) applyVisibility();
+  }
+}
+function pointBlocked(x, z, floor){
+  for(const c of colliders){
+    if(c.floor !== -1 && c.floor !== floor) continue;
+    if(x > c.x0 - .3 && x < c.x1 + .3 && z > c.z0 - .3 && z < c.z1 + .3){ AUTO.lastCollider = [c.x0, c.z0, c.x1, c.z1, c.floor]; return true; }
+  }
+  return false;
+}
+function facePoint(p, x, z){ setNPCYaw(p, Math.atan2(x - p.position.x, z - p.position.z)); }
+function startGreet(p, boss){
+  const u = p.userData;
+  u.greetResume = { mode:u.mode, route:u.route, routeIdx:u.routeIdx, onArrive:u.onArrive, activity:u.activity, workT:u.workT, pauseT:u.pauseT, converseT:u.converseT, isTraveler:u.isTraveler };
+  u.mode = 'greet'; u.state = 'greet'; u.greetT = 1.7; u.greetCooldownUntil = autoNow + 185; u.lastGreetAt = autoNow; u.greetCount++;
+  u.activity = '👋 cumprimentando o chefe'; AUTO.greetings++;
+  facePoint(p, boss.position.x, boss.position.z);
+  let hh = 12; try{ hh = +new Intl.DateTimeFormat('pt-BR', { timeZone:'America/Sao_Paulo', hour:'2-digit', hour12:false }).format(new Date()); }catch(e){}
+  const pool = hh < 12 ? ['Bom dia, chefe!', 'E aí, chefe!', 'Ô, chefe! Tudo certo?', 'Bom trabalho, chefe!'] : hh < 18 ? ['Boa tarde, chefe!', 'E aí, chefe!', 'Ô, chefe! Tudo certo?', 'Bom trabalho, chefe!'] : ['Boa noite, chefe!', 'E aí, chefe!', 'Ô, chefe! Tudo certo?', 'Bom trabalho, chefe!'];
+  const fresh = pool.filter(x => !(u.recentPhrases || []).includes(x));
+  showSpeech(p, autoPick(u, fresh.length ? fresh : pool), 2.8);
+}
+function checkGreetings(){
+  const bossE = roster.get('charlis'); if(!bossE) return;
+  const boss = bossE.obj;
+  for(const e of roster.values()){
+    if(e.rec.id === 'charlis') continue;
+    const p = e.obj, u = p.userData;
+    if(!u.autoInit || u.player || u.mode === 'sleep' || u.mode === 'greet' || u.mode === 'converse' || u.autonomyDisabled) continue;
+    if(autoNow < (u.greetCooldownUntil || 0)) continue;
+    const dx = boss.position.x - p.position.x, dz = boss.position.z - p.position.z;
+    if(Math.abs(boss.position.y - p.position.y) < 2.6 && Math.hypot(dx, dz) <= 4.8) startGreet(p, boss);
+  }
+}
+let greetClock = 0;
 function animatePeople(t, dt){
+  autoNow += dt;
+  greetClock -= dt; if(greetClock <= 0){ greetClock = .25; checkGreetings(); }
+  AUTO.activeSpeeches = 0;
+  for(const p of people) if(p.userData.bubbleSprite) AUTO.activeSpeeches++;
   for(const p of people){
     const u = p.userData;
     if(u.player){ playerAnim(p, t, dt); continue; }
-    u.bubbleT -= dt;
-    if(u.bubbleShow > 0){ u.bubbleShow -= dt; if(u.bubbleShow <= 0 && u.bubbleSprite){ p.remove(u.bubbleSprite); u.bubbleSprite = null; } }
-    else if(u.bubbleT < 0){ showBubble(p); u.bubbleT = 4 + Math.random()*7; }
+    if(!u.autoInit){ /* nascimento anterior à autonomia: adota na hora */
+      const e = roster.get(u.personId); if(e) initAutonomy(p, e.rec, deptById(e.rec.depto), u.seat || { x:p.position.x, z:p.position.z, rotY:0, stand:true });
+    }
+    if(u.bubbleShow > 0){ u.bubbleShow -= dt; if(u.bubbleShow <= 0) clearSpeech(p); }
+    if(u.replyAt && autoNow >= u.replyAt){ const pe = roster.get(u.replyPartner); if(pe) showSpeech(pe.obj, phraseFor(pe.obj.userData, 'conversa', (roster.get(u.personId)||{}).rec?.nome), 3.8); u.replyAt = 0; }
+    if(!u.statesSeen.includes(u.mode)) u.statesSeen.push(u.mode);
+    u.simState = u.mode;
 
-    if(u.state === 'sleep'){
+    if(u.mode === 'sleep'){
       u.body.position.y = Math.sin(t*1.05 + u.phase) * .018;
       u.head.rotation.z = .38; u.legL.rotation.x = 0; u.legR.rotation.x = 0;
       u.armL.rotation.x = .15; u.armR.rotation.x = .15;
       continue;
     }
-    if(u.still){
-      u.body.position.y = 0;
-      p.rotation.y = Math.sin(t*.35 + u.phase) * .6;
-      u.armR.rotation.x = (Math.sin(t*.8 + u.phase) > .75) ? -2.4 + Math.sin(t*9) * .25 : Math.sin(t*1.4) * .12;
-      u.armL.rotation.x = Math.sin(t*1.4 + u.phase) * .12;
+    if(u.mode === 'greet'){
+      const boss = (roster.get('charlis') || {}).obj;
+      if(boss) facePoint(p, boss.position.x, boss.position.z);
+      u.greetT -= dt;
+      u.body.position.y = Math.abs(Math.sin(t*7)) * .025;
+      u.legL.rotation.x = 0; u.legR.rotation.x = 0;
+      u.armL.rotation.x = Math.sin(t*1.6 + u.phase) * .12;
+      u.armR.rotation.x = -2.65 + Math.sin(t*10) * .38;   /* aceno */
+      u.wavePeak = Math.max(u.wavePeak || 0, Math.abs(u.armR.rotation.x));
+      if(u.greetT <= 0){
+        const r = u.greetResume || {}; u.greetResume = null;
+        u.armR.rotation.x = 0;
+        if(r.mode === 'walk' && r.route){ u.mode = 'walk'; u.state = 'walk'; u.route = r.route; u.routeIdx = r.routeIdx || 0; u.onArrive = r.onArrive; u.activity = r.activity || '🚶 andando pela sede'; }
+        else if(r.mode === 'converse'){ u.mode = 'converse'; u.converseT = r.converseT || 3; }
+        else if(r.mode === 'pause' || r.mode === 'visit'){ u.mode = r.mode; u.pauseT = r.pauseT || 3; }
+        else enterWork(p, .6);
+      }
       continue;
     }
-    if(u.state === 'sit'){
-      const s = u.seat; p.position.set(s.x, u.baseY, s.z); p.rotation.y = s.rotY;
-      u.body.position.y = -.26 + Math.sin(t*2 + u.phase) * .012;
-      u.legL.rotation.x = -1.5; u.legR.rotation.x = -1.5;
-      u.armL.rotation.x = -.95 + Math.sin(t*7.2 + u.phase) * .2;
-      u.armR.rotation.x = -.95 + Math.cos(t*7.9 + u.phase) * .2;
-      u.head.rotation.z = Math.sin(t*.9 + u.phase) * .04;
-      u.timer -= dt;
-      if(u.timer < 0){ u.state = 'walk'; u.afterWalk = 'stand'; u.target.copy(wanderTarget(p)); }
+    if(u.mode === 'work'){
+      if(u.workMode === 'sit' && u.seat){
+        p.position.set(u.seat.x, u.homeFloor * FH, u.seat.z); if(p.rotation.y !== u.seat.rotY) setNPCYaw(p, u.seat.rotY);
+        u.body.position.y = -.26 + Math.sin(t*2 + u.phase) * .012;
+        u.legL.rotation.x = -1.5; u.legR.rotation.x = -1.5;
+        u.armL.rotation.x = -.95 + Math.sin(t*7.2 + u.phase) * .2;
+        u.armR.rotation.x = -.95 + Math.cos(t*7.9 + u.phase) * .2;
+      } else {
+        u.body.position.y = Math.sin(t*2 + u.phase) * .02;
+        u.legL.rotation.x = 0; u.legR.rotation.x = 0;
+        u.armL.rotation.x = Math.sin(t*1.6 + u.phase) * .22; u.armR.rotation.x = Math.sin(t*1.6 + u.phase + 1) * .22;
+        u.head.rotation.y = Math.sin(t*.7 + u.phase) * .3;
+      }
+      maybeSpeak(p, 'opiniao');
+      if(u.reservedFor){ u.workT = 1; continue; }
+      u.workT -= dt; if(u.workT <= 0) decide(p);
       continue;
     }
-    if(u.state === 'stand'){
+    if(u.mode === 'converse' || u.mode === 'pause' || u.mode === 'visit'){
       u.body.position.y = Math.sin(t*2 + u.phase) * .02;
       u.legL.rotation.x = 0; u.legR.rotation.x = 0;
-      u.armL.rotation.x = Math.sin(t*1.6 + u.phase) * .25;
-      u.armR.rotation.x = Math.sin(t*1.6 + u.phase + 1) * .25;
-      u.head.rotation.y = Math.sin(t*.7 + u.phase) * .35;
-      u.timer -= dt;
-      if(u.timer < 0){ u.state = 'walk'; u.afterWalk = 'sit'; const s = u.seat; u.target.set(s.x, u.baseY, s.z); }
+      u.armL.rotation.x = Math.sin(t*1.8 + u.phase) * .3; u.armR.rotation.x = Math.sin(t*1.8 + u.phase + 1.2) * .3;
+      if(u.mode === 'converse' && u.partnerId){ const pe = roster.get(u.partnerId); if(pe) facePoint(p, pe.obj.position.x, pe.obj.position.z); }
+      const left = u.mode === 'converse' ? (u.converseT -= dt) : (u.pauseT -= dt);
+      if(left <= 0){
+        if(u.isTraveler && u.mode === 'visit'){ /* volta pra casa depois da visita */ }
+        goWork(p);
+      }
       continue;
     }
-    if(u.state === 'walk'){
-      u.body.position.y = 0;
-      const dx = u.target.x - p.position.x, dz = u.target.z - p.position.z, dist = Math.hypot(dx, dz);
-      if(dist < .22){
-        if(u.afterWalk === 'sit'){ u.state = 'sit'; u.timer = 5 + Math.random()*7; }
-        else { u.state = 'stand'; u.timer = 2 + Math.random()*3; p.rotation.y = Math.random()*Math.PI*2; }
+    if(u.mode === 'walk'){
+      const pt = u.route && u.route[u.routeIdx];
+      if(!pt){ const cb = u.onArrive; u.onArrive = null; if(cb) cb(); else goWork(p); continue; }
+      const dx = pt.x - p.position.x, dz = pt.z - p.position.z, dist = Math.hypot(dx, dz);
+      if(dist < .3){ u.routeIdx++; u.stuckT = 0; continue; }
+      /* prioridade do chefe: se o jogador está no caminho, espera */
+      let waiting = false;
+      if(player && player.userData.player){
+        const pdx = player.position.x - p.position.x, pdz = player.position.z - p.position.z;
+        if(Math.hypot(pdx, pdz) < .85 && Math.abs(player.position.y - p.position.y) < 2.4) waiting = true;
+      }
+      if(!waiting){
+        for(const o of people){
+          if(o === p || o.userData.player) continue;
+          const od = Math.hypot(o.position.x - p.position.x, o.position.z - p.position.z);
+          if(od < .5 && Math.abs(o.position.y - p.position.y) < 2.2 && o.userData.mode !== 'walk'){ waiting = true; break; }
+        }
+      }
+      if(waiting){
+        u.blockedT += dt; u.activity = '⏸️ aguardando passagem';
+        u.legL.rotation.x = 0; u.legR.rotation.x = 0;
+        if(u.blockedT > 2.6 && dist > 1){
+          const px = -dz / (dist || 1), pz = dx / (dist || 1), side = (hashId(u.personId) % 2) ? 1 : -1;
+          u.route.splice(u.routeIdx, 0, { x:p.position.x + px * side * .95, z:p.position.z + pz * side * .95, f:u.currentFloor });
+          u.blockedT = 0;
+        }
         continue;
       }
-      p.position.x += dx/dist * u.speed * dt; p.position.z += dz/dist * u.speed * dt;
-      p.position.y = u.baseY + Math.abs(Math.sin(t*7.5 + u.phase)) * .05;
-      p.rotation.y = Math.atan2(dx, dz);
+      u.blockedT = 0;
+      const speed = u.comportamento === 'agitado' ? 1.85 : 1.42;
+      let nx = p.position.x + dx / dist * speed * dt, nz = p.position.z + dz / dist * speed * dt;
+      const floors = new Set([u.currentFloor]);   /* só o andar atual: layouts de parede mudam por andar */
+      [nx, nz] = collide(nx, nz, .38, floors);
+      const moved = Math.hypot(nx - p.position.x, nz - p.position.z);
+      p.position.x = nx; p.position.z = nz;
+      p.position.y = groundYAt(nx, nz, p.position.y);
+      u.totalDistance += moved;
+      if(moved < speed * dt * .22){ u.stuckT += dt; if(u.stuckT > 3.5){ u.routeIdx++; u.stuckT = 0; } } else u.stuckT = 0;
+      facePoint(p, pt.x, pt.z);
       const sw = Math.sin(t*7.5 + u.phase) * .55;
       u.legL.rotation.x = sw; u.legR.rotation.x = -sw;
       u.armL.rotation.x = -sw * .7; u.armR.rotation.x = sw * .7;
+      u.body.position.y = Math.abs(Math.sin(t*7.5 + u.phase)) * .05;
+      autoSyncParent(p);
+      if((u.validationTick = (u.validationTick || 0) + dt) > .8){
+        u.validationTick = 0;
+        const fl = Math.round(p.position.y / FH);
+        if(pointBlocked(p.position.x, p.position.z, fl) || p.position.x < BLD.x0 + .4 || p.position.x > BLD.x1 + .6 || p.position.z < BLD.z0 + .4 || p.position.z > BLD.z1 + .6){ AUTO.violations++; (AUTO.lastViolations = AUTO.lastViolations || []).push([u.personId, +p.position.x.toFixed(1), +p.position.y.toFixed(1), +p.position.z.toFixed(1), 'colisor/fora', AUTO.lastCollider]); }
+        if(Math.abs(p.position.y - groundYAt(p.position.x, p.position.z, p.position.y)) > .35){ AUTO.violations++; (AUTO.lastViolations = AUTO.lastViolations || []).push([u.personId, +p.position.x.toFixed(1), +p.position.y.toFixed(1), +p.position.z.toFixed(1), 'chão']); }
+      }
+      continue;
     }
+    enterWork(p);
   }
   let main = null;
   if(selectedPersonId && roster.has(selectedPersonId)) main = roster.get(selectedPersonId).obj;
@@ -3247,6 +3624,20 @@ function animatePeople(t, dt){
     plumbob.rotation.y = t * 2.4; plumbob.rotation.x = Math.sin(t*1.7) * .25;
   }
   for(const c of clouds){ c.g.position.x += c.sp * dt; if(c.g.position.x > 130) c.g.position.x = -130; }
+}
+function autoSnapshot(){
+  return { now:autoNow, stats:{ ...AUTO }, people:[...roster.values()].map(e => { const u = e.obj.userData; return {
+    id:e.rec.id, nome:e.rec.nome, depto:e.rec.depto, mode:u.mode, activity:simActivity(e.obj),
+    pos:[+e.obj.position.x.toFixed(2), +e.obj.position.y.toFixed(2), +e.obj.position.z.toFixed(2)],
+    floor:u.currentFloor, parentFloor:floorGroups.indexOf(e.obj.parent), distance:+((u.totalDistance || 0).toFixed(2)),
+    states:u.statesSeen || [], greetCount:u.greetCount || 0, lastGreetAt:u.lastGreetAt, greetCooldownUntil:u.greetCooldownUntil,
+    lastSpeech:u.lastSpeech || null, armR:+(u.armR.rotation.x.toFixed(2)), wavePeak:+(u.wavePeak || 0).toFixed(2),
+  }; }) };
+}
+function autoSimulate(seconds){
+  const step = .05; let done = 0;
+  while(done < seconds){ animatePeople(autoNow, step); done += step; }
+  return autoSnapshot();
 }
 
 /* ============ PAINEL / SELEÇÃO ============ */
@@ -3267,6 +3658,13 @@ function renderPanel(rec){
   const paused = rec.status === 'pausado';
   st.textContent = '● ' + (paused ? 'PAUSADO' : 'ATIVO'); st.className = paused ? 'pause' : ''; st.id = 'pStatus';
   document.getElementById('pDoing').textContent = rec.fazendo || '';
+  let pNow = document.getElementById('pNow');
+  if(!pNow){
+    pNow = document.createElement('div'); pNow.id = 'pNow';
+    pNow.style.cssText = 'margin-top:7px;font-size:12px;font-weight:700;color:#24551a;background:#eef7df;border:1.5px dashed #8fbf62;border-radius:8px;padding:7px 10px';
+    document.getElementById('pDoing').after(pNow);
+  }
+  { const eNow = roster.get(rec.id); pNow.textContent = 'Agora na sede: ' + (eNow ? simActivity(eNow.obj) : '—'); }
   if(!rec._needs) rec._needs = needsOf(rec);
   document.getElementById('pNeeds').innerHTML = rec._needs.map(([n,v]) =>
     `<div class="need"><div class="row"><span>${n}</span><span>${v}%</span></div><div class="nbar"><i class="${v<35?'low':v<60?'mid':''}" style="width:${v}%"></i></div></div>`).join('');
@@ -3352,7 +3750,7 @@ function applyVisibility(){
   const labelsOnTop = window.__cutView && !window.__pov;
   for(const e of roster.values()){
     const lo = e.obj.userData.labelObj; if(!lo) continue;
-    const fl = (deptById(e.rec.depto) || {}).floor;
+    const fl = e.obj.userData.currentFloor != null ? e.obj.userData.currentFloor : (deptById(e.rec.depto) || {}).floor;
     lo.material.depthTest = !(labelsOnTop && fl === cutFloor);
   }
   updateFloorButtons();
@@ -3568,6 +3966,7 @@ function exitPOV(){
   const s = u.seat;
   if(s){ player.position.set(s.x, u.baseY, s.z); setPlayerYaw(s.rotY); }
   u.state = 'sit'; u.timer = 5 + Math.random()*5;
+  if(u.autoInit){ u.mode = 'work'; u.route = null; u.routeIdx = 0; u.currentFloor = u.homeFloor; u.activity = '💻 trabalhando na mesa'; u.workT = 7; }
   pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
   document.getElementById('joyKnob').style.transform = 'translate(0px,0px)';
   povSpawn = null;
@@ -3712,7 +4111,7 @@ window.__KOV = { THREE, scene, camera, renderer, controls, DEPTS, people, roster
   playerNow: ()=> player,
   EQUIPE: ()=> EQUIPE_ATUAL,
   live: ()=>({ on: LIVE.on, atualizadoEm: LIVE.atualizadoEm, count: roster.size }),
-  PAGE_VERSION, checkVersion,
+  PAGE_VERSION, checkVersion, autonomy:{ snapshot:autoSnapshot, simulate:autoSimulate, stats:()=> ({ ...AUTO }) }, colliders,
   collide:(x, z, r)=> collide(x, z, r, new Set([0,1,2,3])),
   camFree:(x, y, z)=> camFree(x, y, z), clampCamPos:(v)=> clampCamPos(v), surfacesAt:(x, z)=> surfacesAt(x, z),
   view:()=>({ mode: viewMode, cut: cutFloor }),
