@@ -1386,7 +1386,7 @@ function doorZOf(d){ return d.doorZ != null ? d.doorZ : (d.floor === 0 ? 1.5 : (
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-30.6';
+const PAGE_VERSION = '2026-10-31.1';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -2044,8 +2044,8 @@ function registerPersonClick(obj, rec, dept){
 }
 function updateLabel(e){
   const u = e.obj.userData;
-  if(u.labelObj) e.obj.remove(u.labelObj);
-  const label = textSprite(String(e.rec.nome || '').split(' — ')[0].split(' ')[0], { fs:38, color:'#17301c', bg:'rgba(253,254,248,0.92)', scale:.0105 });
+  if(u.labelObj){ if(u.labelObj.material.map) u.labelObj.material.map.dispose(); u.labelObj.material.dispose(); e.obj.remove(u.labelObj); }
+  const label = textSprite((u.workBadge ? '💻 ' : '') + String(e.rec.nome || '').split(' — ')[0].split(' ')[0], { fs:38, color:'#17301c', bg:'rgba(253,254,248,0.92)', scale:.0105 });
   label.position.set(0, 2.3, 0); label.renderOrder = 60; e.obj.add(label); u.labelObj = label;
   const dd = deptById(e.rec.depto);
   if(dd && window.__cutView && !window.__pov && dd.floor === window.__cutFloor) label.material.depthTest = false;
@@ -2615,6 +2615,8 @@ function deskSet(dept){
   g.add(box(3.3,.12,1.45, planksMat, 0,.74,0));
   g.add(box(.14,.74,1.3, planksDarkMat, -1.52,.37,0)); g.add(box(.14,.74,1.3, planksDarkMat, 1.52,.37,0));
   const scr = screenBox(dept); scr.position.set(-.5,1.22,-.4); g.add(scr);
+  scr.userData.isDeskScreen = true; scr.userData.sm = scr.material[4]; scr.userData.ph = Math.random()*6.28;
+  g.userData.screen = scr;
   g.add(box(.1,.34,.1, darkMat, -.5,.85,-.4,{shadow:false}));
   g.add(box(.95,.05,.34, darkMat, -.5,.82,.18,{shadow:false}));
   const mug = new THREE.Mesh(new THREE.CylinderGeometry(.09,.08,.18,8), lam(dept.color));
@@ -2894,13 +2896,13 @@ DEPTS.forEach(d=>{
   else { ds.position.set(7.44, 2.6, doorZ); ds.rotation.y = -Math.PI/2; }
   grp.add(ds);
 
-  const seats = [];
+  const seats = []; d._screens = [];
   const nDesk = d.id === 'diretoria' ? 2 : 3;
   for(let i=0;i<nDesk;i++){
     const dx = (i - (nDesk-1)/2) * (L.w / (nDesk + .5));
-    const dn = deskSet(d); dn.position.set(L.cx + dx, 0, L.z0 + 2.0); grp.add(dn);
+    const dn = deskSet(d); dn.position.set(L.cx + dx, 0, L.z0 + 2.0); grp.add(dn); d._screens.push(dn.userData.screen);
     seats.push({ x:L.cx + dx - .5, z:L.z0 + 3.05, rotY:Math.PI });
-    const dsouth = deskSet(d); dsouth.position.set(L.cx + dx, 0, L.z1 - 2.0); dsouth.rotation.y = Math.PI; grp.add(dsouth);
+    const dsouth = deskSet(d); dsouth.position.set(L.cx + dx, 0, L.z1 - 2.0); dsouth.rotation.y = Math.PI; grp.add(dsouth); d._screens.push(dsouth.userData.screen);
     seats.push({ x:L.cx + dx + .5, z:L.z1 - 3.05, rotY:0 });
     addCol(L.cx + dx - 1.75, L.cx + dx + 1.75, L.z0 + 1.25, L.z0 + 2.75, d.floor);
     addCol(L.cx + dx - 1.75, L.cx + dx + 1.75, L.z1 - 2.75, L.z1 - 1.25, d.floor);
@@ -3333,7 +3335,11 @@ function governHeadSprites(){
       if(!lab.userData.base) lab.userData.base = { w: lab.scale.x, h: lab.scale.y };
       lab.getWorldPosition(_headV);
       const d = Math.max(.6, camera.position.distanceTo(_headV));
-      const k = Math.min(1, d / 4.6);
+      let k = Math.min(1, d / 4.6);
+      const maxW = .35 * 2 * d * tanH * aspect;   /* etiqueta também respeita o teto: ≤35% da largura (o selo 💻 a deixou mais larga) */
+      if(lab.userData.base.w * k > maxW) k = maxW / lab.userData.base.w;
+      const maxH = .15 * 2 * d * tanH;            /* ≤ 15% da altura da tela */
+      if(lab.userData.base.h * k > maxH) k = maxH / lab.userData.base.h;
       lab.scale.set(lab.userData.base.w * k, lab.userData.base.h * k, 1);
       labH = lab.userData.base.h * k;
     }
@@ -3350,6 +3356,36 @@ function governHeadSprites(){
       bub.position.y = 2.3 + labH / 2 + (bub.userData.base.h * k) / 2 + .14;
     }
   }
+}
+
+/* ============ TRABALHO VISÍVEL: tela da mesa + selo 💻 ============
+   A tela de cada assento é da pessoa daquele assento: ACESA (textura do
+   depto, com pulso de brilho) enquanto ela trabalha sentada; APAGADA
+   quando ela sai. O selo 💻 entra na própria etiqueta de nome — mesmo
+   sprite governado pelo governHeadSprites (teto de tela + empilhamento),
+   sem virar outro balão. */
+const screenOffMat = new THREE.MeshLambertMaterial({ color: 0x10141b });
+const liveScreens = new Set();
+function setScreen(scr, on){
+  if(!scr || scr.userData.screenOn === on) return;
+  scr.userData.screenOn = on;
+  if(!scr.userData.onMats){ scr.userData.onMats = scr.material; scr.userData.offMats = [frameMat, frameMat, frameMat, frameMat, screenOffMat, frameMat]; }
+  scr.material = on ? scr.userData.onMats : scr.userData.offMats;
+  if(scr.userData.sm) scr.userData.sm.color.setScalar(1);
+  if(on) liveScreens.add(scr); else liveScreens.delete(scr);
+}
+function syncWorkVisuals(){
+  const onSet = new Set();
+  for(const e of roster.values()){
+    const u = e.obj.userData, d = deptById(u.homeDeptId);
+    if(d && d._screens && u.mode === 'work' && u.workMode === 'sit' && !u.player){
+      const scr = d._screens[e.seatIdx]; if(scr) onSet.add(scr);
+    }
+    const wantBadge = u.mode === 'work' && !u.player;
+    if(!!u.workBadge !== wantBadge){ u.workBadge = wantBadge; updateLabel(e); }
+    if(u.reservedFor && autoNow - (u.reservedAt || 0) > 30) u.reservedFor = null;   /* reserva esquecida não prende ninguém */
+  }
+  for(const d of DEPTS){ if(!d._screens) continue; for(const scr of d._screens) setScreen(scr, onSet.has(scr)); }
 }
 
 /* ----- grade caminhável ----- */
@@ -3392,6 +3428,7 @@ function buildAutoGraph(){
         aNode(NW, f, d.x - d.w * .28, d.z - 6.5); aNode(NE, f, d.x + d.w * .28, d.z - 6.5);
         aNode(SW, f, d.x - d.w * .28, d.z + 6.5); aNode(SE, f, d.x + d.w * .28, d.z + 6.5);
         aChain([midN, NW, laneW, SW, midS]); aChain([midN, NE, laneE, SE, midS]);
+        aEdge(K.center, midN);   /* o hub da diretoria coincide com o midN — sem essa aresta o centro era beco sem saída e ninguém voltava pra mesa */
       } else { aChain([K.center, laneW, midN]); aChain([K.center, laneE, midN]); aChain([laneW, midS]); aChain([laneE, midS]); }
       const corKey = f === 0 && Math.abs(doorZ - 3) < 3 ? c(3) : Math.abs(doorZ + 10) < 3 ? c(-10) : c(3);
       if(d.entryGapX != null){
@@ -3459,7 +3496,7 @@ function startRoute(p, dest, label){
   const route = findRoute(p, dest.key, dest.point || null);
   if(!route || !route.length){ return false; }
   u.route = route; u.routeIdx = 0; u.mode = 'walk'; u.state = 'walk'; u.onArrive = dest.onArrive || null;
-  u.activity = label; u.stuckT = 0; u.blockedT = 0; u.tripFloorChange = dest.key.includes(':stair') || route.some(pt => pt.f !== u.currentFloor);
+  u.activity = label; u.stuckT = 0; u.blockedT = 0; u.detours = 0; u.tripFloorChange = dest.key.includes(':stair') || route.some(pt => pt.f !== u.currentFloor);
   if(u.tripFloorChange) AUTO.trips++;
   return true;
 }
@@ -3470,22 +3507,27 @@ function goWork(p, label){
     if(u.workMode === 'sit' && u.seat){ p.position.set(u.seat.x, u.homeFloor * FH, u.seat.z); setNPCYaw(p, u.seat.rotY); }
     else if(u.workMode === 'stand'){ p.position.set(u.workAnchor.x, u.homeFloor * FH, u.workAnchor.z); if(u.seat) setNPCYaw(p, u.seat.rotY); }
     if(u.isTraveler){ u.isTraveler = false; AUTO.travelers = Math.max(0, AUTO.travelers - 1); }
-    enterWork(p, 0);
+    enterWork(p, 1);
   };
   if(Math.hypot(p.position.x - u.workAnchor.x, p.position.z - u.workAnchor.z) < .45 && u.currentFloor === u.homeFloor){ arrive(); return true; }
   return startRoute(p, { key: w.key || deptNodeKeys(deptById(u.homeDeptId)).center, point: u.workMode === 'sit' ? { x:u.seat.x, z:u.seat.z, f:u.homeFloor } : { x:u.workAnchor.x, z:u.workAnchor.z, f:u.homeFloor }, onArrive: arrive }, label || '🚶 voltando pra mesa');
 }
 function workDuration(u){
   const c = u.comportamento || '';
-  if(u.personId === 'charlis') return 17 + autoRand(u)*16;
-  if(c === 'focado') return 19 + autoRand(u)*16;
-  if(c === 'agitado' || c === 'empe') return 6 + autoRand(u)*8;
-  return 9 + autoRand(u)*14;
+  if(u.personId === 'charlis') return 75 + autoRand(u)*45;   /* o chefe trabalha ainda mais: 75–120s */
+  if(c === 'focado') return 60 + autoRand(u)*40;            /* 60–100s */
+  if(c === 'agitado') return 38 + autoRand(u)*30;           /* 38–68s */
+  if(c === 'empe') return 42 + autoRand(u)*33;              /* 42–75s */
+  return 48 + autoRand(u)*42;                               /* padrão: 48–90s por bloco */
 }
 function enterWork(p, scale = 1){
   const u = p.userData;
+  /* relógio anti-estátua só zera se a ausência teve deslocamento de verdade —
+     parceiro de conversa que nem saiu da cadeira não ganha crédito de "saiu" */
+  if((u.totalDistance || 0) - (u.distAtWorkStart || 0) > 3) u.lastOutAt = autoNow;
+  u.distAtWorkStart = u.totalDistance || 0;
   u.mode = 'work'; u.state = u.workMode === 'sit' ? 'sit' : 'stand'; u.route = null; u.onArrive = null;
-  u.workT = workDuration(u) * scale; u.activity = '💻 trabalhando na mesa';
+  u.workT = workDuration(u) * scale; u.workSince = autoNow; u.activity = '💻 trabalhando na mesa';
   u.body.position.y = u.workMode === 'sit' ? -.26 : 0;
 }
 function choosePartner(u){
@@ -3505,16 +3547,17 @@ function startConversation(p, partnerE){
   else { const dd = Math.max(1, Math.hypot(p.position.x - po.position.x, p.position.z - po.position.z));
          anchor = { x:po.position.x + (p.position.x - po.position.x) / dd * 1.15, z:po.position.z + (p.position.z - po.position.z) / dd * 1.15 }; }
   const face = pu.mode === 'work' && pu.workMode === 'sit' && pu.seat ? (pu.seat.rotY === Math.PI ? 0 : Math.PI) : null;
-  pu.reservedFor = u.personId;
+  pu.reservedFor = u.personId; pu.reservedAt = autoNow;
   const begin = () => {
     if(onStairs(p) || onStairs(po)){ pu.reservedFor = null; enterWork(p, .5); return; }
+    if(pu.mode !== 'work' && pu.mode !== 'pause' && pu.mode !== 'converse'){ pu.reservedFor = null; enterWork(p, .5); return; }
     if(Math.hypot(po.position.x - p.position.x, po.position.z - p.position.z) > 2.6 && !u.partnerRetried){
       u.partnerRetried = true;
       const a2 = pu.mode === 'work' && pu.workMode === 'sit' && pu.seat ? seatApproachPoint(pu.seat) : { x:po.position.x, z:po.position.z };
       startRoute(p, { key: deptNodeKeys(deptById(pu.homeDeptId)).center, point:{ x:a2.x, z:a2.z, f:pu.currentFloor }, onArrive: begin }, `🚶 indo conversar com ${firstName(partnerE.rec.nome)}`);
       return;
     }
-    pu.reservedFor = null;
+    pu.reservedFor = null; dequeue(pu.personId); u.nextConverseAt = autoNow + 90; pu.nextConverseAt = autoNow + 90;   /* respiro pós-conversa pros dois */
     u.mode = 'converse'; u.state = 'stand'; u.activity = `💬 conversando com ${firstName(partnerE.rec.nome)}`;
     u.converseT = 5.5 + autoRand(u)*3; u.partnerId = partnerE.rec.id;
     if(face != null) setNPCYaw(p, face); else setNPCYaw(p, Math.atan2(po.position.x - p.position.x, po.position.z - p.position.z));
@@ -3528,32 +3571,78 @@ function startConversation(p, partnerE){
   const d = deptById(u.homeDeptId);
   return startRoute(p, { key: deptNodeKeys(d).center, point: { x:anchor.x, z:anchor.z, f:pu.currentFloor }, onArrive: begin }, `🚶 indo conversar com ${firstName(partnerE.rec.nome)}`);
 }
+function awayCapInfo(){
+  let act = 0, away = 0;
+  for(const e of roster.values()){
+    const ou = e.obj.userData;
+    if(!ou.autoInit || ou.autonomyDisabled || ou.mode === 'sleep') continue;
+    act++; if(ou.mode !== 'work') away++;
+  }
+  return { act, away, cap: Math.max(1, Math.floor(act * .25)) };
+}
+function autoQueue(){ return AUTO.queue || (AUTO.queue = []); }
+function dequeue(id){ const Q = autoQueue(), i = Q.indexOf(id); if(i >= 0) Q.splice(i, 1); }
+function pruneQueue(){
+  const Q = autoQueue();
+  for(let i = Q.length - 1; i >= 0; i--){ const e = roster.get(Q[i]); if(!e || e.obj.userData.mode !== 'work') Q.splice(i, 1); }
+}
 function decide(p){
   const u = p.userData;
   if(u.mode !== 'work' || u.player || u.autonomyDisabled) return;
+  /* ESCRITÓRIO DE VERDADE: trabalho é o estado padrão e dominante. Sair da
+     mesa é exceção, com TRAVA DE PRESENÇA (~25% fora no máximo) e FILA FIFO:
+     sem vaga, a pessoa espera NA MESA TRABALHANDO em blocos curtos — e a
+     próxima vaga é de quem está na frente da fila, não de quem tem sorte. */
+  const { away, cap } = awayCapInfo();
+  const slots = cap - away;
+  if(u.lastOutAt == null) u.lastOutAt = autoNow;
+  const starving = autoNow - u.lastOutAt > 120;
+  const d = deptById(u.homeDeptId), K = deptNodeKeys(d);
+  const goPause = () => startRoute(p, { key: K.pause, onArrive: () => { u.mode = 'pause'; u.state = 'stand'; u.pauseT = 4.5 + autoRand(u)*4; u.activity = '☕ em pausa perto da janela'; setNPCYaw(p, d._L.z1 <= -5 ? Math.PI : 0); maybeSpeak(p, 'pausa', null, true); } }, '☕ indo pra pausa');
+  /* GARANTIA DURA: passou do limite pessoal (130–170s, escalonado) sem sair,
+     a saída curta no próprio depto é obrigatória — pode furar a trava em +1. */
+  const hardStarve = autoNow - u.lastOutAt > 130 + (hashId(u.personId) % 40);
+  if(hardStarve && away <= cap){   /* fura a trava em no máximo +1 pessoa */
+    if(goPause()){ dequeue(u.personId); u.lastOutAt = autoNow; return; }
+    const partner = choosePartner(u);
+    if(partner && startConversation(p, partner)){ dequeue(u.personId); u.lastOutAt = autoNow; return; }
+    enterWork(p, .07); return;
+  }
+  pruneQueue();
+  const Q = autoQueue();
+  const myTurn = Q.length === 0 || Q[0] === u.personId;
   const roll = autoRand(u);
-  const partner = roll < .40 ? choosePartner(u) : null;
-  if(partner && startConversation(p, partner)) return;
-  if(roll < .58){
-    const d = deptById(u.homeDeptId), K = deptNodeKeys(d);
-    if(startRoute(p, { key: K.pause, onArrive: () => { u.mode = 'pause'; u.state = 'stand'; u.pauseT = 4.5 + autoRand(u)*4; u.activity = '☕ em pausa perto da janela'; setNPCYaw(p, d._L.z1 <= -5 ? Math.PI : 0); maybeSpeak(p, 'pausa', null, true); } }, '☕ indo pra pausa')) return;
-  }
-  if(roll < .74){
-    const d = deptById(u.homeDeptId), K = deptNodeKeys(d);
-    if(startRoute(p, { key: K.center, point:{ x:d.x + (autoRand(u)-.5)*5, z:d.z + (autoRand(u)-.5)*4, f:d.floor }, onArrive: () => { u.mode = 'pause'; u.state = 'stand'; u.pauseT = 2.5 + autoRand(u)*3; u.activity = '👀 circulando pela sala'; } }, '🚶 circulando pela sala')) return;
-  }
-  /* visita: mesmo andar, ou outro andar pela escada (1 viajante por vez) */
-  const wantTrip = roll >= .90 && AUTO.travelers <= 0 && autoNow > (u.nextTripAt || 0);
-  const options = DEPTS.filter(d => d.id !== u.homeDeptId && (wantTrip ? d.floor !== u.currentFloor : d.floor === u.currentFloor));
-  if(options.length){
-    const d = autoPick(u, options), K = deptNodeKeys(d);
-    const wasTrip = d.floor !== u.currentFloor;
-    if(startRoute(p, { key: K.center, onArrive: () => { u.mode = 'visit'; u.state = 'stand'; u.pauseT = 4.5 + autoRand(u)*3.5; u.activity = `🤝 visitando ${d.name}`; { const vp = [`vim acompanhar ${d.name.toLowerCase()}`, `passei pra ver ${d.name.toLowerCase()}`, `vim trocar ideia com ${d.name.toLowerCase()}`].filter(x => !(u.recentPhrases || []).includes(x)); showSpeech(p, autoPick(u, vp.length ? vp : [`vim acompanhar ${d.name.toLowerCase()}`]), 3.6); } } }, `${wasTrip ? '🛗' : '🚶'} indo pra ${d.name}`)){
-      if(wasTrip){ u.isTraveler = true; AUTO.travelers++; u.nextTripAt = autoNow + 75 + autoRand(u)*70; }
-      return;
+  if(slots > 0 && myTurn){
+    let attempted = false;
+    if((roll < .24 || (starving && roll < .60)) && autoNow > (u.nextConverseAt || 0)){
+      const partner = choosePartner(u);
+      /* conversa tira DUAS pessoas da mesa (2 vagas) — com quem já está de pausa, só 1 */
+      if(partner && slots >= (partner.obj.userData.mode === 'pause' ? 1 : 2)){ attempted = true; if(startConversation(p, partner)){ dequeue(u.personId); u.lastOutAt = autoNow; return; } }
     }
+    if(roll < .32 || (starving && roll < .70)){ attempted = true; if(goPause()){ dequeue(u.personId); u.lastOutAt = autoNow; return; } }
+    /* visita: mesmo andar, ou outro andar pela escada (1 viajante por vez) */
+    const wantTrip = (roll >= .90 || starving) && AUTO.travelers <= 0 && autoNow > (u.nextTripAt || 0);
+    let options = [];
+    if(wantTrip) options = DEPTS.filter(x => x.id !== u.homeDeptId && x.floor !== u.currentFloor);
+    if(!options.length && (roll < .42 || starving)) options = DEPTS.filter(x => x.id !== u.homeDeptId && x.floor === u.currentFloor);
+    if(options.length){
+      attempted = true;
+      const vd = autoPick(u, options), VK = deptNodeKeys(vd);
+      const wasTrip = vd.floor !== u.currentFloor;
+      if(startRoute(p, { key: VK.center, onArrive: () => { u.mode = 'visit'; u.state = 'stand'; u.pauseT = 4.5 + autoRand(u)*3.5; u.activity = `🤝 visitando ${vd.name}`; { const vp = [`vim acompanhar ${vd.name.toLowerCase()}`, `passei pra ver ${vd.name.toLowerCase()}`, `vim trocar ideia com ${vd.name.toLowerCase()}`].filter(x => !(u.recentPhrases || []).includes(x)); showSpeech(p, autoPick(u, vp.length ? vp : [`vim acompanhar ${vd.name.toLowerCase()}`]), 3.6); } } }, `${wasTrip ? '🛗' : '🚶'} indo pra ${vd.name}`)){
+        if(wasTrip){ u.isTraveler = true; AUTO.travelers++; u.nextTripAt = autoNow + 200 + autoRand(u)*80; }
+        dequeue(u.personId); u.lastOutAt = autoNow;
+        return;
+      }
+    }
+    if(attempted){ enterWork(p, .12); return; }   /* tentou e a rota falhou: espera curta, mantém a vez */
+    dequeue(u.personId);   /* rolou "ficar": sai da fila e emenda um bloco cheio */
+    enterWork(p, 1);
+    return;
   }
-  enterWork(p, .55);
+  /* sem vaga (ou não é a vez): entra/mantém o lugar na fila e espera trabalhando */
+  if(!Q.includes(u.personId)) Q.push(u.personId);
+  enterWork(p, starving ? .10 : .16);
 }
 function initAutonomy(p, rec, d, seat){
   const u = p.userData;
@@ -3561,7 +3650,7 @@ function initAutonomy(p, rec, d, seat){
   u.seat = seat; u.workAnchor = { x:p.position.x, z:p.position.z };
   u.workMode = (rec.comportamento === 'dormindo' || rec.status === 'pausado') ? 'sleep' : (seat && !seat.stand && rec.comportamento !== 'empe') ? 'sit' : 'stand';
   u.comportamento = rec.comportamento || ''; u.rngState = hashId(rec.id) + 23;
-  u.recentPhrases = []; u.nextSpeechAt = 4 + autoRand(u)*16; u.greetCooldownUntil = -999; u.lastGreetAt = -999; u.greetCount = 0;
+  u.recentPhrases = []; u.nextSpeechAt = 4 + autoRand(u)*16; u.greetCooldownUntil = -999; u.lastGreetAt = -999; u.greetCount = 0; u.lastOutAt = 0; u.workBadge = false;   /* 0 = relógio da simulação: quem nunca saiu fica 'starving' aos 120s */
   u.totalDistance = 0; u.statesSeen = []; u.route = null; u.routeIdx = 0; u.autoInit = true;
   u.autonomyDisabled = rec.status === 'pausado' && rec.comportamento !== 'dormindo' ? true : false;
   if(rec.comportamento === 'dormindo' || rec.status === 'pausado'){ u.mode = 'sleep'; u.activity = '💤 dormindo no sofá'; }
@@ -3609,13 +3698,15 @@ function checkGreetings(){
     if(Math.abs(boss.position.y - p.position.y) < 2.6 && Math.hypot(dx, dz) <= 4.8) startGreet(p, boss);
   }
 }
-let greetClock = 0;
+let greetClock = 0, workSyncClock = 0;
 function animatePeople(t, dt){
   autoNow += dt;
   greetClock -= dt; if(greetClock <= 0){ greetClock = .25; checkGreetings(); }
   AUTO.activeSpeeches = 0;
   for(const p of people) if(p.userData.bubbleSprite) AUTO.activeSpeeches++;
   governHeadSprites();
+  workSyncClock -= dt; if(workSyncClock <= 0){ workSyncClock = .3; syncWorkVisuals(); }
+  for(const scr of liveScreens){ if(scr.userData.sm) scr.userData.sm.color.setScalar(.92 + .08 * Math.sin(t*2.2 + (scr.userData.ph || 0))); }
   for(const p of people){
     const u = p.userData;
     if(u.player){ playerAnim(p, t, dt); continue; }
@@ -3634,6 +3725,7 @@ function animatePeople(t, dt){
       continue;
     }
     if(u.mode === 'greet'){
+      u.head.rotation.x = 0; u.head.rotation.y = 0;
       const boss = (roster.get('charlis') || {}).obj;
       if(boss) facePoint(p, boss.position.x, boss.position.z);
       u.greetT -= dt;
@@ -3655,22 +3747,35 @@ function animatePeople(t, dt){
     if(u.mode === 'work'){
       if(u.workMode === 'sit' && u.seat){
         p.position.set(u.seat.x, u.homeFloor * FH, u.seat.z); if(p.rotation.y !== u.seat.rotY) setNPCYaw(p, u.seat.rotY);
-        u.body.position.y = -.26 + Math.sin(t*2 + u.phase) * .012;
+        /* DIGITANDO: antebraços alternados sobre o teclado (amplitude .3 rad,
+           ritmo de digitação com envelope pra não virar metrônomo), corpo
+           acompanhando as batidas e cabeça na tela (olha, confere, volta). */
+        const tap = t*8.8 + u.phase, env = .8 + .3 * Math.sin(t*.37 + u.phase);
+        u.body.position.y = -.26 + Math.sin(t*2 + u.phase) * .01 + Math.abs(Math.sin(tap)) * .012;
         u.legL.rotation.x = -1.5; u.legR.rotation.x = -1.5;
-        u.armL.rotation.x = -.95 + Math.sin(t*7.2 + u.phase) * .2;
-        u.armR.rotation.x = -.95 + Math.cos(t*7.9 + u.phase) * .2;
+        u.armL.rotation.x = -1.02 + Math.sin(tap) * .3 * env;
+        u.armR.rotation.x = -1.02 + Math.sin(tap + Math.PI) * .3 * env;
+        u.head.rotation.x = .14 + Math.sin(t*2.1 + u.phase) * .045;
+        u.head.rotation.y = Math.sin(t*.45 + u.phase) * .14;
       } else {
-        u.body.position.y = Math.sin(t*2 + u.phase) * .02;
+        /* TRABALHO EM PÉ (ex.: Titiku): braços à frente como quem opera um
+           painel/tablet, toques da mão direita, cabeça baixa conferindo. */
+        u.body.position.y = Math.sin(t*2 + u.phase) * .015;
         u.legL.rotation.x = 0; u.legR.rotation.x = 0;
-        u.armL.rotation.x = Math.sin(t*1.6 + u.phase) * .22; u.armR.rotation.x = Math.sin(t*1.6 + u.phase + 1) * .22;
-        u.head.rotation.y = Math.sin(t*.7 + u.phase) * .3;
+        u.armL.rotation.x = -.78 + Math.sin(t*2.6 + u.phase) * .07;
+        u.armR.rotation.x = -.78 + Math.sin(t*7.4 + u.phase*1.7) * .2;
+        u.head.rotation.x = .16 + Math.sin(t*1.8 + u.phase) * .04;
+        u.head.rotation.y = Math.sin(t*.5 + u.phase) * .1;
       }
       maybeSpeak(p, 'opiniao');
       if(u.reservedFor){ u.workT = 1; continue; }
-      u.workT -= dt; if(u.workT <= 0) decide(p);
+      u.workT -= dt;
+      if(autoNow - (u.lastOutAt || 0) > 130 + (hashId(u.personId) % 40)) u.workT = Math.min(u.workT, 0);   /* relógio anti-estátua: decide AGORA */
+      if(u.workT <= 0) decide(p);
       continue;
     }
     if(u.mode === 'converse' || u.mode === 'pause' || u.mode === 'visit'){
+      u.head.rotation.x = 0; u.head.rotation.y = 0;
       u.body.position.y = Math.sin(t*2 + u.phase) * .02;
       u.legL.rotation.x = 0; u.legR.rotation.x = 0;
       u.armL.rotation.x = Math.sin(t*1.8 + u.phase) * .3; u.armR.rotation.x = Math.sin(t*1.8 + u.phase + 1.2) * .3;
@@ -3683,29 +3788,35 @@ function animatePeople(t, dt){
       continue;
     }
     if(u.mode === 'walk'){
+      u.head.rotation.x = 0; u.head.rotation.y = 0;
       const pt = u.route && u.route[u.routeIdx];
       if(!pt){ const cb = u.onArrive; u.onArrive = null; if(cb) cb(); else goWork(p); continue; }
       const dx = pt.x - p.position.x, dz = pt.z - p.position.z, dist = Math.hypot(dx, dz);
-      if(dist < .3){ u.routeIdx++; u.stuckT = 0; continue; }
-      /* prioridade do chefe: se o jogador está no caminho, espera */
+      const arriveR = u.routeIdx === u.route.length - 1 ? 1.0 : .4;   /* ponto final costuma ser "perto de alguém": não precisa encostar */
+      if(dist < arriveR){ u.routeIdx++; u.stuckT = 0; continue; }
+      /* espera só por quem está NA FRENTE do caminho; atrás/ao lado, segue (o collide desliza) */
+      const ux = dx / (dist || 1), uz = dz / (dist || 1);
+      const inFront = (ox, oz) => { const dd = Math.hypot(ox, oz); return dd > .01 && (ox * ux + oz * uz) / dd > .25; };
       let waiting = false;
       if(player && player.userData.player){
         const pdx = player.position.x - p.position.x, pdz = player.position.z - p.position.z;
-        if(Math.hypot(pdx, pdz) < .85 && Math.abs(player.position.y - p.position.y) < 2.4) waiting = true;
+        if(Math.hypot(pdx, pdz) < .85 && Math.abs(player.position.y - p.position.y) < 2.4 && inFront(pdx, pdz)) waiting = true;
       }
       if(!waiting){
         for(const o of people){
           if(o === p || o.userData.player) continue;
-          const od = Math.hypot(o.position.x - p.position.x, o.position.z - p.position.z);
-          if(od < .5 && Math.abs(o.position.y - p.position.y) < 2.2 && o.userData.mode !== 'walk'){ waiting = true; break; }
+          const odx = o.position.x - p.position.x, odz = o.position.z - p.position.z;
+          if(Math.hypot(odx, odz) < .55 && Math.abs(o.position.y - p.position.y) < 2.2 && o.userData.mode !== 'walk' && inFront(odx, odz)){ waiting = true; break; }
         }
       }
       if(waiting){
-        u.blockedT += dt; u.activity = '⏸️ aguardando passagem';
+        u.blockedT += dt; u.stuckT += dt; u.activity = '⏸️ aguardando passagem';
         u.legL.rotation.x = 0; u.legR.rotation.x = 0;
-        if(u.blockedT > 2.6 && dist > 1){
+        if(u.stuckT > 6){ u.routeIdx++; u.stuckT = 0; u.blockedT = 0; continue; }   /* fuga do deadlock: desiste do ponto e segue a rota */
+        if(u.blockedT > 2.6 && dist > 1 && (u.detours || 0) < 3){
           const px = -dz / (dist || 1), pz = dx / (dist || 1), side = (hashId(u.personId) % 2) ? 1 : -1;
           u.route.splice(u.routeIdx, 0, { x:p.position.x + px * side * .95, z:p.position.z + pz * side * .95, f:u.currentFloor });
+          u.detours = (u.detours || 0) + 1;
           u.blockedT = 0;
         }
         continue;
