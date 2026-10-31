@@ -1,6 +1,6 @@
 {
   "empresa": "Kovantu Digital",
-  "atualizadoEm": "2026-10-30T17:15:21-03:00",
+  "atualizadoEm": "2026-10-31T17:37:01-03:00",
   "equipe": [
     {
       "id": "charlis",
@@ -608,6 +608,31 @@
       ],
       "desde": "2026-10-27",
       "atualizadoEm": "2026-10-28T23:00:27-03:00",
+      "genero": "M"
+    },
+    {
+      "id": "otto",
+      "nome": "Otto",
+      "cargo": "O trader",
+      "depto": "trader",
+      "status": "ativo",
+      "fazendo": "Operando na Sala Trader do 3º andar: vive do saldo (oxigênio) — precisa lucrar pra sobreviver; se o saldo zerar, ele desliga. Origem técnica: agente Automaton (Conway Research), em auditoria antes de receber conta e saldo reais.",
+      "tarefas": [
+        {
+          "nome": "Auditoria do motor (Automaton)",
+          "progresso": 40
+        },
+        {
+          "nome": "Estratégia e backtest",
+          "progresso": 15
+        },
+        {
+          "nome": "Oxigênio: meta de lucro do ciclo",
+          "progresso": 0
+        }
+      ],
+      "desde": "2026-10-31",
+      "atualizadoEm": "2026-10-31T17:37:01-03:00",
       "genero": "M"
     }
   ]

@@ -175,7 +175,8 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
   <button id="bf0">🚪 Térreo — Hall</button>
   <button id="bf1">1️⃣ 1º andar</button>
   <button id="bf2">2️⃣ 2º andar</button>
-  <button id="bf3">☀️ Cobertura</button>
+  <button id="bf3">3️⃣ 3º andar</button>
+  <button id="bf4">☀️ Cobertura</button>
 </div>
 
 <div id="panel" class="hidden">
@@ -1261,7 +1262,7 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
 <script>
 /* ================================================================
    KOVANTU DIGITAL — TORRE KOVANTU (sede voxel estilo Minecraft)
-   Prédio fechado de 3 andares + cobertura, com a logo da empresa.
+   Prédio fechado de 4 andares + cobertura, com a logo da empresa.
    100% autocontida: three.js r128 + OrbitControls embutidos,
    texturas pixeladas geradas por canvas, zero rede.
    Reaproveita motor/dados/personagens/interações da sede voxel v1.
@@ -1346,7 +1347,13 @@ const DEPTS = [
  { id:'kdp', name:'Editora KDP', emoji:'📚', color:0xffd166, css:'#c9930a', bubble:['💤','📚','😴','📖'] },
  { id:'apps', name:'Fábrica de Apps', emoji:'📱', color:0x4f8cff, css:'#2f6de0', bubble:['📱','⚙️','🔧','🚀'] },
  { id:'farejador', name:'Prospecção', emoji:'🔍', color:0x2ee6a8, css:'#0aa873', bubble:['🔍','🐽','💎','📡'] },
+ { id:'trader', name:'Trader', emoji:'📈', color:0x00e065, css:'#009e57', bubble:['📈','🕯️','💹','🪙'] },
 ];
+/* rótulo CURTO da placa de porta: nome completo não cabe legível no vão da
+   porta (correção de legibilidade 31/out) — a placa interna mantém o nome todo */
+const DOOR_LABEL = { diretoria:'Diretoria', abuelo:'Abuelo', hotmart:'Hotmart', stock:'Stock IA',
+  blogs:'Blogs', trafego:'Tráfego Pago', arcade:'Games', youtube:'YouTube Dark', kdp:'KDP',
+  apps:'Apps', farejador:'Prospecção', trader:'Trader' };
 
 /* ============ LAYOUT DA TORRE (1 unidade = 1 bloco) ============
    Prédio: paredes externas em x=-34 / x=33, z=-30 (fundo) / z=21 (frente).
@@ -1367,6 +1374,7 @@ const LAYOUT = {  // retângulos INTERIORES de cada departamento [x0, x1, z0, z1
   youtube:   { f:2, r:[  9, 32,-29, -5] },
   farejador: { f:2, r:[-33,-10, -3, 21] },
   kdp:       { f:2, r:[  9, 32, -3, 21] },
+  trader:    { f:3, r:[-33,-10,-29, 21] },
 };
 DEPTS.forEach(d=>{
   const lay = LAYOUT[d.id], [x0, x1, z0, z1] = lay.r;
@@ -1386,7 +1394,7 @@ function doorZOf(d){ return d.doorZ != null ? d.doorZ : (d.floor === 0 ? 1.5 : (
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-31.1';
+const PAGE_VERSION = '2026-10-31.4';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -2004,7 +2012,32 @@ const EQUIPE_EMBUTIDA = {
    "desde": "2026-10-27",
    "atualizadoEm": "2026-10-28T23:00:27-03:00",
    "genero": "M"
-  }
+  },
+   {
+     "id": "otto",
+     "nome": "Otto",
+     "cargo": "O trader",
+     "depto": "trader",
+     "status": "ativo",
+     "fazendo": "Operando na Sala Trader do 3º andar: vive do saldo (oxigênio) — precisa lucrar pra sobreviver; se o saldo zerar, ele desliga. Origem técnica: agente Automaton (Conway Research), em auditoria antes de receber conta e saldo reais.",
+     "tarefas": [
+       {
+         "nome": "Auditoria do motor (Automaton)",
+         "progresso": 40
+       },
+       {
+         "nome": "Estratégia e backtest",
+         "progresso": 15
+       },
+       {
+         "nome": "Oxigênio: meta de lucro do ciclo",
+         "progresso": 0
+       }
+     ],
+     "desde": "2026-10-31",
+     "atualizadoEm": "2026-10-31T17:37:01-03:00",
+     "genero": "M"
+   }
  ]
 };
 let EQUIPE_ATUAL = null;
@@ -2227,8 +2260,8 @@ sun.shadow.bias = -0.0006; sun.shadow.normalBias = .04;
 scene.add(sun);
 
 /* grupos por andar (o macete do teto liga/desliga estes conjuntos) */
-const floorGroups = [0,1,2,3].map(()=>{ const g = new THREE.Group(); scene.add(g); return g; });
-const wallSEGroups = [0,1,2].map(()=>{ const g = new THREE.Group(); scene.add(g); return g; }); // paredes sul/leste de cada andar
+const floorGroups = [0,1,2,3,4].map(()=>{ const g = new THREE.Group(); scene.add(g); return g; });
+const wallSEGroups = [0,1,2,3].map(()=>{ const g = new THREE.Group(); scene.add(g); return g; }); // paredes sul/leste de cada andar
 
 /* ============ ATLAS DE TEXTURAS PIXELADAS (canvas, grade 8×4 de tiles 16×16) ============ */
 function mulberry(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
@@ -2358,9 +2391,9 @@ const vox = new Map();      // "x,y,z" -> { t:type, b:bucket }
 const vkey = (x,y,z)=> x + ',' + y + ',' + z;
 function bucketOf(x,y,z){
   if(y < 0) return '0';
-  if(y >= 14) return '3';
+  if(y >= 19) return '4';
   if((z === BLD.z1 || x === BLD.x1) && y % FH !== FH - 1) return 'se' + Math.floor(y / FH); // paredes sul/leste (corte)
-  return String(Math.floor((y + 1) / FH) > 3 ? 3 : Math.max(0, Math.floor((y + 1) / FH)));
+  return String(Math.floor((y + 1) / FH) > 4 ? 4 : Math.max(0, Math.floor((y + 1) / FH)));
 }
 function setB(x,y,z,t,b){ vox.set(vkey(x,y,z), { t, b: b || bucketOf(x,y,z) }); }
 function getB(x,y,z){ const v = vox.get(vkey(x,y,z)); return v && v.t; }
@@ -2446,7 +2479,7 @@ function groundYAt(x, z, curY){
   const inFlight = inWest || inLand || inEast;
   const cands = [];
   if(!inFlight) cands.push(0);
-  if(inB && !inFlight) cands.push(5, 10, 15);
+  if(inB && !inFlight) cands.push(5, 10, 15, 20);
   if(inShaft(x, z)){
     for(let s=0; s<3; s++){
       const b = s * FH;
@@ -2472,7 +2505,7 @@ function groundYAt(x, z, curY){
 function surfacesAt(x, z){
   const inB = x >= BLD.x0 && x <= BLD.x1 + 1 && z >= BLD.z0 && z <= BLD.z1 + 1;
   const out = [0];
-  if(inB) out.push(5, 10, 15);
+  if(inB) out.push(5, 10, 15, 20);
   if(inShaft(x, z)){
     const inWest = x >= -8 && x < -1 && z >= -21 && z <= -16;
     const inLand = x >= -8 && x <= 1 && z >= -28 && z < -21;
@@ -2500,7 +2533,7 @@ function camFree(x, y, z){
     if(c.floor !== -1 && !floors.has(c.floor)) continue;
     if(x > c.x0 - .3 && x < c.x1 + .3 && z > c.z0 - .3 && z < c.z1 + .3){
       const b0 = c.floor === -1 ? -.2 : c.floor * FH - .2;
-      const b1 = c.floor === -1 ? 19.4 : c.floor * FH + 4.2;
+      const b1 = c.floor === -1 ? 24.4 : c.floor * FH + 4.2;
       if(y > b0 && y < b1) return false;
     }
   }
@@ -2509,7 +2542,7 @@ function camFree(x, y, z){
     /* dentro do vão da escada a laje plana NÃO é teto: o corte de andares a
        esconde e os lances de cima é que mandam — sem essa exceção a marcha
        travava no patamar e a câmera caía pro fallback dentro da cabeça */
-    if(shaft && (s === 5 || s === 10 || s === 15)) continue;
+    if(shaft && (s === 5 || s === 10 || s === 15 || s === 20)) continue;
     if(s > py + 1.6 && y > s - 1.05 && y < s + .05) return false;
   }
   return true;
@@ -2539,6 +2572,15 @@ function clampCamPos(p){
 
 /* ============ HELPERS DE TEXTO / CAIXAS ============ */
 function rr(g,x,y,w,h,r){ g.beginPath(); if(g.roundRect) g.roundRect(x,y,w,h,r); else g.rect(x,y,w,h); }
+/* auto-fit de fonte: reduz o tamanho até o texto caber INTEIRO em maxW px do
+   canvas — nenhuma placa/painel da torre pode cortar letra nas bordas */
+function fitFont(g, text, weight, px, family, maxW){
+  let s = px;
+  g.font = `${weight} ${s}px ${family}`;
+  const w = g.measureText(text).width;
+  if(w > maxW){ s = Math.max(9, Math.floor(px * maxW / w)); g.font = `${weight} ${s}px ${family}`; }
+  return s;
+}
 function textSprite(text, opts={}){
   const fs = opts.fs||44, pad = 22;
   const c = document.createElement('canvas'); const g0 = c.getContext('2d');
@@ -2658,7 +2700,8 @@ function deptSign(dept, big=false){
   const g = c.getContext('2d');
   g.fillStyle = '#fdfef8'; rr(g, 0, 0, 1024, 150, 26); g.fill();
   g.strokeStyle = dept.css; g.lineWidth = 9; rr(g, 7, 7, 1010, 136, 22); g.stroke();
-  g.font = "800 60px 'Segoe UI', sans-serif"; g.textAlign='center'; g.textBaseline='middle'; g.fillStyle = '#24551a';
+  g.textAlign='center'; g.textBaseline='middle'; g.fillStyle = '#24551a';
+  fitFont(g, (dept.emoji + ' ' + dept.name).toUpperCase(), 900, 62, "'Segoe UI', sans-serif", 940);
   g.fillText((dept.emoji + ' ' + dept.name).toUpperCase(), 512, 80);
   const tex = new THREE.CanvasTexture(c); tex.encoding = THREE.sRGBEncoding;
   const w = big ? 17 : Math.min(dept._L.w * .62, 15);
@@ -2670,10 +2713,21 @@ function plateSign(text, color, w=6){
   const g = c.getContext('2d');
   g.fillStyle = '#fdfef8'; rr(g, 0, 0, 512, 110, 20); g.fill();
   g.strokeStyle = color; g.lineWidth = 7; rr(g, 6, 6, 500, 98, 16); g.stroke();
-  g.font = "800 52px 'Segoe UI', sans-serif"; g.textAlign='center'; g.textBaseline='middle'; g.fillStyle = '#24551a';
+  g.textAlign='center'; g.textBaseline='middle'; g.fillStyle = '#24551a';
+  fitFont(g, text, 900, 54, "'Segoe UI', sans-serif", 452);
   g.fillText(text, 256, 58);
   const tex = new THREE.CanvasTexture(c); tex.encoding = THREE.sRGBEncoding;
   return new THREE.Mesh(new THREE.PlaneGeometry(w, w * 110/512), new THREE.MeshBasicMaterial({ map: tex, transparent:true }));
+}
+function emojiPlaque(dept){
+  const c = document.createElement('canvas'); c.width = 256; c.height = 256;
+  const g = c.getContext('2d');
+  g.fillStyle = '#fdfef8'; rr(g, 0, 0, 256, 256, 34); g.fill();
+  g.strokeStyle = dept.css; g.lineWidth = 10; rr(g, 8, 8, 240, 240, 28); g.stroke();
+  g.font = "150px 'Segoe UI', sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText(dept.emoji, 128, 140);
+  const tex = new THREE.CanvasTexture(c); tex.encoding = THREE.sRGBEncoding;
+  return new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshBasicMaterial({ map: tex, transparent:true }));
 }
 
 /* ============ DIVISÓRIAS INTERNAS (geram os colisores junto) ============ */
@@ -2719,15 +2773,15 @@ for(let x = LOT.x0; x < LOT.x1; x++) for(let z = LOT.z0; z < LOT.z1; z++){
   else setB(x, -1, z, 'grass');
 }
 /* lajes dos andares e da cobertura */
-for(let f=1; f<=2; f++) for(let x = BLD.x0; x <= BLD.x1; x++) for(let z = BLD.z0; z <= BLD.z1; z++) setB(x, f*FH - 1, z, zoneTypeAt(f, x, z));
+for(let f=1; f<=3; f++) for(let x = BLD.x0; x <= BLD.x1; x++) for(let z = BLD.z0; z <= BLD.z1; z++) setB(x, f*FH - 1, z, zoneTypeAt(f, x, z));
 for(let x = BLD.x0; x <= BLD.x1; x++) for(let z = BLD.z0; z <= BLD.z1; z++)
-  setB(x, 14, z, (x === BLD.x0 || x === BLD.x1 || z === BLD.z0 || z === BLD.z1) ? 'graphite' : 'stone');
+  setB(x, 19, z, (x === BLD.x0 || x === BLD.x1 || z === BLD.z0 || z === BLD.z1) ? 'graphite' : 'stone');
 
 /* paredes externas — PELE NOVA (30/out): térreo em grafite (base corporativa),
    andares em painel claro com filete verde na fileira do piso (sul/leste),
    janelas MAIORES de vidro azul-espelhado (3 de cada 4 colunas); porta no térreo.
    Só muda o TIPO dos blocos: posições e colisores são os mesmos de antes. */
-for(let f=0; f<3; f++){
+for(let f=0; f<4; f++){
   const y0 = f * FH, mat = f === 0 ? 'graphite' : 'panel';
   const winX = x => ((x - BLD.x0) % 4) < 3, winZ = z => ((z - BLD.z0) % 4) < 3;
   for(let x = BLD.x0; x <= BLD.x1; x++){
@@ -2760,12 +2814,12 @@ for(let f=0; f<3; f++){
   addCol(1.15, BLD.x1 + 1.15, BLD.z1 - .15, BLD.z1 + 1.15, 0);
 }
 /* parapeito da cobertura (grafite; marcos na cor da marca na frente) */
-for(let x = BLD.x0; x <= BLD.x1; x++){ setB(x, 15, BLD.z0, 'graphite'); setB(x, 15, BLD.z1, (x % 6 === 0) ? 'kgreen' : 'graphite'); }
-for(let z = BLD.z0 + 1; z < BLD.z1; z++){ setB(BLD.x0, 15, z, 'graphite'); setB(BLD.x1, 15, z, 'graphite'); }
-addCol(BLD.x0 - .15, BLD.x1 + 1.15, BLD.z0 - .15, BLD.z0 + 1.15, 3);
-addCol(BLD.x0 - .15, BLD.x1 + 1.15, BLD.z1 - .15, BLD.z1 + 1.15, 3);
-addCol(BLD.x0 - .15, BLD.x0 + 1.15, BLD.z0, BLD.z1 + 1, 3);
-addCol(BLD.x1 - .15, BLD.x1 + 1.15, BLD.z0, BLD.z1 + 1, 3);
+for(let x = BLD.x0; x <= BLD.x1; x++){ setB(x, 20, BLD.z0, 'graphite'); setB(x, 20, BLD.z1, (x % 6 === 0) ? 'kgreen' : 'graphite'); }
+for(let z = BLD.z0 + 1; z < BLD.z1; z++){ setB(BLD.x0, 20, z, 'graphite'); setB(BLD.x1, 20, z, 'graphite'); }
+addCol(BLD.x0 - .15, BLD.x1 + 1.15, BLD.z0 - .15, BLD.z0 + 1.15, 4);
+addCol(BLD.x0 - .15, BLD.x1 + 1.15, BLD.z1 - .15, BLD.z1 + 1.15, 4);
+addCol(BLD.x0 - .15, BLD.x0 + 1.15, BLD.z0, BLD.z1 + 1, 4);
+addCol(BLD.x1 - .15, BLD.x1 + 1.15, BLD.z0, BLD.z1 + 1, 4);
 
 /* ===== A LOGO NA FACHADA: painel escuro + K gigante em blocos verdes (glow) ===== */
 for(let x=-5; x<=3; x++) for(let y=6; y<=13; y++) setB(x, y, BLD.z1, 'dark');
@@ -2774,11 +2828,11 @@ K_GRID.forEach((row, r)=>{
 });
 
 /* divisórias dos andares + núcleo */
-for(let f=0; f<3; f++){
+for(let f=0; f<4; f++){
   const y0 = f * FH;
   const gapsE = f === 0 ? [[0,3]] : [[-10,-7],[6,9]];
   /* 1º andar oeste tem TRÊS salas (abuelo/tráfego/stock): três portas no corredor */
-  const gapsW = f === 1 ? [[-13,-10],[-2,1],[6,9]] : gapsE;
+  const gapsW = f === 1 ? [[-13,-10],[-2,1],[6,9]] : f === 3 ? [[6,9]] : gapsE;
   hWallX(-10, -29, 20, y0, gapsW, f);
   hWallX(  8, -29, 20, y0, gapsE, f);
   hWallZ(-14, -9, 8, y0, [[-3,3]], -1, 'stonebrick', 4, f === 0);   // frente do núcleo (colisor único, sempre)
@@ -2786,7 +2840,7 @@ for(let f=0; f<3; f++){
     hWallZ(-10, -33, -11, y0, [[-22,-19]], f);   // abuelo | tráfego pago
     hWallZ(  6, -33, -11, y0, [[-22,-19]], f);   // tráfego pago | stock
     hWallZ( -4,   9,  32, y0, [[ 19, 22]], f);   // hotmart | blogs
-  } else if(f > 0){
+  } else if(f > 0 && f !== 3){
     hWallZ(-4, -33, -11, y0, [[-22,-19]], f);
     hWallZ(-4,   9,  32, y0, [[ 19, 22]], f);
   }
@@ -2794,9 +2848,9 @@ for(let f=0; f<3; f++){
 /* parede-painel da logo no hall (térreo) */
 hWallZ(10, -6, 5, 0, [], 0, 'dark');
 /* cerca do núcleo na cobertura */
-hWallX(-10, -29, -15, 15, [], 3, 'graphite', 2);
-hWallX(  8, -29, -15, 15, [], 3, 'graphite', 2);
-hWallZ(-14, -9, 8, 15, [[-3,3]], 3, 'graphite', 2);
+hWallX(-10, -29, -15, 20, [], 4, 'graphite', 2);
+hWallX(  8, -29, -15, 20, [], 4, 'graphite', 2);
+hWallZ(-14, -9, 8, 20, [[-3,3]], 4, 'graphite', 2);
 
 /* cerca do lote + árvores + portão (bucket fixo '0': são do jardim, não de um andar) */
 for(let x = LOT.x0; x < LOT.x1; x++){ setB(x, 0, LOT.z0, 'stone', '0'); if(!(x >= -2 && x <= 1)) setB(x, 0, LOT.z1 - 1, 'stone', '0'); }
@@ -2841,18 +2895,18 @@ addCol(-5.15, -3.85, 23.85, 25.15, 0); addCol(3.85, 5.15, 23.85, 25.15, 0);
   const doorMat = new THREE.MeshLambertMaterial({ color:0xbfe3f2, transparent:true, opacity:.5 });
   const leafL = box(.95, 2.9, .07, doorMat, -1.55, 1.45, 20.55, {shadow:false}); leafL.rotation.y = .1; floorGroups[0].add(leafL);
   const leafR = box(.95, 2.9, .07, doorMat,  0.55, 1.45, 20.55, {shadow:false}); leafR.rotation.y = -.1; floorGroups[0].add(leafR);
-  const signMain = canvasPlane(logoCanvas(1024, 176), 13, 2.24); signMain.position.set(-0.5, 5.15, 22.15); floorGroups[1].add(signMain);
-  const signMarq = canvasPlane(logoCanvas(1024, 96), 7.2, .68); signMarq.position.set(-0.5, 3.3, 25.45); floorGroups[0].add(signMarq);
-  const gateSign = canvasPlane(logoCanvas(1024, 176), 9, 1.55); gateSign.position.set(-0.5, 3.9, 45.2); scene.add(gateSign);
-  const gateSign2 = gateSign.clone(); gateSign2.rotation.y = Math.PI; gateSign2.position.z = 43.8; scene.add(gateSign2);
+  const signMain = canvasPlane(logoCanvas(1024, 176), 13, 2.24); signMain.position.set(-0.5, 5.15, 22.06); floorGroups[1].add(signMain);
+  const signMarq = canvasPlane(logoCanvas(1024, 96), 7.2, .68); signMarq.position.set(-0.5, 3.3, 25.36); floorGroups[0].add(signMarq);
+  const gateSign = canvasPlane(logoCanvas(1024, 176), 9, 1.55); gateSign.position.set(-0.5, 3.9, 45.06); scene.add(gateSign);
+  const gateSign2 = gateSign.clone(); gateSign2.rotation.y = Math.PI; gateSign2.position.z = 43.94; scene.add(gateSign2);
 }
 /* letreiro luminoso KOVANTU na cobertura */
 const FONT3 = { K:['101','101','110','101','101'], O:['010','101','101','101','010'], V:['101','101','101','101','010'],
   A:['010','101','111','101','101'], N:['101','111','111','101','101'], T:['111','010','010','010','010'], U:['101','101','101','101','010'] };
-for(let x=-15; x<=13; x++) for(let y=15; y<=21; y++) setB(x, y, 19, 'dark');
+for(let x=-15; x<=13; x++) for(let y=20; y<=26; y++) setB(x, y, 19, 'dark');
 'KOVANTU'.split('').forEach((ch, li)=>{
   const gl = FONT3[ch];
-  gl.forEach((row, r)=>{ for(let cix=0; cix<3; cix++) if(row[cix] === '1') setB(-14 + li*4 + cix, 20 - r, 20, 'kgreen'); });
+  gl.forEach((row, r)=>{ for(let cix=0; cix<3; cix++) if(row[cix] === '1') setB(-14 + li*4 + cix, 25 - r, 20, 'kgreen'); });
 });
 
 const voxelFaces = buildVoxelMeshes();
@@ -2886,14 +2940,34 @@ DEPTS.forEach(d=>{
   grp.position.set(0, d.baseY, 0); floorGroups[d.floor].add(grp); d._group = grp;
   const rug = box(L.w * .46, .07, L.d * .44, lam(lighten(d.color, .12).getHex()), L.cx, .035, L.cz + .5, { shadow:false });
   grp.add(rug);
-  const s2 = deptSign(d); s2.position.set(L.cx + 1.5, 2.3, L.z0 + .65); grp.add(s2);
-  const art = textSprite(d.emoji, { fs:120, scale:.02 }); art.position.set(L.x0 + 3.4, 2.1, L.z0 + .8); grp.add(art);
-  grp.add(box(1.9,1.9,.1, lam(0xffffff), L.x0 + 3.4, 2.1, L.z0 + .35, {shadow:false}));
-  /* placa do departamento ao lado da porta (lado do hall/corredor) */
+  /* ===== PADRÃO ÚNICO DE PLACAS DA TORRE (correção 31/out) =====
+     • placa principal: SOBRE a porta, no corredor, rente à parede — uma verga de
+       madeira atravessa o topo do vão e ancora a placa (nada flutuando no vão)
+     • placa interna do depto: rente à parede, topo alinhado em y=3.30; nas salas
+       com painel central na parede do fundo (diretoria/tráfego/stock/youtube),
+       ela vai rente à parede lateral oeste, centrada na sala
+     • medalhão do emoji: placa única com o emoji desenhado, rente, topo em 3.30
+     • painéis de parede de cada sala: rentes e com o topo na mesma linha (3.30) */
+  const SIGN_TOP = 3.3;
+  const westSignRooms = ['diretoria', 'trafego', 'stock', 'youtube'];
+  const s2 = deptSign(d); const s2h = Math.min(L.w * .62, 15) * 150/1024;
+  if(westSignRooms.includes(d.id)){
+    s2.position.set(L.x0 + .03, SIGN_TOP - s2h/2, L.cz); s2.rotation.y = Math.PI/2;
+  } else {
+    s2.position.set(L.cx, SIGN_TOP - s2h/2, L.z0 + .03);
+  }
+  grp.add(s2);
+  const art = emojiPlaque(d); art.position.set(L.x0 + 2.6, SIGN_TOP - .95, L.z0 + .03); grp.add(art);
+  /* placa principal sobre a porta (lado do corredor) + verga que a sustenta */
   const doorZ = doorZOf(d);
-  const ds = plateSign(d.emoji + ' ' + d.name, d.css, 6.5);
-  if(L.x1 === -10){ ds.position.set(-9.44, 2.6, doorZ); ds.rotation.y = Math.PI/2; }
-  else { ds.position.set(7.44, 2.6, doorZ); ds.rotation.y = -Math.PI/2; }
+  const ds = plateSign(d.emoji + ' ' + (DOOR_LABEL[d.id] || d.name), d.css, 4.3);
+  if(L.x1 === -10){
+    grp.add(box(1.0, 1.44, 4.4, planksDarkMat, -9.5, SIGN_TOP, doorZ, {shadow:false}));
+    ds.position.set(-8.94, SIGN_TOP, doorZ); ds.rotation.y = Math.PI/2;
+  } else {
+    grp.add(box(1.0, 1.44, 4.4, planksDarkMat, 8.5, SIGN_TOP, doorZ, {shadow:false}));
+    ds.position.set(7.94, SIGN_TOP, doorZ); ds.rotation.y = -Math.PI/2;
+  }
   grp.add(ds);
 
   const seats = []; d._screens = [];
@@ -2925,14 +2999,13 @@ DEPTS.forEach(d=>{
       const c1 = voxelChair(0x8a6a20); c1.position.set(L.cx + i*2.6, 0, L.cz + 3.1); c1.rotation.y = Math.PI; P.add(c1);
       const c2 = voxelChair(0x8a6a20); c2.position.set(L.cx + i*2.6, 0, L.cz - 1.4); P.add(c2);
     }
-    const dash = screenBox(d, 4.6, 2.2); dash.position.set(L.cx, 2.0, L.z0 + .75); P.add(dash);
+    const dash = screenBox(d, 4.6, 2.2); dash.position.set(L.cx, 2.2, L.z0 + .06); P.add(dash);
     addCol(L.cx - 4.2, L.cx + 4.2, L.cz - .9, L.cz + 2.5, d.floor);
   }
   if(d.id === 'abuelo'){
     P.add(box(.12,1.7,.12, darkMat, L.cx + 7, .85, L.cz, {shadow:false}));
-    const panelGlow = box(1.5,1.5,.08, glowMat, L.cx + 7, 2.15, L.cz, {shadow:false}); P.add(panelGlow);
-    const herb = textSprite('🌿', { fs:90, scale:.016 }); herb.position.set(L.cx + 7, 3.6, L.cz); P.add(herb);
-    animated.push(t=>{ panelGlow.position.y = 2.15 + Math.sin(t*1.7)*.06; });
+    const herbP = emojiPlaque(d); herbP.material.side = THREE.DoubleSide;
+    herbP.scale.setScalar(1.5/1.9); herbP.position.set(L.cx + 7, 2.15, L.cz); P.add(herbP);
   }
   if(d.id === 'hotmart'){
     const funnelMat = new THREE.MeshLambertMaterial({ color:0xff7a45, transparent:true, opacity:.45 });
@@ -2944,35 +3017,33 @@ DEPTS.forEach(d=>{
   }
   if(d.id === 'stock'){
     [0xff8fb2,0x8fd0ff,0xffe28f,0xb78bff].forEach((cc,i)=>{
-      P.add(box(2.0,1.4,.09, new THREE.MeshBasicMaterial({ color:cc }), L.cx - 4.5 + i*3.1, 1.9, L.z0 + .6, {shadow:false}));
+      P.add(box(2.0,1.4,.09, new THREE.MeshBasicMaterial({ color:cc }), L.cx - 4.5 + i*3.1, 2.6, L.z0 + .06, {shadow:false}));
     });
   }
   if(d.id === 'blogs'){
     for(let i=0;i<3;i++) P.add(box(1.4,.32,1.9, lam(0xf7f4ea), L.cx + 5.5, .16 + i*.33, L.cz + 3.2, {shadow:false}));
-    const pen = textSprite('✒️', { fs:90, scale:.016 }); pen.position.set(L.cx + 5.5, 2.3, L.cz + 3.2); P.add(pen);
-    animated.push(t=>{ pen.position.y = 2.3 + Math.sin(t*1.5)*.15; });
   }
   if(d.id === 'trafego'){
     /* dois monitores de campanha na parede do fundo + quadro de métricas na parede do corredor */
-    const dashA = screenBox(d, 4.4, 2.1); dashA.position.set(L.cx - 3.6, 2.0, L.z0 + .75); P.add(dashA);
-    const dashB = screenBox(d, 4.4, 2.1); dashB.position.set(L.cx + 3.6, 2.0, L.z0 + .75); P.add(dashB);
+    const dashA = screenBox(d, 4.4, 2.1); dashA.position.set(L.cx - 3.6, 2.25, L.z0 + .06); P.add(dashA);
+    const dashB = screenBox(d, 4.4, 2.1); dashB.position.set(L.cx + 3.6, 2.25, L.z0 + .06); P.add(dashB);
     const mc = document.createElement('canvas'); mc.width = 512; mc.height = 300;
     { const g = mc.getContext('2d');
       g.fillStyle = '#0d1522'; g.fillRect(0,0,512,300);
-      g.fillStyle = '#ff4fc3'; g.font = "800 32px 'Segoe UI', sans-serif"; g.textAlign = 'left';
+      g.fillStyle = '#ff4fc3'; g.textAlign = 'left';
+      fitFont(g, '📊 CAMPANHAS — ILUMINE', 800, 32, "'Segoe UI', sans-serif", 464);
       g.fillText('📊 CAMPANHAS — ILUMINE', 24, 46);
       const bars = [.35,.5,.42,.66,.8,.95];
       bars.forEach((v,i)=>{ g.fillStyle = i === bars.length - 1 ? '#58cc02' : '#2f9fd8'; g.fillRect(36 + i*52, 248 - v*132, 36, v*132); });
       g.strokeStyle = '#ffd94d'; g.lineWidth = 6; g.beginPath();
       bars.forEach((v,i)=>{ const px = 54 + i*52, py = 240 - v*132; i ? g.lineTo(px,py) : g.moveTo(px,py); }); g.stroke();
-      g.fillStyle = '#e8e8e8'; g.font = "700 25px 'Segoe UI', sans-serif";
+      g.fillStyle = '#e8e8e8';
+      fitFont(g, 'CTR ↑   CPC ↓   CONVERSAS ↑', 700, 25, "'Segoe UI', sans-serif", 464);
       g.fillText('CTR ↑   CPC ↓   CONVERSAS ↑', 24, 288);
     }
     const mtex = new THREE.CanvasTexture(mc); mtex.encoding = THREE.sRGBEncoding;
     const board = new THREE.Mesh(new THREE.PlaneGeometry(4.6, 2.7), new THREE.MeshBasicMaterial({ map: mtex }));
-    board.position.set(L.x1 - .62, 1.9, L.cz); board.rotation.y = -Math.PI/2; P.add(board);
-    const chart = textSprite('📈', { fs:90, scale:.016 }); chart.position.set(L.cx, 3.4, L.cz + 1); P.add(chart);
-    animated.push(t=>{ chart.position.y = 3.4 + Math.sin(t*1.6)*.14; });
+    board.position.set(L.x1 - .06, 1.95, L.cz); board.rotation.y = Math.PI/2; P.add(board);
   }
   if(d.id === 'arcade'){
     const cabCols = [0x1a2440,0x2c1440,0x0e2c28], scrCols = ['#39c5ff','#ff5bd8','#3ddc84'];
@@ -2987,16 +3058,16 @@ DEPTS.forEach(d=>{
     }
   }
   if(d.id === 'youtube'){
-    P.add(box(7.4,3.4,.18, lam(0x101014), L.cx + 2, 2.1, L.z0 + .55));
-    const play = textSprite('▶ DINERO CLARO', { fs:52, color:'#ff8f99', scale:.013 }); play.position.set(L.cx + 2, 2.2, L.z0 + .85); P.add(play);
+    P.add(box(7.4,3.4,.18, lam(0x101014), L.cx + 2, 1.6, L.z0 + .1));
+    const pc = document.createElement('canvas'); pc.width = 1024; pc.height = 256;
+    { const g = pc.getContext('2d'); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#ff8f99'; fitFont(g, '▶ DINERO CLARO', 800, 118, "'Segoe UI', sans-serif", 950); g.fillText('▶ DINERO CLARO', 512, 134); }
+    const play = canvasPlane(pc, 6.8, 1.7); play.position.set(L.cx + 2, 1.6, L.z0 + .21); P.add(play);
     const rec = box(.4,.4,.4, new THREE.MeshBasicMaterial({ color:0xff2233 }), L.cx - 5.5, 2.9, L.cz + 1.5, {shadow:false}); P.add(rec);
     P.add(box(.14,1.5,.14, darkMat, L.cx - 5.5, 1.1, L.cz + 1.5, {shadow:false}));
     animated.push(t=>{ rec.visible = Math.sin(t*3.2) > -.2; });
   }
   if(d.id === 'kdp'){
     [0xffd166,0xf4a9b8,0x9ad1ff,0xb5e7a0,0xffb38f].forEach((cc,i)=> P.add(box(2.0,.4,1.5, lam(cc), L.cx + 3 + (i%3)*2.2, .2 + Math.floor(i/3)*.42, L.cz + 2.8, {shadow:false})));
-    const zz = textSprite('💤', { fs:100, scale:.018 }); zz.position.set(L.x0 + 3, 2.7, L.cz + 2); P.add(zz);
-    animated.push(t=>{ zz.position.y = 2.7 + Math.sin(t*.9)*.18; });
   }
   if(d.id === 'apps'){
     P.add(box(11,.24,1.4, planksDarkMat, L.cx + 1, .85, L.cz + 3.8));
@@ -3011,6 +3082,97 @@ DEPTS.forEach(d=>{
     const sweep = new THREE.Mesh(new THREE.CircleGeometry(5.4, 22, 0, .55), new THREE.MeshBasicMaterial({ color:0x2ee6a8, transparent:true, opacity:.13, side:THREE.DoubleSide }));
     sweep.rotation.x = -Math.PI/2; sweep.position.set(L.cx + 7.5, .12, L.cz - 2); P.add(sweep);
     animated.push(t=>{ dish.rotation.y = t*1.1; sweep.rotation.z = -t*1.1; });
+  }
+  if(d.id === 'trader'){
+    /* ===== SALA TRADER — MERCADO FINANCEIRO (3º andar, estreia do Otto) ===== */
+    /* mesa de operação encostada na parede do corredor (não bloqueia as rotas):
+       tampo vertical, 6 monitores costas-com-costas e cadeiras dos dois lados */
+    P.add(box(2.4,.14,11, planksDarkMat, -13.5, .8, L.cz));
+    P.add(box(2.2,.8,.14, planksDarkMat, -13.5, .4, L.cz - 5.2, {shadow:false}));
+    P.add(box(2.2,.8,.14, planksDarkMat, -13.5, .4, L.cz + 5.2, {shadow:false}));
+    [-3.4, 0, 3.4].forEach(dz=>{
+      const sA = screenBox(d, 1.7, 1.05); sA.position.set(-14.25, 1.55, L.cz + dz); sA.rotation.y = -Math.PI/2; P.add(sA);
+      const sB = screenBox(d, 1.7, 1.05); sB.position.set(-12.75, 1.55, L.cz + dz); sB.rotation.y = Math.PI/2; P.add(sB);
+      const cA = voxelChair(0x37414f); cA.position.set(-16.3, 0, L.cz + dz); cA.rotation.y = Math.PI/2; P.add(cA);
+      const cB = voxelChair(0x37414f); cB.position.set(-10.9, 0, L.cz + dz); cB.rotation.y = -Math.PI/2; P.add(cB);
+    });
+    addCol(-14.9, -12.1, L.cz - 5.8, L.cz + 5.8, d.floor);
+    /* painel candlestick gigante na parede oeste (terminal escuro) */
+    const cc = document.createElement('canvas'); cc.width = 1024; cc.height = 256;
+    { const g = cc.getContext('2d');
+      g.fillStyle = '#0b1220'; g.fillRect(0,0,1024,256);
+      g.strokeStyle = '#1d2a3f'; g.lineWidth = 1;
+      for(let gx=0; gx<=1024; gx+=64){ g.beginPath(); g.moveTo(gx,0); g.lineTo(gx,256); g.stroke(); }
+      for(let gy=32; gy<256; gy+=32){ g.beginPath(); g.moveTo(0,gy); g.lineTo(1024,gy); g.stroke(); }
+      g.fillStyle = '#00e065'; g.font = "800 30px 'Segoe UI', sans-serif"; g.textAlign = 'left';
+      g.fillText('BTC/USD — SALA TRADER', 22, 40);
+      g.fillStyle = '#ffd94d'; g.font = "700 24px 'Segoe UI', sans-serif"; g.textAlign = 'right';
+      g.fillText('OTTO OPERANDO ▲', 1002, 40);
+      const rnd = mulberry(42); let base = 150;
+      for(let i=0;i<30;i++){
+        const x = 26 + i*33, open = base, close = base + (rnd() - .44) * 34;
+        const hi = Math.max(open, close) + rnd()*12, lo = Math.min(open, close) - rnd()*12;
+        const up = close >= open, col = up ? '#00e065' : '#ff5b6a';
+        g.strokeStyle = col; g.fillStyle = col; g.lineWidth = 3;
+        g.beginPath(); g.moveTo(x + 9, 226 - hi*0.62); g.lineTo(x + 9, 226 - lo*0.62); g.stroke();
+        g.fillRect(x, 226 - Math.max(open, close)*0.62, 18, Math.max(4, Math.abs(close - open)*0.62));
+        base = close;
+      }
+    }
+    const ctex = new THREE.CanvasTexture(cc); ctex.encoding = THREE.sRGBEncoding;
+    const candle = new THREE.Mesh(new THREE.PlaneGeometry(13, 3.25), new THREE.MeshBasicMaterial({ map: ctex }));
+    candle.position.set(L.x0 + .03, 1.68, L.cz - 8); candle.rotation.y = Math.PI/2; P.add(candle);
+    /* ticker de cotações na parede sul */
+    const tc = document.createElement('canvas'); tc.width = 2048; tc.height = 96;
+    { const g = tc.getContext('2d');
+      g.fillStyle = '#0b1220'; g.fillRect(0,0,2048,96);
+      g.textAlign = 'left'; g.textBaseline = 'middle';
+      const segs = [['BTC 97.420 ', '#e8e8e8'], ['▲2,4%  ', '#00e065'], ['ETH 3.812 ', '#e8e8e8'], ['▲1,1%  ', '#00e065'],
+        ['SOL 214,5 ', '#e8e8e8'], ['▼0,8%  ', '#ff5b6a'], ['IBOV 128.450 ', '#e8e8e8'], ['▲1,7%  ', '#00e065'],
+        ['USD/BRL 5,43 ', '#e8e8e8'], ['▼0,3%  ', '#ff5b6a'], ['PETR4 38,12 ', '#e8e8e8'], ['▲0,9%', '#00e065']];
+      /* auto-fit: a soma dos trechos tem que caber nos 2048px — antes o fim do ticker era cortado */
+      g.font = "800 44px 'Segoe UI', monospace";
+      let totW = 24; for(const [txt] of segs) totW += g.measureText(txt).width;
+      if(totW > 2000) g.font = `800 ${Math.floor(44 * 2000 / totW)}px 'Segoe UI', monospace`;
+      let tx = 24; for(const [txt, col] of segs){ g.fillStyle = col; g.fillText(txt, tx, 52); tx += g.measureText(txt).width; }
+    }
+    const ttex = new THREE.CanvasTexture(tc); ttex.encoding = THREE.sRGBEncoding;
+    const ticker = new THREE.Mesh(new THREE.PlaneGeometry(15, .7), new THREE.MeshBasicMaterial({ map: ttex }));
+    ticker.position.set(L.cx, 2.95, L.z1 - .03); ticker.rotation.y = Math.PI; P.add(ticker);
+    /* (placa escura duplicada sobre a porta removida na correção de placas:
+       a sala segue o padrão da torre — placa principal sobre a porta no corredor
+       + placa interna do depto rente à parede do fundo) */
+    /* painel do oxigênio: o Otto vive do saldo (tiers de sobrevivência) —
+       rente à parede oeste, abaixo do painel de candles, topo na linha 3.30 */
+    const oc = document.createElement('canvas'); oc.width = 512; oc.height = 300;
+    { const g = oc.getContext('2d');
+      g.fillStyle = '#0b1220'; g.fillRect(0,0,512,300);
+      g.strokeStyle = '#00e065'; g.lineWidth = 6; g.strokeRect(6,6,500,288);
+      g.fillStyle = '#ffffff'; g.textAlign = 'left';
+      fitFont(g, '💰 SALDO = OXIGÊNIO', 800, 30, "'Segoe UI', sans-serif", 458);
+      g.fillText('💰 SALDO = OXIGÊNIO', 24, 44);
+      g.fillStyle = '#8a93a5';
+      fitFont(g, 'Otto opera, lucra e sobrevive do saldo.', 700, 21, "'Segoe UI', sans-serif", 458);
+      g.fillText('Otto opera, lucra e sobrevive do saldo.', 24, 76);
+      fitFont(g, 'Zerou o saldo, ele desliga.', 700, 21, "'Segoe UI', sans-serif", 458);
+      g.fillText('Zerou o saldo, ele desliga.', 24, 100);
+      const tiers = [['NORMAL', '#00e065', 440], ['LOW', '#ffd94d', 300], ['CRITICAL', '#ff9f43', 180], ['DEAD', '#ff5b6a', 60]];
+      tiers.forEach(([nm, col, w], i)=>{
+        const y = 128 + i*42;
+        g.fillStyle = '#e8e8e8'; g.font = "700 20px 'Segoe UI', sans-serif"; g.fillText(nm, 24, y + 22);
+        g.fillStyle = col; g.fillRect(140, y, w * .78, 22);
+      });
+    }
+    const otex = new THREE.CanvasTexture(oc); otex.encoding = THREE.sRGBEncoding;
+    const oxy = new THREE.Mesh(new THREE.PlaneGeometry(4.0, 2.34), new THREE.MeshBasicMaterial({ map: otex }));
+    oxy.position.set(L.x0 + .03, 2.13, L.cz + 12); oxy.rotation.y = Math.PI/2; P.add(oxy);
+    /* moedas de ouro empilhadas + símbolo flutuante sobre a mesa */
+    [[-.3,0],[.35,.0],[0,.3]].forEach(([ox,oz], i)=>{
+      const cn = new THREE.Mesh(new THREE.CylinderGeometry(.32,.32,.1,14), new THREE.MeshLambertMaterial({ color:0xffd94d, emissive:0x8a6a00 }));
+      cn.position.set(-16.9 + ox, .16 + i*.11, L.cz + 4.8 + oz); cn.castShadow = true; P.add(cn);
+    });
+    /* (símbolo 💹 flutuante sobre a mesa removido na correção de placas:
+       ícone solto no ar não faz parte do padrão da torre) */
   }
 });
 
@@ -3035,11 +3197,12 @@ DEPTS.forEach(d=>{
       ['🚪 TÉRREO', '#2e7d12'], ['Hall • 🕹️ Games • 📱 Apps', '#33502c'],
       ['1️⃣ 1º ANDAR', '#2e7d12'], ['🌿 Abuelo • 🔥 Hotmart', '#33502c'], ['🖼️ Stock • ✒️ Blogs • 📊 Tráfego', '#33502c'],
       ['2️⃣ 2º ANDAR', '#2e7d12'], ['👑 Diretoria • 🎬 YouTube', '#33502c'], ['🔍 Prospecção • 📚 KDP', '#33502c'],
+      ['3️⃣ 3º ANDAR', '#2e7d12'], ['📈 Trader • Mercado Financeiro', '#33502c'],
       ['☀️ COBERTURA', '#2e7d12'], ['Terraço + letreiro Kovantu', '#33502c'],
     ];
-    lines.forEach(([txt, col], i)=>{ g.fillStyle = col; g.font = (i % 2 === 0 || i === 0 ? "800 33px" : "600 30px") + " 'Segoe UI', sans-serif"; g.fillText(txt, 256, 122 + i * 50); });
+    lines.forEach(([txt, col], i)=>{ g.fillStyle = col; fitFont(g, txt, (i % 2 === 0 || i === 0) ? 800 : 600, (i % 2 === 0 || i === 0) ? 33 : 30, "'Segoe UI', sans-serif", 458); g.fillText(txt, 256, 122 + i * 50); });
   }
-  const board = canvasPlane(dc, 2.3, 2.79); board.position.set(3.1, 1.8, 11.06); hall.add(board);
+  const board = canvasPlane(dc, 2.3, 2.79); board.position.set(3.1, 2.4, 11.06); hall.add(board);
   const rugH = box(10, .06, 7, rugMat, -0.5, .03, 16.8, {shadow:false}); hall.add(rugH);
   const sf1 = sofa(0x707a68); sf1.position.set(-5.2, 0, 17.2); sf1.rotation.y = Math.PI; hall.add(sf1);
   const sf2 = sofa(0x707a68); sf2.position.set(4.2, 0, 17.2); sf2.rotation.y = Math.PI; hall.add(sf2);
@@ -3052,8 +3215,8 @@ DEPTS.forEach(d=>{
   hall.add(box(1.05,.6,1.05, planksDarkMat, -5, 1.35, -27.5, {shadow:false}));
 }
 /* corredores do 1º e 2º andar + placas de andar */
-const FLOOR_NAMES = ['🚪 TÉRREO', '1️⃣ 1º ANDAR', '2️⃣ 2º ANDAR', '☀️ COBERTURA'];
-for(let f=1; f<=2; f++){
+const FLOOR_NAMES = ['🚪 TÉRREO', '1️⃣ 1º ANDAR', '2️⃣ 2º ANDAR', '3️⃣ 3º ANDAR', '☀️ COBERTURA'];
+for(let f=1; f<=3; f++){
   const cg = new THREE.Group(); cg.position.set(0, f*FH, 0); floorGroups[f].add(cg);
   const sf = sofa(0x5a6b7a); sf.position.set(-7.4, 0, 4); sf.rotation.y = Math.PI/2; cg.add(sf);
   const pl = plant(); pl.position.set(6.6, 0, 18.6); cg.add(pl);
@@ -3063,14 +3226,14 @@ for(let f=1; f<=2; f++){
   const bottle = new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.5,10), lam(0x9fd8ef));
   bottle.position.set(6.6, 1.45, -11); cg.add(bottle);
 }
-for(let f=0; f<4; f++){
+for(let f=0; f<5; f++){
   const pl = plateSign(FLOOR_NAMES[f], '#2e7d12', 3.4);
-  pl.position.set(5.9, f === 3 ? 15.95 : f*FH + 2.3, -12.94);
+  pl.position.set(5.9, f === 4 ? 20.95 : f*FH + 2.3, -12.94);
   floorGroups[f].add(pl);
 }
 /* ============ COBERTURA (terraço) ============ */
 {
-  const ter = new THREE.Group(); ter.position.set(0, 15, 0); floorGroups[3].add(ter);
+  const ter = new THREE.Group(); ter.position.set(0, 20, 0); floorGroups[4].add(ter);
   const tableSet = (x, z)=>{
     const g = new THREE.Group();
     g.add(box(2.2,.12,1.4, planksMat, 0,.78,0));
@@ -3086,8 +3249,21 @@ for(let f=0; f<4; f++){
   });
   const tl1 = floorLamp(); tl1.position.set(-24, 0, -2); ter.add(tl1);
   const tl2 = floorLamp(); tl2.position.set(22, 0, -8); ter.add(tl2);
-  addCol(-31.5, -28.5, -25.5, -22.5, 3); addCol(26.5, 29.5, -25.5, -22.5, 3);
-  addCol(-31.5, -28.5, 14.5, 17.5, 3); addCol(26.5, 29.5, 14.5, 17.5, 3);
+  addCol(-31.5, -28.5, -25.5, -22.5, 4); addCol(26.5, 29.5, -25.5, -22.5, 4);
+  addCol(-31.5, -28.5, 14.5, 17.5, 4); addCol(26.5, 29.5, 14.5, 17.5, 4);
+}
+/* ============ 3º ANDAR — MIRANTE LESTE (área comum, sem departamento) ============ */
+{
+  const lg = new THREE.Group(); lg.position.set(0, 15, 0); floorGroups[3].add(lg);
+  lg.add(box(9, .06, 11, rugMat, 20.5, .03, 5, {shadow:false}));
+  const lsf = sofa(0x5a6b7a); lsf.position.set(20, 0, 12); lsf.rotation.y = -Math.PI/2; lg.add(lsf);
+  const lpl = plant(); lpl.position.set(30, 0, 18.5); lg.add(lpl);
+  const llp = floorLamp(); llp.position.set(11, 0, 18.5); lg.add(llp);
+  lg.add(box(2.2,.12,1.4, planksMat, 20, .78, -2));
+  lg.add(box(.12,.78,1.1, planksDarkMat, 19.05, .39, -2)); lg.add(box(.12,.78,1.1, planksDarkMat, 20.95, .39, -2));
+  const lc1 = voxelChair(0x8a5a33); lc1.position.set(20, 0, -.95); lc1.rotation.y = Math.PI; lg.add(lc1);
+  const lc2 = voxelChair(0x8a5a33); lc2.position.set(20, 0, -3.05); lg.add(lc2);
+  addCol(19.2, 20.8, 10.3, 13.7, 3);
 }
 
 /* ============ PERSONAGENS VOXEL ESTILO MINECRAFT (da v1) ============ */
@@ -3403,7 +3579,7 @@ function deptNodeKeys(d){
 }
 function buildAutoGraph(){
   if(AUTO_NODES.size) return;
-  for(let f=0; f<3; f++){
+  for(let f=0; f<4; f++){
     const c = z => `${f}:cor:${z}`;
     [16,8,3,-4,-10].forEach(z => aNode(c(z), f, 0, z));
     aNode(`${f}:stair`, f, 0, -15.3);
@@ -3446,7 +3622,7 @@ function buildAutoGraph(){
       });
     }
     /* lances da escada deste andar pro próximo */
-    if(f < 2){
+    if(f < 3){
       const pts = [ [`${f}:stair`,0,-15.3,f], [`s${f}:w0`,-4.5,-15.3,f], [`s${f}:w1`,-4.5,-18,f], [`s${f}:w2`,-4.5,-21.5,f],
         [`s${f}:lw`,-4.5,-25.6,f], [`s${f}:le`,4,-25.6,f], [`s${f}:e1`,4,-23,f], [`s${f}:e2`,4,-20,f], [`s${f}:e3`,4,-16.8,f],
         [`s${f}:arr`,4,-15.3,f], [`${f+1}:stair`,0,-15.3,f+1] ];
@@ -3458,7 +3634,7 @@ function nearestAutoKey(p){
   const u = p.userData, f = u.currentFloor;
   const d = deptById(u.homeDeptId);
   const insideHome = d && p.position.x >= d._L.x0 && p.position.x < d._L.x1 && p.position.z >= d._L.z0 && p.position.z < d._L.z1 && f === d.floor;
-  if(inShaft(p.position.x, p.position.z)) return `${Math.min(2, Math.max(0, Math.round(p.position.y / FH)))}:stair`;
+  if(inShaft(p.position.x, p.position.z)) return `${Math.min(3, Math.max(0, Math.round(p.position.y / FH)))}:stair`;
   if(insideHome) return deptNodeKeys(d).center;
   if(p.position.x >= -9 && p.position.x <= 8 && p.position.z >= -15 && p.position.z <= 20){
     const zs = [16,8,3,-4,-10]; let best = zs[0], bd = 1e9;
@@ -3659,8 +3835,8 @@ function initAutonomy(p, rec, d, seat){
 }
 function autoSyncParent(p){
   const u = p.userData;
-  const f = Math.max(0, Math.min(3, Math.round(p.position.y / FH)));
-  if(f !== u.currentFloor && f <= 2){
+  const f = Math.max(0, Math.min(4, Math.round(p.position.y / FH)));
+  if(f !== u.currentFloor && f <= 3){
     const yaw = Math.atan2(Math.sin(p.rotation.y), Math.cos(p.rotation.y));
     floorGroups[f].attach(p); u.currentFloor = f; setNPCYaw(p, yaw);
     if(window.__cutView) applyVisibility();
@@ -3973,16 +4149,16 @@ renderer.domElement.addEventListener('pointerup', e=>{
 });
 
 /* ============ O MACETE DO TETO: vistas e cortes por andar ============ */
-let viewMode = 'exterior', cutFloor = 3;
-const floorBtns = [0,1,2,3].map(f=> document.getElementById('bf' + f));
+let viewMode = 'exterior', cutFloor = 4;
+const floorBtns = [0,1,2,3,4].map(f=> document.getElementById('bf' + f));
 const btnExt = document.getElementById('bfExt');
 function updateFloorButtons(){
   btnExt.classList.toggle('on', viewMode === 'exterior');
   floorBtns.forEach((b, f)=> b.classList.toggle('on', viewMode === 'cut' && cutFloor === f));
 }
 function applyVisibility(){
-  for(let i=0;i<4;i++) floorGroups[i].visible = viewMode === 'exterior' ? true : i <= cutFloor;
-  for(let n=0;n<3;n++) wallSEGroups[n].visible = viewMode === 'exterior' ? true : n < cutFloor;
+  for(let i=0;i<5;i++) floorGroups[i].visible = viewMode === 'exterior' ? true : i <= cutFloor;
+  for(let n=0;n<4;n++) wallSEGroups[n].visible = viewMode === 'exterior' ? true : n < cutFloor;
   plumbob.visible = viewMode === 'exterior' || (selectedDept && selectedDept.floor <= cutFloor);
   /* na vista de corte, as etiquetas de quem está NO andar aberto atravessam a
      mobília (dono tem que ABRIR o andar e VER a galera); etiquetas dos outros
@@ -4005,7 +4181,7 @@ function goFloor(f){
   povSpawn = f;
   setCut(f);
   focusTarget = new THREE.Vector3(0, f*FH + 1.2, -4);
-  focusCam = f === 3 ? new THREE.Vector3(30, 27, 38) : new THREE.Vector3(34, f*FH + 15, 42);
+  focusCam = f === 4 ? new THREE.Vector3(30, 32, 38) : new THREE.Vector3(34, f*FH + 15, 42);
 }
 floorBtns.forEach((b, f)=> b.onclick = ()=> goFloor(f));
 btnExt.onclick = ()=>{
@@ -4100,7 +4276,7 @@ function activeFloors(){
   const s = new Set([povFloor]);
   if(inShaft(player.position.x, player.position.z)){
     if(povFloor > 0) s.add(povFloor - 1);
-    if(povFloor < 3) s.add(povFloor + 1);
+    if(povFloor < 4) s.add(povFloor + 1);
   }
   return s;
 }
@@ -4122,7 +4298,7 @@ function povStep(dt){
   } else {
     player.position.y = groundYAt(player.position.x, player.position.z, player.position.y);
   }
-  const fl = Math.max(0, Math.min(3, Math.round(player.position.y / FH)));
+  const fl = Math.max(0, Math.min(4, Math.round(player.position.y / FH)));
   if(fl !== povFloor){ povFloor = fl; viewMode = 'cut'; cutFloor = fl; applyVisibility(); }
 }
 /* pose-alvo da câmera de 3ª pessoa — fonte única: o tick interpola até ela,
@@ -4345,7 +4521,7 @@ renderer.setAnimationLoop(()=>{
   }
   renderer.render(scene, camera);
   if(firstFrame){ firstFrame = false; loaderSceneReady = true; loaderGate();
-    setTimeout(()=>{ selectDept(DEPTS[0], false, false); toast('🏢 Torre Kovantu pronta: ' + people.length + ' pessoas em 3 andares + cobertura'); }, 500); }
+    setTimeout(()=>{ selectDept(DEPTS[0], false, false); toast('🏢 Torre Kovantu pronta: ' + people.length + ' pessoas em 4 andares + cobertura'); }, 500); }
 });
 addEventListener('resize', ()=>{ camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
 
@@ -4355,7 +4531,7 @@ window.__KOV = { THREE, scene, camera, renderer, controls, DEPTS, people, roster
   EQUIPE: ()=> EQUIPE_ATUAL,
   live: ()=>({ on: LIVE.on, atualizadoEm: LIVE.atualizadoEm, count: roster.size }),
   PAGE_VERSION, checkVersion, showSpeech, clearSpeech, onStairs, startConversation, autonomy:{ snapshot:autoSnapshot, simulate:autoSimulate, stats:()=> ({ ...AUTO }) }, colliders,
-  collide:(x, z, r)=> collide(x, z, r, new Set([0,1,2,3])),
+  collide:(x, z, r)=> collide(x, z, r, new Set([0,1,2,3,4])),
   camFree:(x, y, z)=> camFree(x, y, z), clampCamPos:(v)=> clampCamPos(v), surfacesAt:(x, z)=> surfacesAt(x, z),
   view:()=>({ mode: viewMode, cut: cutFloor }),
   stats:{ blocks: vox.size, voxelFaces, people: people.length, clickables: clickables.length, colliders: colliders.length, bucketFaces } };
