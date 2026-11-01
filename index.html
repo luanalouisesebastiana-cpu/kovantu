@@ -28,19 +28,51 @@
   #livePill.on .dot{background:#58cc02;animation:livepulse 1.6s ease-in-out infinite}
   @keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(88,204,2,.55)}50%{box-shadow:0 0 0 6px rgba(88,204,2,0)}}
 
+  /* ===== topo enxuto: estatísticas sob demanda no chip 📊 Resumo ===== */
+  #btnResumo{cursor:pointer;font:inherit;background:linear-gradient(180deg,#fdfef8,#e8f3dc);border:2.5px solid #2e5d23;border-radius:8px;padding:6px 12px;text-align:center;min-width:66px;box-shadow:0 6px 16px rgba(20,50,10,.3);font-size:16px;line-height:1.05;color:#24551a}
+  #btnResumo s{display:block;text-decoration:none;font-size:9px;color:#6b8560;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-top:1px}
+  #btnResumo:active{transform:scale(.96)}
+  #resumoCard{position:fixed;top:74px;right:12px;width:232px;max-width:calc(100vw - 24px);background:linear-gradient(180deg,#fdfef9,#eef6e3);border:2.5px solid #2e5d23;border-radius:12px;padding:12px 14px 10px;z-index:16;box-shadow:0 16px 38px rgba(15,45,5,.4);transition:.25s}
+  #resumoCard.hidden{transform:translateY(-8px);opacity:0;pointer-events:none}
+  #resumoCard h3{font-size:13px;letter-spacing:.6px;color:#24551a;margin-bottom:8px}
+  #resumoClose{position:absolute;top:6px;right:9px;background:none;border:none;color:#7a9271;font-size:15px;cursor:pointer;padding:2px 4px}
+  #resumoCard .rrow{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:600;color:#47663c;padding:5px 0;border-top:1.5px dashed #cfe0ba}
+  #resumoCard .rrow b{font-size:15px;color:#24551a}
+  #resumoCard .rrow b.green{color:#43a400}
+  #resumoCard .rrow b.amber{color:#d98a00}
+
+  /* ===== coluna direita (ações + andares) =====
+     Desktop: #side é display:contents — #actions/#floors mantêm o posicionamento
+     fixo de sempre. No mobile (≤760px) o #side vira UMA coluna única rolável,
+     com o fundo limitado ACIMA do dock de pessoas: nada cobre botão de andar. */
+  #side{display:contents}
   #actions{position:fixed;top:86px;right:12px;display:flex;flex-direction:column;gap:7px;z-index:10}
-  #actions button{touch-action:manipulation;cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#fdfef8,#dff0cb);color:#24551a;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;box-shadow:0 5px 14px rgba(20,50,10,.3);transition:.15s;text-align:left}
+  #actions button{touch-action:manipulation;cursor:pointer;border:1.5px solid #2e5d23;background:linear-gradient(180deg,#fdfef8,#dff0cb);color:#24551a;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;box-shadow:0 2px 7px rgba(20,50,10,.18);transition:.15s;text-align:left}
   #actions button:hover{transform:translateX(-3px);background:linear-gradient(180deg,#fff,#cdeeb2)}
   #actions button.on{background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3)}
 
   #floors{position:fixed;top:342px;right:12px;display:flex;flex-direction:column;gap:7px;z-index:10}
   #floors .flabel{font-size:9.5px;font-weight:900;letter-spacing:1.6px;color:#eaf7da;text-shadow:0 1px 3px rgba(10,30,5,.8);text-align:right;padding-right:2px}
-  #floors button{touch-action:manipulation;cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#fdfef8,#dff0cb);color:#24551a;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;box-shadow:0 5px 14px rgba(20,50,10,.3);transition:.15s;text-align:left}
+  #floors button{touch-action:manipulation;cursor:pointer;border:1.5px solid #2e5d23;background:linear-gradient(180deg,#fdfef8,#dff0cb);color:#24551a;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;box-shadow:0 2px 7px rgba(20,50,10,.18);transition:.15s;text-align:left}
   #floors button:hover{transform:translateX(-3px);background:linear-gradient(180deg,#fff,#cdeeb2)}
   #floors button.on{background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3)}
 
+  /* ===== abinha de ocultar/mostrar a coluna direita =====
+     Fica FORA do #side (não some junto), sempre visível: o JS encosta a abinha
+     na borda esquerda da coluna; oculta, ela vai pro canto da tela (right:0). */
+  #btnSideTab{position:fixed;top:86px;right:210px;z-index:12;width:28px;height:64px;padding:0;border:2.5px solid #2e5d23;border-radius:8px 0 0 8px;background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;font-size:15px;font-weight:900;line-height:1;cursor:pointer;box-shadow:-4px 5px 14px rgba(20,50,10,.3);display:flex;align-items:center;justify-content:center;touch-action:manipulation;transition:right .32s ease,top .2s ease}
+  #btnSideTab:active{transform:scale(.95)}
+  #actions,#floors{transition:transform .32s ease,opacity .32s ease}
+  body.side-off #actions,body.side-off #floors{transform:translateX(calc(100% + 26px));opacity:0;pointer-events:none}
+  body.side-snap #actions,body.side-snap #floors,body.side-snap #side,body.side-snap #btnSideTab{transition:none!important}
+
   /* ===== painel da pessoa selecionada ===== */
-  #panel{position:fixed;left:12px;bottom:104px;width:330px;max-width:calc(100vw - 24px);background:linear-gradient(180deg,#fdfef9,#eef6e3);border:3px solid #2e5d23;border-radius:12px;padding:14px 16px;z-index:11;box-shadow:0 18px 44px rgba(15,45,5,.45);transition:.3s}
+  #panel{position:fixed;left:12px;bottom:104px;width:330px;max-width:calc(100vw - 24px);background:linear-gradient(180deg,#fdfef9,#eef6e3);border:3px solid #2e5d23;border-radius:12px;padding:11px 13px;z-index:13;box-shadow:0 18px 44px rgba(15,45,5,.45);transition:.3s;display:flex;flex-direction:column;max-height:calc(100vh - 196px);max-height:calc(100dvh - 196px)}
+  /* miolo rolável do painel: quem rola é o #pBody — o 💬 Conversar é RODAPÉ
+     FIXO, visível em qualquer altura de tela, sem precisar rolar o painel */
+  #pBody{overflow-y:auto;min-height:0;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#58cc02 transparent}
+  #pBody::-webkit-scrollbar{width:4px}
+  #pBody::-webkit-scrollbar-thumb{background:#58cc02;border-radius:2px}
   #panel.hidden{transform:translateY(14px);opacity:0;pointer-events:none}
   #pClose{position:absolute;top:8px;right:11px;background:none;border:none;color:#7a9271;font-size:17px;cursor:pointer}
   .p-head{display:flex;gap:11px;align-items:center}
@@ -50,20 +82,20 @@
   #pStatus{display:inline-block;margin-top:4px;font-size:10px;font-weight:800;letter-spacing:.8px;padding:2.5px 9px;border-radius:6px;background:#dff5c8;color:#33750a;border:1.5px solid #7cc24a}
   #pStatus.pause{background:#ffefc4;color:#8a6100;border-color:#e3b94e}
   #pStatus.wait{background:#dbeafe;color:#1d4ed8;border-color:#93c5fd}
-  #pDoing{margin-top:11px;font-size:12.5px;line-height:1.45;color:#33502c;background:#fff;border:2px solid #cfe3ba;border-radius:8px;padding:8px 10px;position:relative}
+  #pDoing{margin-top:8px;font-size:12.5px;line-height:1.45;color:#33502c;background:#fff;border:2px solid #cfe3ba;border-radius:8px;padding:7px 9px;position:relative}
   #pDoing:before{content:'💭';position:absolute;top:-11px;left:10px;font-size:15px}
-  .needs{margin-top:11px;display:grid;grid-template-columns:1fr 1fr;gap:7px 12px}
+  .needs{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:5px 10px}
   .need{font-size:11px;font-weight:700;color:#47663c}
-  .need .row{display:flex;justify-content:space-between;margin-bottom:3px}
-  .nbar{height:9px;background:#dde8d2;border-radius:3px;overflow:hidden;border:1px solid #b9d1a4}
+  .need .row{display:flex;justify-content:space-between;margin-bottom:2px}
+  .nbar{height:6px;background:#dde8d2;border-radius:3px;overflow:hidden;border:1px solid #b9d1a4}
   .nbar i{display:block;height:100%;background:linear-gradient(90deg,#58cc02,#a5ec62);transition:width .6s}
   .nbar i.low{background:linear-gradient(90deg,#e0532f,#ff9a62)}
   .nbar i.mid{background:linear-gradient(90deg,#e8a812,#ffd94d)}
-  #pTasks{margin-top:11px;border-top:2px dashed #c4dcab;padding-top:9px;display:flex;flex-direction:column;gap:5px}
+  #pTasks{margin-top:8px;border-top:2px dashed #c4dcab;padding-top:7px;display:flex;flex-direction:column;gap:4px}
   #pTasks h4{font-size:10.5px;letter-spacing:1.4px;color:#6b8560}
   #pTasks .tk{font-size:12px;color:#33502c;display:flex;justify-content:space-between;gap:8px}
   #pTasks .tk b{color:#43a400}
-  #pChatBtn{margin-top:12px;width:100%;cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);border-radius:9px;padding:10px;font-size:13.5px;font-weight:800;box-shadow:0 5px 14px rgba(20,50,10,.3)}
+  #pChatBtn{margin-top:9px;width:100%;flex:0 0 auto;cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);border-radius:9px;padding:9px;font-size:13.5px;font-weight:800;box-shadow:0 5px 14px rgba(20,50,10,.3)}
   #pChatBtn:active{transform:scale(.98)}
 
   /* ===== conversa com funcionário (chat + ligação) ===== */
@@ -92,7 +124,7 @@
   /* overlay de ligação */
   #callOverlay{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(8,20,10,.72)}
   #callOverlay.on{display:flex}
-  .call-card{background:linear-gradient(180deg,#173620,#0d2213);border:3px solid #58cc02;border-radius:20px;padding:30px 38px;text-align:center;color:#d7ecc6;box-shadow:0 30px 80px rgba(0,0,0,.6);max-width:calc(100vw - 32px)}
+  .call-card{background:linear-gradient(180deg,#173620,#0d2213);border:3px solid #58cc02;border-radius:20px;padding:30px 38px;text-align:center;color:#d7ecc6;box-shadow:0 30px 80px rgba(0,0,0,.6);max-width:calc(100vw - 32px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain}
   #callAvatar{width:104px;height:104px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:52px;border:3px solid #58cc02;background:#fdfef8;animation:callpulse 1.8s ease-in-out infinite}
   @keyframes callpulse{0%,100%{box-shadow:0 0 0 0 rgba(88,204,2,.5)}50%{box-shadow:0 0 0 16px rgba(88,204,2,0)}}
   #callName{font-size:21px;font-weight:800}
@@ -105,27 +137,33 @@
 
   /* ===== barra de personagens: dock próprio acima do ticker, fundo OPACO
      (o #hint vazava por trás dos chips: mesma faixa + fundo translúcido) ===== */
-  #peopleDock{position:fixed;left:0;right:0;bottom:40px;z-index:11;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+  #peopleDock{position:fixed;left:0;right:0;bottom:34px;z-index:11;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
   #peopleDock>*{pointer-events:auto}
   #btnPeople{align-self:flex-end;margin-right:10px;min-height:38px;padding:8px 16px;border-radius:999px;border:2px solid #58cc02;background:#0d2213;color:#d7ecc6;font-weight:800;font-size:12.5px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.4)}
   #btnPeople:active{transform:scale(.97)}
   #peopleDock.closed #simbar{display:none}
   #simbar{display:flex;gap:7px;background:linear-gradient(180deg,#173620,#0d2213);border:2.5px solid #58cc02;border-radius:12px;padding:8px 10px;max-width:calc(100vw - 16px);overflow-x:auto;box-shadow:0 14px 34px rgba(0,0,0,.45)}
-  .sim{flex:0 0 auto;cursor:pointer;text-align:center;background:none;border:none;width:62px}
+  .sim{flex:0 0 auto;cursor:pointer;text-align:center;background:none;border:none;width:62px;position:relative}
+  /* 💬 de conversa direta no canto do retrato: 1 toque abre o chat com a
+     pessoa, sem passar pelo painel (descoberta — pedido do CEO) */
+  .sim .chatdot{position:absolute;top:-3px;right:-1px;width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,#8fe63f,#58cc02);border:2px solid #2e5d23;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(0,0,0,.4);z-index:2}
+  .sim .chatdot:active{transform:scale(.9)}
   .sim .face{width:46px;height:46px;margin:0 auto;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:23px;border:3px solid #46684f;transition:.15s;position:relative}
   .sim.sel .face{border-color:#58cc02;transform:scale(1.12);box-shadow:0 0 0 3px rgba(88,204,2,.35)}
   .sim .face:after{content:'';position:absolute;top:-13px;left:50%;margin-left:-5px;width:9px;height:9px;background:#58cc02;border-radius:1px;border:1px solid #2e7d12;opacity:0;transition:.15s}
   .sim.sel .face:after{opacity:1}
   .sim small{display:block;margin-top:3px;font-size:9.5px;color:#cfe8bd;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-  #ticker{position:fixed;left:0;right:0;bottom:0;height:34px;background:rgba(10,26,14,.95);border-top:2px solid #58cc02;display:flex;align-items:center;overflow:hidden;z-index:10}
-  #ticker .tag{flex:0 0 auto;background:#58cc02;color:#0e2a05;font-weight:900;font-size:10.5px;letter-spacing:1.2px;padding:0 13px;height:100%;display:flex;align-items:center}
-  #tickMove{display:inline-block;white-space:nowrap;padding-left:18px;animation:tick 55s linear infinite;font-size:12px;color:#d7ecc6}
+  #ticker{position:fixed;left:0;right:0;bottom:0;height:28px;background:rgba(10,26,14,.95);border-top:2px solid #58cc02;display:flex;align-items:center;overflow:hidden;z-index:10}
+  #ticker .tag{flex:0 0 auto;background:#58cc02;color:#0e2a05;font-weight:900;font-size:9.5px;letter-spacing:1.1px;padding:0 11px;height:100%;display:flex;align-items:center}
+  #tickMove{display:inline-block;white-space:nowrap;padding-left:18px;animation:tick 55s linear infinite;font-size:11px;color:#d7ecc6}
   #tickMove b{color:#fff}
   @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-  #hint{position:fixed;left:12px;bottom:176px;z-index:9;background:rgba(253,254,248,.9);border:2px solid #2e5d23;color:#47663c;font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:8px}
+  #hint{position:fixed;left:12px;bottom:176px;z-index:9;background:rgba(253,254,248,.9);border:2px solid #2e5d23;color:#47663c;font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:8px;transition:opacity .6s}
+  #hint.bye{opacity:0;pointer-events:none}
   #hint b{color:#33750a}
+  #hint .hint-short{display:none}
   #joy{position:fixed;left:18px;bottom:120px;width:118px;height:118px;border-radius:50%;background:rgba(253,254,248,.16);border:2.5px solid rgba(253,254,248,.55);z-index:12;display:none;touch-action:none}
   #joyKnob{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:rgba(253,254,248,.85);border:2.5px solid #2e5d23}
   #povHint{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:12;display:none;background:rgba(13,34,19,.92);border:2px solid #58cc02;color:#d7ecc6;font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:10px;white-space:nowrap}
@@ -153,7 +191,79 @@
   #loader .kv-bar{margin-top:18px;width:min(420px,80vw);height:10px;border:3px solid #1B2B1A;border-radius:6px;overflow:hidden;opacity:0;animation:kvfadeUp .5s .8s forwards}
   #loader .kv-bar i{display:block;height:100%;width:0;background:#1B2B1A;animation:kvfill 2.9s .8s cubic-bezier(.22,.8,.36,1) forwards}
   @keyframes kvfill{to{width:100%}}
-  @media(max-width:760px){ .stats{display:none} #hint{display:none} #panel{bottom:118px} #actions{top:80px} #actions button{min-height:44px} #floors{top:auto;bottom:238px} #floors button{padding:6px 10px;font-size:11.5px;min-height:44px} #povHint{white-space:normal;max-width:94vw;text-align:center} #btnPeople{min-height:44px;padding:10px 16px} }
+  @media(max-width:760px){ #hud{flex-wrap:wrap} .stats{display:flex;order:3;flex-basis:100%;gap:5px;pointer-events:none} .stat{min-width:0;padding:3px 8px;border-width:2px;border-radius:7px} .stat b{font-size:12.5px} .stat s{font-size:7.5px;letter-spacing:.6px} #livePill{font-size:10px;padding:5px 9px} #btnResumo{min-width:0;padding:3px 8px;border-width:2px;border-radius:7px;font-size:12.5px;pointer-events:auto} #btnResumo s{font-size:7.5px;letter-spacing:.6px} #resumoCard{top:166px;right:8px} #panel{bottom:118px} #povHint{white-space:normal;max-width:94vw;text-align:center} #btnPeople{min-height:44px;padding:10px 16px}
+    /* dica curta SEMPRE visível no celular (antes era display:none e a
+       descoberta do toque/conversa morria): versão curta no topo, à esquerda */
+    #hint{display:block;top:158px;bottom:auto;left:12px;max-width:64vw;font-size:10.5px;padding:5px 9px}
+    #hint .hint-full{display:none}
+    #hint .hint-short{display:inline}
+    /* coluna direita única e rolável: ações + andares empilhados, fundo travado
+       190px acima da base (dock de pessoas aberto ≈170px) — a pílula Pessoas
+       e a barra NUNCA alcançam os botões de andar; o que não couber, rola aqui */
+    #side{position:fixed;top:150px;right:8px;z-index:10;display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 150px - 190px);max-height:calc(100dvh - 150px - 190px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:2px;scrollbar-width:thin;scrollbar-color:#58cc02 transparent}
+    #side::-webkit-scrollbar{width:4px}
+    #side::-webkit-scrollbar-thumb{background:#58cc02;border-radius:2px}
+    /* ocultar no mobile: desliza a COLUNA inteira (não os filhos, que já
+       deslizam pela regra de desktop — aqui eles ficam parados dentro dela) */
+    #side{transition:transform .32s ease,opacity .32s ease}
+    body.side-off #actions,body.side-off #floors{transform:none;opacity:1;pointer-events:auto}
+    body.side-off #side{transform:translateX(calc(100% + 18px));opacity:0;pointer-events:none}
+    /* abinha maior no toque: 40x56 de área tocável */
+    #btnSideTab{top:76px;width:40px;height:56px;font-size:17px;border-radius:10px 0 0 10px}
+    #actions{position:static}
+    #floors{position:static}
+    #actions button{min-height:44px}
+    #floors button{padding:6px 10px;font-size:11.5px;min-height:44px} }
+  @media(max-width:560px){
+    /* retrato de celular: coluna compacta, sem comer metade da tela */
+    .brand p{display:none}
+    .stat s{display:none}
+    #btnResumo s{display:none}
+    .stat{padding:3px 6px}
+    #side{gap:8px;max-width:56vw}
+    #actions{gap:5px}
+    #floors{gap:5px}
+    #actions button,#floors button{min-height:40px;padding:6px 9px;font-size:11.5px;border-width:2px;border-radius:7px}
+    #floors .flabel{font-size:8.5px;letter-spacing:1.2px}
+    #btnPeople{min-height:40px} }
+
+  /* ===== ALTURA CURTA (celular em paisagem, janela baixa e larga) =====
+     Acima de 760px de largura o layout de desktop deixava #floors fixo em
+     top:342px: numa tela de 390px de altura os andares caíam FORA da tela.
+     Aqui vale o mesmo remédio do mobile: coluna única rolável à direita. */
+  @media(max-height:540px) and (min-width:761px){
+    #side{position:fixed;top:76px;right:8px;z-index:10;display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 76px - 190px);max-height:calc(100dvh - 76px - 190px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:2px;scrollbar-width:thin;scrollbar-color:#58cc02 transparent}
+    #side::-webkit-scrollbar{width:4px}
+    #side::-webkit-scrollbar-thumb{background:#58cc02;border-radius:2px}
+    #side{transition:transform .32s ease,opacity .32s ease}
+    body.side-off #actions,body.side-off #floors{transform:none;opacity:1;pointer-events:auto}
+    body.side-off #side{transform:translateX(calc(100% + 18px));opacity:0;pointer-events:none}
+    #btnSideTab{top:76px;width:40px;height:56px;font-size:17px;border-radius:10px 0 0 10px}
+    #actions{position:static}
+    #floors{position:static}
+    #actions button,#floors button{min-height:40px;padding:6px 10px;font-size:11.5px}
+    #panel{bottom:118px}
+    #chatPanel{bottom:118px;height:430px}
+    #povHint{white-space:normal;max-width:94vw;text-align:center}
+    .call-card{padding:16px 22px}
+    #callAvatar{width:64px;height:64px;font-size:32px;margin:0 auto 8px}
+    #callName{font-size:18px}
+    #callLast{margin-top:8px}
+    #callEnd{margin-top:12px;padding:10px 22px} }
+
+  /* ===== DESKTOP BAIXO (541–799px de altura): andares ancorados embaixo =====
+     Com #floors em top:342px, a Cobertura encostava na pílula Pessoas em
+     janelas de ~768px de altura. Ancorar em bottom:186px mantém a coluna
+     inteira acima do dock — e em telas ≥800px nada muda. */
+  @media(min-width:761px) and (min-height:541px) and (max-height:799px){
+    #floors{top:auto;bottom:186px} }
+
+  /* ===== TOQUE (tablet e celular): alvos ≥40px sem mudar o visual ===== */
+  @media(pointer:coarse){
+    #actions button,#floors button{min-height:40px}
+    .chat-hbtn{width:40px;height:40px}
+    /* o 💬 do retrato segue 26px visual, mas ganha área de toque de 40px */
+    .sim .chatdot::after{content:'';position:absolute;inset:-7px;border-radius:50%} }
 </style>
 </head>
 <body>
@@ -190,21 +300,27 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
     </div>
   </div>
   <div class="stats">
-    <div class="stat"><b>4</b><s>pisos</s></div>
-    <div class="stat"><b id="statPeople">–</b><s>pessoas</s></div>
-    <div class="stat"><b class="green">8</b><s>frentes ativas</s></div>
-    <div class="stat"><b class="amber">1</b><s>pausada</s></div>
+    <button id="btnResumo" type="button" aria-haspopup="true" aria-expanded="false" title="Ver o resumo da Torre">📊<s>resumo</s></button>
     <div class="stat"><b id="clock">--:--</b><s>horário</s></div>
     <div id="livePill"><span class="dot"></span><span id="liveTxt">MODO ARQUIVO</span></div>
   </div>
 </div>
+<div id="resumoCard" class="hidden">
+  <button id="resumoClose" type="button" aria-label="Fechar resumo">✕</button>
+  <h3>📊 Resumo da Torre</h3>
+  <div class="rrow"><span>🏢 Pisos</span><b>4</b></div>
+  <div class="rrow"><span>👥 Pessoas</span><b id="statPeople">–</b></div>
+  <div class="rrow"><span>🚀 Frentes ativas</span><b class="green">8</b></div>
+  <div class="rrow"><span>⏸️ Pausada</span><b class="amber">1</b></div>
+</div>
 
+<div id="side">
 <div id="actions">
   <button id="btnTour">🎬 Tour pela sede</button>
   <button id="btnSpin">🔄 Girar sozinho</button>
-  <button id="btnTop">🛰️ Ver a sede de cima</button>
+  <button id="btnTop">🛰️ Vista de cima</button>
   <button id="btnReset">🏠 Visão geral</button>
-  <button id="btnPOV">🚶 Andar como Charlis (POV)</button>
+  <button id="btnPOV">🚶 Andar como Charlis</button>
   <button id="btnView" style="display:none">👁️ Câmera: 3ª pessoa</button>
 </div>
 
@@ -217,6 +333,81 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
   <button id="bf3">3️⃣ 3º andar</button>
   <button id="bf4">☀️ Cobertura</button>
 </div>
+</div>
+<button id="btnSideTab" type="button" aria-expanded="true" aria-controls="side" title="Ocultar os botões da torre">❯</button>
+<script>
+/* ocultar/desocultar a coluna direita (ações + andares) — estado no localStorage */
+(function(){
+  var KEY = 'kovantuSideHidden';
+  var tab = document.getElementById('btnSideTab');
+  var side = document.getElementById('side');
+  var actions = document.getElementById('actions');
+  var floors = document.getElementById('floors');
+  function isHidden(){ return document.body.classList.contains('side-off'); }
+  /* modo coluna única: celular (≤760px de largura) OU altura curta
+     (paisagem ≤540px) — o mesmo critério das media queries do CSS */
+  function columnMode(){ return window.matchMedia('(max-width:760px), (max-height:540px)').matches; }
+  function hiddenTop(){ if(window.matchMedia('(max-width:760px)').matches) return 150; return columnMode() ? 76 : 86; }
+  function placeTab(){
+    if(isHidden()){ tab.style.right = '0px'; tab.style.top = hiddenTop() + 'px'; return; }
+    var ref = columnMode() ? side : actions;
+    var r = ref.getBoundingClientRect();
+    tab.style.right = Math.max(0, Math.round(window.innerWidth - r.left + 3)) + 'px';
+    tab.style.top = Math.round(r.top) + 'px';
+  }
+  function setSide(hidden, snap){
+    document.body.classList.toggle('side-off', hidden);
+    tab.textContent = hidden ? '❮' : '❯';
+    tab.setAttribute('aria-expanded', hidden ? 'false' : 'true');
+    tab.title = hidden ? 'Mostrar os botões da torre' : 'Ocultar os botões da torre';
+    try{ localStorage.setItem(KEY, hidden ? '1' : '0'); }catch(e){}
+    if(snap && !hidden){
+      document.body.classList.add('side-snap');
+      placeTab();
+      void document.body.offsetWidth;
+      document.body.classList.remove('side-snap');
+    } else placeTab();
+  }
+  var saved = null;
+  try{ saved = localStorage.getItem(KEY); }catch(e){}
+  /* sem estado salvo: no desktop a coluna nasce visível; no modo coluna
+     (celular/altura curta) nasce OCULTA — tela inicial limpa, só a abinha.
+     Depois que ele alterna, vale a escolha dele (localStorage). */
+  if(saved === '1' || (saved === null && columnMode())){ document.body.classList.add('side-off'); tab.textContent = '❮'; tab.setAttribute('aria-expanded','false'); tab.title = 'Mostrar os botões da torre'; }
+  tab.addEventListener('click', function(){ setSide(!isHidden(), true); });
+  window.addEventListener('resize', placeTab);
+  if(window.MutationObserver){
+    var mo = new MutationObserver(function(){ if(!isHidden()) placeTab(); });
+    [actions, floors].forEach(function(el){ if(el) mo.observe(el, { attributes:true, childList:true, characterData:true, subtree:true }); });
+  }
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(placeTab);
+  window.addEventListener('load', placeTab);
+  placeTab();
+})();
+</script>
+<script>
+/* chip 📊 Resumo: as estatísticas da torre moram aqui agora (topo enxuto) —
+   1 toque abre o cartão com pisos/pessoas/frentes/pausada; ✕, ESC ou
+   tocar fora fecha */
+(function(){
+  var btn = document.getElementById('btnResumo');
+  var card = document.getElementById('resumoCard');
+  var close = document.getElementById('resumoClose');
+  if(!btn || !card || !close) return;
+  function setOpen(open){
+    card.classList.toggle('hidden', !open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function(){ setOpen(card.classList.contains('hidden')); });
+  close.addEventListener('click', function(){ setOpen(false); });
+  document.addEventListener('pointerdown', function(e){
+    if(card.classList.contains('hidden')) return;
+    if(card.contains(e.target) || btn.contains(e.target)) return;
+    setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setOpen(false); });
+})();
+</script>
 
 <div id="panel" class="hidden">
   <button id="pClose">✕</button>
@@ -228,9 +419,11 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
       <span id="pStatus">ATIVO</span>
     </div>
   </div>
-  <div id="pDoing">—</div>
-  <div class="needs" id="pNeeds"></div>
-  <div id="pTasks"></div>
+  <div id="pBody">
+    <div id="pDoing">—</div>
+    <div class="needs" id="pNeeds"></div>
+    <div id="pTasks"></div>
+  </div>
   <button id="pChatBtn">💬 Conversar</button>
 </div>
 
@@ -262,8 +455,8 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
 <div id="povHint">🚶 Você é o <b>Charlis</b> &bull; <b>joystick</b> anda &bull; <b>arrastar</b> olha &bull; no PC: WASD + mouse &bull; <b>ESPAÇO</b> pula &bull; <b>ESC</b> sai</div>
 <div id="joy"><div id="joyKnob"></div></div>
 <div id="toast" style="position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:30;display:none;background:rgba(13,34,19,.94);border:2px solid #58cc02;color:#d7ecc6;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:10px"></div>
-<div id="peopleDock"><button id="btnPeople" aria-expanded="true" title="Ocultar/mostrar a barra de pessoas">👥 Pessoas ▾</button><div id="simbar"></div></div>
-<div id="hint">🖱️ Arraste pra girar &bull; <b>Clique numa pessoa, cômodo ou retrato</b> pra acompanhar &bull; botões de andar entram na torre</div>
+<div id="peopleDock" class="closed"><button id="btnPeople" aria-expanded="false" title="Mostrar/ocultar a barra de pessoas">👥 Pessoas ▸</button><div id="simbar"></div></div>
+<div id="hint"><span class="hint-full">🖱️ Arraste pra girar &bull; <b>Clique numa pessoa ou cômodo</b> pra acompanhar &bull; 👥 <b>Pessoas</b> abre os retratos e as conversas &bull; botões de andar entram na torre</span><span class="hint-short">👆 Toque numa <b>pessoa</b> &bull; 👥 <b>Pessoas</b> abre retratos e conversas 💬</span></div>
 <div id="ticker"><div class="tag">NA KOVANTU AGORA</div><div style="overflow:hidden;flex:1"><span id="tickMove"></span></div></div>
 
 
@@ -1459,7 +1652,7 @@ function doorZOf(d){ return d.doorZ != null ? d.doorZ : (d.floor === 0 ? 1.5 : (
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-31.8';
+const PAGE_VERSION = '2026-11-01.5';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -2718,7 +2911,7 @@ function lighten(hex, f){ return new THREE.Color(hex).lerp(new THREE.Color(0xfff
 const animated = []; const people = []; const clickables = [];
 function registerClick(obj, dept){ obj.traverse(o=>{ if(o.isMesh){ o.userData.deptRef = dept; clickables.push(o); } }); }
 let toastTimer = null;
-function toast(msg){ const el = document.getElementById('toast'); if(!el) return; el.textContent = msg; el.style.display = 'block'; clearTimeout(toastTimer); toastTimer = setTimeout(()=>{ el.style.display = 'none'; }, 4500); }
+function toast(msg){ const el = document.getElementById('toast'); if(!el) return; el.textContent = msg; el.style.display = 'block'; clearTimeout(toastTimer); toastTimer = setTimeout(()=>{ el.style.display = 'none'; }, 2800); }
 function canvasPlane(canvas, w, h){
   const tex = new THREE.CanvasTexture(canvas); tex.encoding = THREE.sRGBEncoding; tex.anisotropy = 4;
   return new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: tex, transparent:true }));
@@ -4575,7 +4768,9 @@ function setPeopleBar(open){
   try{ sessionStorage.setItem('kovPeopleBar', open ? '1' : '0'); }catch(e){}
 }
 btnPeople.addEventListener('click', ()=> setPeopleBar(peopleDock.classList.contains('closed')));
-try{ if(sessionStorage.getItem('kovPeopleBar') === '0') setPeopleBar(false); }catch(e){}
+/* a barra de retratos nasce FECHADA (limpeza visual): na tela inicial só
+   aparece a pílula 👥 Pessoas; tocar nela abre a barra com os retratos e
+   os 💬 de conversa — a dica de uso aponta pra pílula */
 const simbar = document.getElementById('simbar');
 function buildSimbar(){
   simbar.innerHTML = '';
@@ -4583,8 +4778,11 @@ function buildSimbar(){
     const rec = e.rec, d = deptById(rec.depto) || DEPTS[0];
     const b = document.createElement('button'); b.className = 'sim'; b.dataset.pid = rec.id;
     if(rec.id === selectedPersonId) b.classList.add('sel');
-    b.innerHTML = `<span class="face" style="background:radial-gradient(circle at 35% 30%, ${d.css}66, ${d.css}33), #f4f8ec">${d.emoji}</span><small>${firstName(rec.nome)}</small>`;
-    b.onclick = ()=>{ stopTour(); selectPerson(rec.id); };
+    b.innerHTML = `<span class="face" style="background:radial-gradient(circle at 35% 30%, ${d.css}66, ${d.css}33), #f4f8ec">${d.emoji}</span><span class="chatdot" role="button" aria-label="Conversar com ${firstName(rec.nome)}" title="💬 Conversar com ${firstName(rec.nome)}">💬</span><small>${firstName(rec.nome)}</small>`;
+    b.onclick = (ev)=>{
+      if(ev.target.closest && ev.target.closest('.chatdot')){ stopTour(); selectPerson(rec.id); openChat(rec.id); return; }
+      stopTour(); selectPerson(rec.id);
+    };
     simbar.appendChild(b);
   }
 }
@@ -4594,18 +4792,25 @@ refreshLiveUI();
 
 /* clique na cena (ignora objetos de andares escondidos) */
 const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
-let downAt = 0;
+let downAt = 0, downX = 0, downY = 0;
 function chainVisible(o){ while(o){ if(!o.visible) return false; o = o.parent; } return true; }
-renderer.domElement.addEventListener('pointerdown', ()=>{ downAt = performance.now(); focusCam = null; });
+renderer.domElement.addEventListener('pointerdown', e=>{ downAt = performance.now(); downX = e.clientX; downY = e.clientY; focusCam = null; });
 renderer.domElement.addEventListener('pointerup', e=>{
-  if(pov.on) return;
-  if(performance.now() - downAt > 220) return;
+  /* toque = DISTÂNCIA de arrasto < 8px, não importa quanto tempo o dedo
+     ficou parado (o guard antigo de 220ms descartava o toque real de
+     celular, que dura 300-500ms, sem nenhum feedback). Vale também no
+     POV: arrasto <8px não gira a câmera de forma perceptível — lá a
+     seleção só abre o painel, sem mexer em foco/corte. */
+  if(Math.hypot(e.clientX - downX, e.clientY - downY) > 8) return;
   mouse.set((e.clientX/innerWidth)*2 - 1, -(e.clientY/innerHeight)*2 + 1);
   ray.setFromCamera(mouse, camera);
   const hits = ray.intersectObjects(clickables, false);
   const hit = hits.find(h=> chainVisible(h.object));
-  if(hit && hit.object.userData.personId && roster.has(hit.object.userData.personId)){ stopTour(); selectPerson(hit.object.userData.personId); }
-  else if(hit && hit.object.userData.deptRef){ stopTour(); selectDept(hit.object.userData.deptRef); }
+  if(hit && hit.object.userData.personId && roster.has(hit.object.userData.personId)){
+    if(pov.on) selectPerson(hit.object.userData.personId, false, false);
+    else { stopTour(); selectPerson(hit.object.userData.personId); }
+  }
+  else if(hit && hit.object.userData.deptRef && !pov.on){ stopTour(); selectDept(hit.object.userData.deptRef); }
 });
 
 /* ============ O MACETE DO TETO: vistas e cortes por andar ============ */
@@ -4864,7 +5069,7 @@ function exitPOV(){
   povSpawn = null;
   controls.enabled = true;
   showExterior();
-  btnPOV.textContent = '🚶 Andar como Charlis (POV)'; btnPOV.classList.remove('on');
+  btnPOV.textContent = '🚶 Andar como Charlis'; btnPOV.classList.remove('on');
   btnView.style.display = 'none'; document.getElementById('povHint').style.display = 'none';
   document.getElementById('joy').style.display = 'none';
   focusTarget = new THREE.Vector3(0, 6, -2); focusCam = new THREE.Vector3(56, 34, 86);
@@ -5003,9 +5208,15 @@ renderer.setAnimationLoop(()=>{
   }
   renderer.render(scene, camera);
   if(firstFrame){ firstFrame = false; loaderSceneReady = true; loaderGate();
-    setTimeout(()=>{ selectDept(DEPTS[0], false, false); toast('🏢 Torre Kovantu pronta: ' + people.length + ' pessoas em 4 andares + cobertura'); }, 500); }
+    setTimeout(()=>{ selectDept(DEPTS[0], false, false); toast('🏢 Torre pronta: ' + people.length + ' pessoas'); }, 500);
+    /* dica de uso: aparece na abertura e some sozinha em ~6s (a do POV
+       continua contextual, no #povHint) */
+    setTimeout(()=>{ const h = document.getElementById('hint'); if(h) h.classList.add('bye'); }, 6000); }
 });
-addEventListener('resize', ()=>{ camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+const __kovResize = ()=>{ camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); };
+addEventListener('resize', __kovResize);
+addEventListener('orientationchange', ()=>setTimeout(__kovResize, 60));
+if(window.visualViewport) visualViewport.addEventListener('resize', __kovResize);
 
 /* ============ CONVERSAR COM O FUNCIONÁRIO (chat + ligação, 100% client-side) ============
    Motor dirigido pelo ESTADO VIVO da simulação: a pessoa responde com os dados
@@ -5171,6 +5382,7 @@ function openChat(id){
   document.getElementById('chSub').textContent = `${rec.cargo || ''} • ${d.name} • ${ctx.sleeping ? '😴 dormindo' : stripEmoji(ctx.act)}`;
   chLog.innerHTML = '';
   chatEl.classList.remove('hidden');
+  document.getElementById('panel').classList.add('hidden'); /* chat aberto = painel da pessoa sai da frente (no celular os dois disputavam a tela) */
   chatAddMsg('them', chatReply(id, 'oi'), id);
   setTimeout(()=> chInput.focus(), 60);
 }
