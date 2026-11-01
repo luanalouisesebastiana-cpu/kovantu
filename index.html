@@ -63,6 +63,45 @@
   #pTasks h4{font-size:10.5px;letter-spacing:1.4px;color:#6b8560}
   #pTasks .tk{font-size:12px;color:#33502c;display:flex;justify-content:space-between;gap:8px}
   #pTasks .tk b{color:#43a400}
+  #pChatBtn{margin-top:12px;width:100%;cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);border-radius:9px;padding:10px;font-size:13.5px;font-weight:800;box-shadow:0 5px 14px rgba(20,50,10,.3)}
+  #pChatBtn:active{transform:scale(.98)}
+
+  /* ===== conversa com funcionário (chat + ligação) ===== */
+  #chatPanel{position:fixed;right:12px;bottom:104px;width:344px;max-width:calc(100vw - 24px);height:472px;max-height:calc(100vh - 130px);background:linear-gradient(180deg,#fdfef9,#eef6e3);border:3px solid #2e5d23;border-radius:12px;z-index:14;box-shadow:0 18px 44px rgba(15,45,5,.5);display:flex;flex-direction:column;overflow:hidden;transition:.3s}
+  #chatPanel.hidden{transform:translateY(14px);opacity:0;pointer-events:none}
+  .chat-head{display:flex;align-items:center;gap:9px;padding:10px 12px;background:#0d2213;color:#d7ecc6}
+  #chAvatar{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid #58cc02;flex:0 0 auto;background:#fdfef8}
+  #chName{font-size:15.5px;font-weight:800;line-height:1.1}
+  #chSub{font-size:11px;color:#9dc48a;font-weight:600}
+  .chat-head .sp{flex:1}
+  .chat-voice{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+  .chat-voice input{accent-color:#58cc02;width:16px;height:16px;cursor:pointer}
+  .chat-hbtn{cursor:pointer;border:2px solid #58cc02;background:#173620;color:#d7ecc6;border-radius:8px;width:36px;height:36px;font-size:16px;flex:0 0 auto}
+  .chat-hbtn:active{transform:scale(.94)}
+  #chLog{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+  .msg{max-width:86%;padding:8px 11px;border-radius:12px;font-size:13px;line-height:1.45;box-shadow:0 2px 6px rgba(20,50,10,.12)}
+  .msg.me{align-self:flex-end;background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;border-bottom-right-radius:3px}
+  .msg.them{align-self:flex-start;background:#fff;border:2px solid #cfe3ba;border-bottom-left-radius:3px;color:#26431c}
+  .msg .spk{display:block;margin-top:4px;font-size:11px;background:none;border:none;cursor:pointer;color:#58a802;font-weight:800;padding:0}
+  .msg.sys{align-self:center;background:#fff7d6;border:1.5px dashed #d9b23c;color:#6d5410;font-size:11.5px;text-align:center}
+  #chTyping{display:none;padding:2px 14px 6px;font-size:11.5px;color:#6b8560;font-weight:700;font-style:italic}
+  #chForm{display:flex;gap:7px;padding:10px;border-top:2px solid #cfe3ba;background:#fdfef9}
+  #chInput{flex:1;border:2px solid #b9d1a4;border-radius:9px;padding:10px 12px;font-size:13.5px;font-family:inherit;outline:none;min-width:0}
+  #chInput:focus{border-color:#58cc02}
+  #chSend{cursor:pointer;border:2.5px solid #2e5d23;background:linear-gradient(180deg,#8fe63f,#58cc02);color:#fff;border-radius:9px;width:46px;font-size:17px;flex:0 0 auto}
+  /* overlay de ligação */
+  #callOverlay{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(8,20,10,.72)}
+  #callOverlay.on{display:flex}
+  .call-card{background:linear-gradient(180deg,#173620,#0d2213);border:3px solid #58cc02;border-radius:20px;padding:30px 38px;text-align:center;color:#d7ecc6;box-shadow:0 30px 80px rgba(0,0,0,.6);max-width:calc(100vw - 32px)}
+  #callAvatar{width:104px;height:104px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:52px;border:3px solid #58cc02;background:#fdfef8;animation:callpulse 1.8s ease-in-out infinite}
+  @keyframes callpulse{0%,100%{box-shadow:0 0 0 0 rgba(88,204,2,.5)}50%{box-shadow:0 0 0 16px rgba(88,204,2,0)}}
+  #callName{font-size:21px;font-weight:800}
+  #callStatus{font-size:13px;color:#9dc48a;font-weight:700;margin-top:4px}
+  #callTimer{font-size:15px;font-weight:800;margin-top:6px;letter-spacing:1px}
+  #callLast{font-size:12.5px;color:#eaf7da;margin-top:12px;max-width:300px;line-height:1.5;font-style:italic}
+  #callEnd{margin-top:18px;cursor:pointer;border:none;background:#e03144;color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:12px 26px;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+  #callEnd:active{transform:scale(.96)}
+  @media(max-width:760px){ #chatPanel{bottom:118px;height:430px} }
 
   /* ===== barra de personagens: dock próprio acima do ticker, fundo OPACO
      (o #hint vazava por trás dos chips: mesma faixa + fundo translúcido) ===== */
@@ -192,9 +231,35 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
   <div id="pDoing">—</div>
   <div class="needs" id="pNeeds"></div>
   <div id="pTasks"></div>
+  <button id="pChatBtn">💬 Conversar</button>
 </div>
 
-<div id="povHint">🚶 Você é o <b>Charlis</b> &bull; <b>joystick</b> anda &bull; <b>arrastar</b> olha &bull; no PC: WASD + mouse &bull; <b>ESC</b> sai</div>
+<div id="chatPanel" class="hidden">
+  <div class="chat-head">
+    <div id="chAvatar">🌿</div>
+    <div><div id="chName">—</div><div id="chSub">—</div></div>
+    <div class="sp"></div>
+    <label class="chat-voice" title="Ler as respostas em voz alta"><input type="checkbox" id="chVoiceOn"> 🔊 Voz</label>
+    <button class="chat-hbtn" id="chCall" title="Ligar (falar por voz)">📞</button>
+    <button class="chat-hbtn" id="chClose" title="Fechar conversa">✕</button>
+  </div>
+  <div id="chLog"></div>
+  <div id="chTyping">digitando…</div>
+  <form id="chForm"><input id="chInput" placeholder="Escreve pra ele(a)…" autocomplete="off"><button id="chSend" type="submit" title="Enviar">➤</button></form>
+</div>
+
+<div id="callOverlay">
+  <div class="call-card">
+    <div id="callAvatar">🌿</div>
+    <div id="callName">—</div>
+    <div id="callStatus">chamando…</div>
+    <div id="callTimer">00:00</div>
+    <div id="callLast"></div>
+    <button id="callEnd">📵 Encerrar</button>
+  </div>
+</div>
+
+<div id="povHint">🚶 Você é o <b>Charlis</b> &bull; <b>joystick</b> anda &bull; <b>arrastar</b> olha &bull; no PC: WASD + mouse &bull; <b>ESPAÇO</b> pula &bull; <b>ESC</b> sai</div>
 <div id="joy"><div id="joyKnob"></div></div>
 <div id="toast" style="position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:30;display:none;background:rgba(13,34,19,.94);border:2px solid #58cc02;color:#d7ecc6;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:10px"></div>
 <div id="peopleDock"><button id="btnPeople" aria-expanded="true" title="Ocultar/mostrar a barra de pessoas">👥 Pessoas ▾</button><div id="simbar"></div></div>
@@ -1394,7 +1459,7 @@ function doorZOf(d){ return d.doorZ != null ? d.doorZ : (d.floor === 0 ? 1.5 : (
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-10-31.4';
+const PAGE_VERSION = '2026-10-31.8';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -1407,6 +1472,7 @@ const EQUIPE_EMBUTIDA = {
  "equipe": [
   {
    "id": "charlis",
+   "casa": 1,
    "nome": "Charlis",
    "cargo": "Dono / CEO",
    "depto": "diretoria",
@@ -1433,6 +1499,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "titiku",
+   "casa": 2,
    "nome": "Titiku",
    "cargo": "Gerente-geral",
    "depto": "diretoria",
@@ -1460,6 +1527,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "baltazar",
+   "casa": 3,
    "nome": "Baltazar",
    "cargo": "O escriba",
    "depto": "abuelo",
@@ -1485,6 +1553,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "valdo",
+   "casa": 4,
    "nome": "Valdomiro “Valdo”",
    "cargo": "O caixa",
    "depto": "hotmart",
@@ -1510,6 +1579,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "assistente-hotmart",
+   "casa": 5,
    "nome": "Bianca",
    "cargo": "Assistente de Vendas",
    "depto": "hotmart",
@@ -1536,6 +1606,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "iris",
+   "casa": 6,
    "nome": "Íris",
    "cargo": "O olho",
    "depto": "stock",
@@ -1562,6 +1633,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "plinio",
+   "casa": 7,
    "nome": "Plínio",
    "cargo": "O cronista",
    "depto": "blogs",
@@ -1587,6 +1659,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "assistente-blogs",
+   "casa": 8,
    "nome": "Marina",
    "cargo": "Redatora Assistente",
    "depto": "blogs",
@@ -1613,6 +1686,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "vetor",
+   "casa": 9,
    "nome": "VETOR",
    "cargo": "O gestor de tráfego",
    "depto": "trafego",
@@ -1638,6 +1712,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "fliper",
+   "casa": 10,
    "nome": "Fliper",
    "cargo": "O fliperama",
    "depto": "arcade",
@@ -1663,6 +1738,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "otavio",
+   "casa": 11,
    "nome": "Otávio",
    "cargo": "O diretor dark",
    "depto": "youtube",
@@ -1688,6 +1764,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "severo",
+   "casa": 12,
    "nome": "Severo",
    "cargo": "Pesquisa",
    "depto": "youtube",
@@ -1713,6 +1790,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "rui",
+   "casa": 13,
    "nome": "Rui",
    "cargo": "Roteiro",
    "depto": "youtube",
@@ -1738,6 +1816,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "tito",
+   "casa": 14,
    "nome": "Tito",
    "cargo": "Títulos",
    "depto": "youtube",
@@ -1763,6 +1842,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "miro",
+   "casa": 15,
    "nome": "Miro",
    "cargo": "Thumbnails",
    "depto": "youtube",
@@ -1788,6 +1868,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "beto",
+   "casa": 16,
    "nome": "Beto",
    "cargo": "Imagens",
    "depto": "youtube",
@@ -1813,6 +1894,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "tom",
+   "casa": 17,
    "nome": "Tom",
    "cargo": "Áudio e voz",
    "depto": "youtube",
@@ -1838,6 +1920,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "vitor",
+   "casa": 18,
    "nome": "Vítor",
    "cargo": "Vídeo e stock",
    "depto": "youtube",
@@ -1863,6 +1946,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "edson",
+   "casa": 19,
    "nome": "Edson",
    "cargo": "Edição",
    "depto": "youtube",
@@ -1888,6 +1972,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "decio",
+   "casa": 20,
    "nome": "Décio",
    "cargo": "Descrição e SEO",
    "depto": "youtube",
@@ -1913,6 +1998,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "teodoro",
+   "casa": 21,
    "nome": "Teodoro",
    "cargo": "O editor",
    "depto": "kdp",
@@ -1939,6 +2025,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "tonhao",
+   "casa": 22,
    "nome": "Tonhão",
    "cargo": "O montador",
    "depto": "apps",
@@ -1964,6 +2051,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "assistente-apps",
+   "casa": 23,
    "nome": "Júlia",
    "cargo": "Assistente de Apps",
    "depto": "apps",
@@ -1990,6 +2078,7 @@ const EQUIPE_EMBUTIDA = {
   },
   {
    "id": "rex",
+   "casa": 24,
    "nome": "Rex",
    "cargo": "O farejador",
    "depto": "farejador",
@@ -2015,6 +2104,7 @@ const EQUIPE_EMBUTIDA = {
   },
    {
      "id": "otto",
+   "casa": 25,
      "nome": "Otto",
      "cargo": "O trader",
      "depto": "trader",
@@ -2254,8 +2344,8 @@ controls.target.set(0, 6, -2);
 scene.add(new THREE.HemisphereLight(0xd8ecff, 0x5d7a3d, 1.08));
 const sun = new THREE.DirectionalLight(0xfff3da, 1.55);
 sun.position.set(55, 95, 45); sun.castShadow = true;
-sun.shadow.mapSize.set(1024, 1024);
-Object.assign(sun.shadow.camera, { left:-85, right:85, top:85, bottom:-85, near:10, far:280 });
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left:-120, right:195, top:120, bottom:-110, near:10, far:360 });   /* folga pro Bairro Kovantu no flanco leste */
 sun.shadow.bias = -0.0006; sun.shadow.normalBias = .04;
 scene.add(sun);
 
@@ -2265,7 +2355,7 @@ const wallSEGroups = [0,1,2,3].map(()=>{ const g = new THREE.Group(); scene.add(
 
 /* ============ ATLAS DE TEXTURAS PIXELADAS (canvas, grade 8×4 de tiles 16×16) ============ */
 function mulberry(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-const TILE = { GRASS_TOP:0, GRASS_SIDE:1, DIRT:2, STONE:3, PLANKS:4, LOG_SIDE:5, LOG_TOP:6, BRICK:7, GLASS:8, LEAVES:9, GRAVEL:10, BOOK:11, SCREEN:12, GLOW:13, QUARTZ:14, STONEBRICK:15, DARK:16, KGREEN:17, QUARTZ2:18, PANEL:19, GRAPHITE:20, PANELG:21, GLASSBLUE:22 };
+const TILE = { GRASS_TOP:0, GRASS_SIDE:1, DIRT:2, STONE:3, PLANKS:4, LOG_SIDE:5, LOG_TOP:6, BRICK:7, GLASS:8, LEAVES:9, GRAVEL:10, BOOK:11, SCREEN:12, GLOW:13, QUARTZ:14, STONEBRICK:15, DARK:16, KGREEN:17, QUARTZ2:18, PANEL:19, GRAPHITE:20, PANELG:21, GLASSBLUE:22, PLASTER1:23, PLASTER2:24, PLASTER3:25, PLASTER4:26, PLASTER5:27, PLASTER6:28, ROOFCER:29, ROOFSLATE:30, ROOFGREEN:31 };
 const ACOLS = 8, AROWS = 4;
 const atlasCanvas = document.createElement('canvas'); atlasCanvas.width = 512; atlasCanvas.height = 256;
 {
@@ -2355,6 +2445,20 @@ const atlasCanvas = document.createElement('canvas'); atlasCanvas.width = 512; a
   /* verde da marca, emissivo (o K da fachada e o letreiro da cobertura) */
   fillNoise(TILE.KGREEN, ['#58cc02','#4fb802','#63d40f','#52b802','#5ac704'], 144, [5,3,3,2,3]);
   { const rnd = mulberry(145); for(let i=0;i<20;i++) put(TILE.KGREEN, Math.floor(rnd()*16), Math.floor(rnd()*16), '#8fe63f'); }
+  /* ===== CASAS DO BAIRRO — REDESIGN 31/out (sem tijolo!): reboco liso em paleta
+     pastel/quente e telhas de verdade (cerâmica, ardósia, verde) com fiadas ===== */
+  fillNoise(TILE.PLASTER1, ['#f5f1e6','#f0ebdd','#faf7ee','#eae4d3'], 161, [5,4,3,2]);   /* branco gelo */
+  fillNoise(TILE.PLASTER2, ['#ecd9ae','#e6d09f','#f2e2ba','#ddc78f'], 162, [5,4,3,2]);   /* areia */
+  fillNoise(TILE.PLASTER3, ['#e0a184','#d9956f','#e8ae93','#d18a64'], 163, [5,4,3,2]);   /* terracota suave */
+  fillNoise(TILE.PLASTER4, ['#b7dcc0','#a9d2b2','#c4e4cb','#9ec7a6'], 164, [5,4,3,2]);   /* verde-menta */
+  fillNoise(TILE.PLASTER5, ['#aecfe8','#9fc2e0','#bedaf2','#92b4d8'], 165, [5,4,3,2]);   /* azul-claro */
+  fillNoise(TILE.PLASTER6, ['#f0df9a','#eadb8a','#f5e7ab','#e2cd76'], 166, [5,4,3,2]);   /* amarelo-palha */
+  for(const pt of [TILE.PLASTER1, TILE.PLASTER2, TILE.PLASTER3, TILE.PLASTER4, TILE.PLASTER5, TILE.PLASTER6])
+    for(let x=0;x<16;x++) put(pt, x, 15, 'rgba(0,0,0,0.14)');   /* rodapé sombreado do reboco (put usa fillStyle direto: cor sólida abaixo) */
+  fillNoise(TILE.ROOFCER,   ['#c96f4a','#bf6440','#d47c55','#b25a38'], 171, [5,4,3,2]);
+  fillNoise(TILE.ROOFSLATE, ['#5d6d7e','#556473','#68788a','#4e5d6d'], 172, [5,4,3,2]);
+  fillNoise(TILE.ROOFGREEN, ['#4e7d5a','#456f50','#598a64','#3f6547'], 173, [5,4,3,2]);
+  for(let x=0;x<16;x++){ for(const y of [3,7,11,15]){ put(TILE.ROOFCER, x, y, '#9c4f30'); put(TILE.ROOFSLATE, x, y, '#3f4c5a'); put(TILE.ROOFGREEN, x, y, '#33523b'); } }
 }
 const atlasTex = new THREE.CanvasTexture(atlasCanvas);
 atlasTex.magFilter = THREE.NearestFilter; atlasTex.minFilter = THREE.NearestFilter;
@@ -2378,6 +2482,9 @@ const BT = {
   leaves:{ all:TILE.LEAVES }, book:{ all:TILE.BOOK }, dark:{ all:TILE.DARK },
   glass:{ all:TILE.GLASS, glass:true }, glow:{ all:TILE.GLOW, glow:true },
   screen:{ all:TILE.SCREEN, glow:true }, kgreen:{ all:TILE.KGREEN, glow:true },
+  plaster1:{ all:TILE.PLASTER1 }, plaster2:{ all:TILE.PLASTER2 }, plaster3:{ all:TILE.PLASTER3 },
+  plaster4:{ all:TILE.PLASTER4 }, plaster5:{ all:TILE.PLASTER5 }, plaster6:{ all:TILE.PLASTER6 },
+  roofcer:{ all:TILE.ROOFCER }, roofslate:{ all:TILE.ROOFSLATE }, roofgreen:{ all:TILE.ROOFGREEN },
 };
 const VFACES = [
   { dir:[-1,0,0], corners:[[0,1,0,0,1],[0,0,0,0,0],[0,1,1,1,1],[0,0,1,1,0]] },
@@ -2463,7 +2570,8 @@ function collide(px, pz, r, floors){
         if(m === l) px = c.x0 - r; else if(m === rr2) px = c.x1 + r; else if(m === tt) pz = c.z0 - r; else pz = c.z1 + r; }
     }
   }
-  px = Math.max(-53.5, Math.min(53.5, px)); pz = Math.max(-45.5, Math.min(46.5, pz));
+  /* mundo caminhável: lote da empresa + Bairro Kovantu no flanco leste (x até ~174) */
+  px = Math.max(-53.5, Math.min(173.5, px)); pz = Math.max(-45.5, Math.min(46.5, pz));
   return [px, pz];
 }
 
@@ -2854,7 +2962,10 @@ hWallZ(-14, -9, 8, 20, [[-3,3]], 4, 'graphite', 2);
 
 /* cerca do lote + árvores + portão (bucket fixo '0': são do jardim, não de um andar) */
 for(let x = LOT.x0; x < LOT.x1; x++){ setB(x, 0, LOT.z0, 'stone', '0'); if(!(x >= -2 && x <= 1)) setB(x, 0, LOT.z1 - 1, 'stone', '0'); }
-for(let z = LOT.z0; z < LOT.z1; z++){ setB(LOT.x0, 0, z, 'stone', '0'); setB(LOT.x1 - 1, 0, z, 'stone', '0'); }
+for(let z = LOT.z0; z < LOT.z1; z++){ setB(LOT.x0, 0, z, 'stone', '0'); if(!(z >= 34 && z <= 38)) setB(LOT.x1 - 1, 0, z, 'stone', '0'); }
+/* portão lateral LESTE (vão z 34–38): pilares de grafite — é por aqui que a
+   Rua Kovantu vira a esquina e leva ao Bairro Kovantu, fora do lote da empresa */
+for(let y=0;y<3;y++){ setB(LOT.x1 - 1, y, 33, 'graphite', '0'); setB(LOT.x1 - 1, y, 39, 'graphite', '0'); }
 function tree(x, z){
   setB(x, 0, z, 'log', '0'); setB(x, 1, z, 'log', '0'); setB(x, 2, z, 'log', '0');
   for(let dx=-1;dx<=1;dx++) for(let dz=-1;dz<=1;dz++) setB(x+dx, 3, z+dz, 'leaves', '0');
@@ -2909,6 +3020,68 @@ for(let x=-15; x<=13; x++) for(let y=20; y<=26; y++) setB(x, y, 19, 'dark');
   gl.forEach((row, r)=>{ for(let cix=0; cix<3; cix++) if(row[cix] === '1') setB(-14 + li*4 + cix, 25 - r, 20, 'kgreen'); });
 });
 
+/* ============ BAIRRO KOVANTU: a casa de cada funcionário ============
+   MUDANÇA DE LUGAR (31/out, ordem do Charlis): NADA de casas na frente da Torre
+   tampando a fachada — o bairro inteiro foi pro FLANCO LESTE, FORA do lote da
+   empresa (além da cerca, portão lateral em x=55/z 34–38). A frente da Torre
+   fica só com a rua que vira a esquina, a calçada e o jardim da empresa.
+   REDESIGN (31/out): sem tijolo/stonebrick — paredes de REBOCO LISO pastel
+   (6 tons por lote), telhados de cerâmica/ardósia/verde nos 3 estilos, porta
+   na cor do depto com batente de madeira, floreiras e pergolados.
+   25 casas em duas fileiras frente a frente separadas pela Rua Kovantu (z=36):
+   fileira A (lotes 1–12) frente sul (parede z=32), fileira B (lotes 13–25)
+   frente norte (parede z=40). HOUSES alimenta a rotina casa↔trabalho e o painel. */
+const HOUSES = [];
+const BAIRRO_STREET_Z = 36;
+{
+  const eq = (typeof EQUIPE_EMBUTIDA !== 'undefined' && EQUIPE_EMBUTIDA.equipe) || [];
+  const centersA = [72,80,88,96,104,112,124,132,140,148,156,164];
+  const centersB = [70,78,86,94,102,110,118,126,134,142,150,158,166];
+  eq.forEach((rec, i)=>{
+    const lot = rec.casa || (i + 1);
+    const rowA = lot <= 12;
+    const cx = rowA ? centersA[lot - 1] : centersB[lot - 13];
+    const frontZ = rowA ? 32 : 40, backZ = rowA ? 27 : 45, face = rowA ? 1 : -1;
+    const zMin = Math.min(frontZ, backZ), zMax = Math.max(frontZ, backZ);
+    const d = deptById(rec.depto) || DEPTS[0];
+    /* REDESIGN 31/out: fachada de REBOCO pastel (6 tons, variando por lote) e
+       telhado em 3 estilos com telha de verdade: cerâmica / ardósia / verde */
+    const WALLS = ['plaster1', 'plaster2', 'plaster3', 'plaster4', 'plaster5', 'plaster6'];
+    const ROOF_TILES = ['roofcer', 'roofslate', 'roofgreen'];
+    const wallT = WALLS[lot % WALLS.length], roofT = lot % 3, roofTile = ROOF_TILES[roofT];
+    const H = { id: rec.id, lot, cx, front: frontZ, face, zMin, zMax, dept: d, wall: wallT, roof: roofT,
+      door: { x: cx, z: frontZ + face * 1.6 },
+      bed: { x: cx - 1.9, z: backZ - face * 1.6 },
+      leisure: { x: cx + 1.7, z: frontZ - face * 1.5 },
+      lights: [] };
+    HOUSES.push(H);
+    for(let x = cx - 3; x <= cx + 3; x++) for(let z = zMin; z <= zMax; z++) setB(x, -1, z, 'planks', '0');
+    for(let h = 0; h < 3; h++){
+      for(let x = cx - 3; x <= cx + 3; x++){
+        const doorCell = (x === cx && h < 2), winCell = (h === 1 && Math.abs(x - cx) === 2);
+        if(!doorCell) setB(x, h, frontZ, winCell ? 'glass' : wallT, '0');
+        if(!(h === 1 && Math.abs(x - cx) === 2)) setB(x, h, backZ, wallT, '0'); else setB(x, h, backZ, 'glass', '0');
+      }
+      for(let z = zMin + 1; z < zMax; z++){
+        if(!(h === 1 && z === zMin + 2)) setB(cx - 3, h, z, wallT, '0'); else setB(cx - 3, h, z, 'glass', '0');
+        if(!(h === 1 && z === zMin + 3)) setB(cx + 3, h, z, wallT, '0'); else setB(cx + 3, h, z, 'glass', '0');
+      }
+    }
+    for(let x = cx - 3; x <= cx + 3; x++) for(let z = zMin; z <= zMax; z++) setB(x, 3, z, roofTile, '0');
+    if(roofT === 0){ const zr = Math.round((zMin + zMax) / 2); for(let x = cx - 3; x <= cx + 3; x++) setB(x, 4, zr, roofTile, '0'); }
+    if(roofT === 1){ for(let x = cx - 3; x <= cx + 3; x++){ for(let z = zMin + 1; z <= zMax - 1; z++) setB(x, 4, z, roofTile, '0'); for(let z = zMin + 2; z <= zMax - 2; z++) setB(x, 5, z, roofTile, '0'); } }
+    if(roofT === 2){ for(let x = cx - 3; x <= cx + 3; x++){ setB(x, 4, zMin, wallT, '0'); setB(x, 4, zMax, wallT, '0'); } for(let z = zMin + 1; z < zMax; z++){ setB(cx - 3, 4, z, wallT, '0'); setB(cx + 3, 4, z, wallT, '0'); } }
+    addCol(cx - 3.15, cx + 4.15, backZ - .15, backZ + 1.15, 0);
+    addCol(cx - 3.15, cx - .15, frontZ - .15, frontZ + 1.15, 0);
+    addCol(cx + 1.15, cx + 4.15, frontZ - .15, frontZ + 1.15, 0);
+    addCol(cx - 3.15, cx - 2.85, zMin - .15, zMax + 1.15, 0);
+    addCol(cx + 3.15, cx + 3.45, zMin - .15, zMax + 1.15, 0);
+  });
+  /* caminho de cascalho: porta da Torre → rua (z=36) */
+  for(let z = 25; z <= 33; z++) for(let x = -2; x <= 1; x++) setB(x, -1, z, 'gravel', '0');
+  /* soleira de cascalho no portão lateral leste: atravessa a cerca e chega ao bairro */
+  for(let x = 52; x <= 61; x++) for(let z = 34; z <= 38; z++) setB(x, -1, z, 'gravel', '0');
+}
 const voxelFaces = buildVoxelMeshes();
 
 /* gramado infinito, calçada e rua */
@@ -2931,6 +3104,120 @@ const clouds = [];
     for(let j=0;j<n;j++){ const b = new THREE.Mesh(new THREE.BoxGeometry(3+rnd()*3, .9, 2.5+rnd()*2), cm); b.position.set(j*3.1 - n*1.5, rnd()*.4, (rnd()-.5)*2.4); cl.add(b); }
     cl.position.set(-110 + rnd()*220, 42 + rnd()*9, -70 + rnd()*130);
     scene.add(cl); clouds.push({ g:cl, sp:.5 + rnd()*.8 });
+  }
+}
+
+/* ============ BAIRRO: rua, calçadas, placas, mobília e luzes das casas ============ */
+const houseLightMat = new THREE.MeshBasicMaterial({ color: 0xffc46b, transparent: true, opacity: .92 });
+const lampHeadMat = new THREE.MeshBasicMaterial({ color: 0x777d6a });
+const lampGlowTex = (()=>{ const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+  const gr = g.createRadialGradient(32, 32, 2, 32, 32, 32); gr.addColorStop(0, 'rgba(255,205,110,0.85)'); gr.addColorStop(1, 'rgba(255,205,110,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64); const tx = new THREE.CanvasTexture(c); return tx; })();
+const lampGlows = [];   /* halos dos postes da Rua Kovantu: acendem ao escurecer */
+{
+  /* Rua Kovantu: sai da porta da Torre, atravessa o jardim da empresa, passa
+     pelo portão lateral leste e segue pelo Bairro (que fica FORA do lote) */
+  flatBox(scene, 178, .1, 4.6, lam(0x3a3f46), 86, -.03, BAIRRO_STREET_Z);   /* topo em y=0,02: acima da grama (y=0), senão some */
+  for(let x = -2; x <= 172; x += 6) flatBox(scene, 3, .02, .45, lam(0xd8d8d8), x, .005, BAIRRO_STREET_Z);
+  flatBox(scene, 112, .1, 1.7, lam(0x9a9a9a), 118, -.02, 33.3);
+  flatBox(scene, 112, .1, 1.7, lam(0x9a9a9a), 118, -.02, 38.7);
+  for(const H of HOUSES){
+    const d = H.dept, fz = H.front + H.face * 1.06;
+    const rec = (EQUIPE_EMBUTIDA.equipe.find(r=>r.id===H.id) || {});
+    const sign = plateSign(d.emoji + ' ' + firstName(rec.nome || H.id), d.css, 4.4);
+    /* lotes com PERGOLADO (5, 11, 17, 23): a viga do pergolado (topo ≈2,43)
+       cruzava na frente do nome — nesses lotes a placa SOBE pra base ficar em
+       ≈2,61, totalmente acima da viga, sem tocar nos demais lotes */
+    const pergLot = (H.lot % 3 === 2 && H.lot % 2 === 1);
+    sign.position.set(H.cx, pergLot ? 3.08 : 2.42, fz); if(H.face < 0) sign.rotation.y = Math.PI;
+    floorGroups[0].add(sign);
+    const num = plateSign('Nº ' + String(H.lot).padStart(2, '0'), d.css, 1.15);
+    num.position.set(H.cx + 1.95, 1.55, fz); if(H.face < 0) num.rotation.y = Math.PI;
+    floorGroups[0].add(num);
+    const outerZ = H.front + (H.face > 0 ? 1 : 0);
+    if(H.roof === 1) flatBox(floorGroups[0], 7.5, .2, .55, lam(d.color), H.cx + .5, 6.08, (H.zMin + H.zMax) / 2 + .5);
+    else if(H.roof === 2) flatBox(floorGroups[0], 7.6, .42, .22, lam(d.color), H.cx + .5, 4.5, outerZ + H.face * .14);
+    else flatBox(floorGroups[0], 5.6, .3, 4.4, lam(d.color), H.cx, 4.16, (H.zMin + H.zMax) / 2);
+    /* porta na cor do depto */
+    flatBox(floorGroups[0], 1.06, 1.96, .1, lam(lighten(d.color, -.18).getHex()), H.cx + .5, .98, outerZ + H.face * .07);
+    /* batente de MADEIRA em volta da porta (redesign 31/out) */
+    { const fz3 = outerZ + H.face * .14;
+      flatBox(floorGroups[0], .18, 2.06, .12, planksDarkMat, H.cx + .5 - .64, 1.03, fz3);
+      flatBox(floorGroups[0], .18, 2.06, .12, planksDarkMat, H.cx + .5 + .64, 1.03, fz3);
+      flatBox(floorGroups[0], 1.46, .18, .12, planksDarkMat, H.cx + .5, 2.13, fz3); }
+    /* toldo sobre a porta em metade das casas */
+    if(H.lot % 2 === 0){ const awn = flatBox(floorGroups[0], 2.7, .1, 1.5, lam(lighten(d.color, .25).getHex()), H.cx + .5, 2.62, outerZ + H.face * .8); awn.rotation.x = H.face > 0 ? -.38 : .38; }
+    /* jardim frontal: canteiro de grama, arbustos e flores */
+    const gz = outerZ + H.face * .5;
+    flatBox(floorGroups[0], 6.6, .07, .95, lam(0x5da32a), H.cx + .5, .035, gz);
+    flatBox(floorGroups[0], .62, .55, .62, leavesMat, H.cx - 2.1, .3, gz);
+    flatBox(floorGroups[0], .62, .55, .62, leavesMat, H.cx + 3.1, .3, gz);
+    const FLOWER_COLS = [0xe84393, 0xffd94d, 0xff5b6a, 0xffffff];
+    for(let fi = 0; fi < 5; fi++) flatBox(floorGroups[0], .2, .22, .2, lam(FLOWER_COLS[(H.lot + fi) % 4]), H.cx - 1.6 + fi * 1.05, .15, gz + ((fi % 2) ? .24 : -.24) * H.face);
+    /* batentes de MADEIRA nas janelas da frente + floreira florida nos lotes ímpares */
+    for(const wx of [H.cx - 2, H.cx + 2]){
+      const wz = outerZ + H.face * .06;
+      flatBox(floorGroups[0], .36, 1.24, .07, planksDarkMat, wx + .5 - .79, 1.5, wz);
+      flatBox(floorGroups[0], .36, 1.24, .07, planksDarkMat, wx + .5 + .79, 1.5, wz);
+      if(H.lot % 2 === 1){
+        flatBox(floorGroups[0], 1.34, .26, .3, planksDarkMat, wx + .5, .8, outerZ + H.face * .24);
+        for(let fi = 0; fi < 3; fi++) flatBox(floorGroups[0], .17, .18, .17, lam(FLOWER_COLS[(H.lot + fi) % 4]), wx + .5 - .42 + fi * .42, 1.02, outerZ + H.face * .24);
+      }
+    }
+    /* pergolado/alpendre de madeira na entrada (alguns lotes, sem toldo) */
+    if(H.lot % 3 === 2 && H.lot % 2 === 1){
+      const pz2 = outerZ + H.face * .85;
+      flatBox(floorGroups[0], .16, 2.3, .16, planksDarkMat, H.cx + .5 - 1.35, 1.15, pz2);
+      flatBox(floorGroups[0], .16, 2.3, .16, planksDarkMat, H.cx + .5 + 1.35, 1.15, pz2);
+      flatBox(floorGroups[0], 3.1, .14, .3, planksDarkMat, H.cx + .5, 2.36, pz2);
+    }
+    /* cerca baixa com vão na porta em 1/3 dos lotes */
+    if(H.lot % 3 === 0){
+      const fz2 = outerZ + H.face * 1.08;
+      for(const dx of [-3, -2.2, -1.4, 1.6, 2.4, 3.2]) flatBox(floorGroups[0], .11, .52, .11, planksDarkMat, H.cx + .5 + dx, .26, fz2);
+      flatBox(floorGroups[0], 2.1, .07, .07, planksDarkMat, H.cx - 1.7, .46, fz2);
+      flatBox(floorGroups[0], 2.1, .07, .07, planksDarkMat, H.cx + 2.9, .46, fz2);
+    }
+    for(const wx of [H.cx - 2, H.cx + 2]){
+      const glow = new THREE.Mesh(new THREE.PlaneGeometry(1.02, 1.02), houseLightMat);
+      glow.position.set(wx + .5, 1.5, H.front + H.face * 1.03);
+      if(H.face < 0) glow.rotation.y = Math.PI;
+      glow.visible = false; floorGroups[0].add(glow); H.lights.push(glow);
+    }
+    const mb = new THREE.Group();
+    mb.add(box(.16, .95, .16, planksDarkMat, 0, .47, 0, { shadow:false }));
+    mb.add(box(.62, .42, .42, lam(d.color), 0, 1.1, 0, { shadow:false }));
+    mb.position.set(H.cx + 2.7, 0, H.front + H.face * 1.15);   /* na calçada, fora do asfalto */
+    floorGroups[0].add(mb);
+    const bed = new THREE.Group();
+    bed.add(box(2.3, .45, 1.25, lam(0xe8e2d2), 0, .22, 0, { shadow:false }));
+    bed.add(box(2.3, .28, 1.25, lam(d.color), .18, .5, 0, { shadow:false }));
+    bed.add(box(.5, .22, 1.1, lam(0xffffff), -.85, .55, 0, { shadow:false }));
+    bed.position.set(H.bed.x, 0, H.bed.z); floorGroups[0].add(bed);
+    if(H.lot % 3 === 0){ const tv = screenBox(d, 1.9, 1.15); tv.position.set(H.leisure.x, 1.35, H.leisure.z - H.face * 1.2); if(H.face > 0) tv.rotation.y = Math.PI; floorGroups[0].add(tv); }
+    else if(H.lot % 3 === 1){ floorGroups[0].add(box(1.5, .75, .95, planksMat, H.leisure.x, .37, H.leisure.z, { shadow:false })); }
+    else { const sf = sofa(d.color); sf.position.set(H.leisure.x - 1, 0, H.leisure.z); sf.rotation.y = H.face > 0 ? Math.PI : 0; floorGroups[0].add(sf); }
+  }
+  /* ===== RUA VIVA: bancos, árvores e postes de luz ===== */
+  for(const [bx, bz, bf] of [[76, 33.3, 1], [108, 33.3, 1], [140, 33.3, 1], [92, 38.7, -1], [124, 38.7, -1], [156, 38.7, -1]]){
+    flatBox(floorGroups[0], 2.3, .12, .55, planksMat, bx, .46, bz);
+    flatBox(floorGroups[0], 2.3, .5, .1, planksMat, bx, .82, bz - bf * .28);
+    flatBox(floorGroups[0], .14, .46, .5, darkMat, bx - .95, .23, bz);
+    flatBox(floorGroups[0], .14, .46, .5, darkMat, bx + .95, .23, bz);
+  }
+  for(const [tx, tz] of [[68, 33.9], [84, 33.9], [100, 33.9], [120, 33.9], [136, 33.9], [152, 33.9], [72, 38.1], [88, 38.1], [104, 38.1], [120, 38.1], [136, 38.1], [152, 38.1], [168, 38.1]]){
+    flatBox(floorGroups[0], .3, 1.7, .3, planksDarkMat, tx, .85, tz);
+    flatBox(floorGroups[0], 1.7, 1.4, 1.7, leavesMat, tx, 2.35, tz);
+    flatBox(floorGroups[0], 1.05, .95, 1.05, leavesMat, tx, 3.3, tz);
+  }
+  for(let li = 0; li < 11; li++){
+    const lx = 4 + li * 16, lz = (li % 2 === 0) ? 34.35 : 37.65, lf = (li % 2 === 0) ? 1 : -1;
+    flatBox(floorGroups[0], .16, 3.2, .16, darkMat, lx, 1.6, lz);
+    flatBox(floorGroups[0], .14, .14, 1.15, darkMat, lx, 3.14, lz + lf * .5);
+    flatBox(floorGroups[0], .36, .17, .62, lampHeadMat, lx, 3.08, lz + lf * 1.0);
+    const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: lampGlowTex, color: 0xffffff, transparent: true, opacity: .85, depthWrite: false }));
+    halo.scale.set(2.4, 2.4, 1); halo.position.set(lx, 3.08, lz + lf * 1.0); halo.visible = false;
+    floorGroups[0].add(halo); lampGlows.push(halo);
   }
 }
 
@@ -3462,7 +3749,7 @@ function setNPCYaw(p, a){
 function simActivity(p){
   const u = p && p.userData; if(!u) return '—';
   if(u.player) return '🚶 andando pela sede (é você!)';
-  if(u.mode === 'sleep') return '💤 dormindo no sofá';
+  if(u.mode === 'sleep') return u.atHome ? '💤 dormindo em casa' : '💤 dormindo no sofá';
   return u.activity || '💻 trabalhando na mesa';
 }
 function phraseFor(u, kind, partner){
@@ -3577,8 +3864,28 @@ function deptNodeKeys(d){
   const side = d._L.x1 <= -10 ? 'w' : 'e', kind = deptDoorKind(d), pre = `${d.floor}:${d.id}`;
   return { center:`${pre}:center`, pause:`${pre}:pause`, out:`${pre}:out`, cross:`${pre}:cross`, inside:`${pre}:in` };
 }
+function OUT_NODE_KEYS(){
+  if(OUT_NODE_KEYS._k) return OUT_NODE_KEYS._k;
+  OUT_NODE_KEYS._k = ['0:halldoor','0:exit','0:path','0:stc','0:exitw1','0:exitw2', ...HOUSES.map(H=>'0:st:' + H.cx), ...HOUSES.map(H=>'0:house:' + H.id)];
+  return OUT_NODE_KEYS._k;
+}
+function buildBairroGraph(){
+  aNode('0:halldoor', 0, 0, 19.6); aNode('0:exit', 0, -0.5, 23.5); aNode('0:path', 0, -0.5, 29); aNode('0:stc', 0, -0.5, BAIRRO_STREET_Z);
+  /* saída pelo canal livre do hall: coluna oeste (x=-7,5) → fileira z=19 → porta.
+     (A diagonal cor:16→porta cruzava o balcão do hall e prendia todo mundo.) */
+  aNode('0:exitw1', 0, -7.5, 9.5); aNode('0:exitw2', 0, -7.5, 19);
+  aChain(['0:cor:-4', '0:exitw1', '0:exitw2', '0:halldoor', '0:exit', '0:path', '0:stc']);
+  const cxs = [...new Set(HOUSES.map(H=>H.cx))].sort((a,b)=>a-b);
+  cxs.forEach(cx => aNode('0:st:' + cx, 0, cx, BAIRRO_STREET_Z));
+  const keys = [];
+  for(const cx of cxs){ if(cx > -0.5 && !keys.includes('0:stc')) keys.push('0:stc'); keys.push('0:st:' + cx); }
+  if(!keys.includes('0:stc')) keys.push('0:stc');
+  aChain(keys);
+  for(const H of HOUSES){ const hk = '0:house:' + H.id; aNode(hk, 0, H.door.x, H.door.z); aEdge('0:st:' + H.cx, hk); }
+}
 function buildAutoGraph(){
   if(AUTO_NODES.size) return;
+  buildBairroGraph();
   for(let f=0; f<4; f++){
     const c = z => `${f}:cor:${z}`;
     [16,8,3,-4,-10].forEach(z => aNode(c(z), f, 0, z));
@@ -3636,6 +3943,12 @@ function nearestAutoKey(p){
   const insideHome = d && p.position.x >= d._L.x0 && p.position.x < d._L.x1 && p.position.z >= d._L.z0 && p.position.z < d._L.z1 && f === d.floor;
   if(inShaft(p.position.x, p.position.z)) return `${Math.min(3, Math.max(0, Math.round(p.position.y / FH)))}:stair`;
   if(insideHome) return deptNodeKeys(d).center;
+  if(u.atHome && u.houseId) return '0:house:' + u.houseId;
+  if(p.position.z > BLD.z1 + 1.5 || p.position.x < BLD.x0 - .5 || p.position.x > BLD.x1 + 1.5){
+    let bk = '0:stc', bd = 1e18;
+    for(const k of OUT_NODE_KEYS()){ const n = AUTO_NODES.get(k); if(!n) continue; const dd = (n.x - p.position.x) ** 2 + (n.z - p.position.z) ** 2; if(dd < bd){ bd = dd; bk = k; } }
+    return bk;
+  }
   if(p.position.x >= -9 && p.position.x <= 8 && p.position.z >= -15 && p.position.z <= 20){
     const zs = [16,8,3,-4,-10]; let best = zs[0], bd = 1e9;
     for(const z of zs){ const dd = Math.abs(z - p.position.z); if(dd < bd){ bd = dd; best = z; } }
@@ -3683,6 +3996,7 @@ function goWork(p, label){
     if(u.workMode === 'sit' && u.seat){ p.position.set(u.seat.x, u.homeFloor * FH, u.seat.z); setNPCYaw(p, u.seat.rotY); }
     else if(u.workMode === 'stand'){ p.position.set(u.workAnchor.x, u.homeFloor * FH, u.workAnchor.z); if(u.seat) setNPCYaw(p, u.seat.rotY); }
     if(u.isTraveler){ u.isTraveler = false; AUTO.travelers = Math.max(0, AUTO.travelers - 1); }
+    u.atHome = false; u.commute = false;
     enterWork(p, 1);
   };
   if(Math.hypot(p.position.x - u.workAnchor.x, p.position.z - u.workAnchor.z) < .45 && u.currentFloor === u.homeFloor){ arrive(); return true; }
@@ -3711,7 +4025,7 @@ function choosePartner(u){
   for(const e of roster.values()){
     const o = e.obj, ou = o.userData;
     if(e.rec.id === u.personId || ou.player || ou.mode === 'sleep' || ou.autonomyDisabled) continue;
-    if(e.rec.depto === u.homeDeptId && ou.currentFloor === u.currentFloor && !ou.reservedFor && (ou.mode === 'work' || ou.mode === 'pause')) peers.push(e);
+    if(e.rec.depto === u.homeDeptId && ou.currentFloor === u.currentFloor && !ou.reservedFor && !ou.atHome && !ou.commute && (ou.mode === 'work' || ou.mode === 'pause')) peers.push(e);
   }
   return peers.length ? peers[Math.floor(autoRand(u)*peers.length)] : null;
 }
@@ -3733,6 +4047,7 @@ function startConversation(p, partnerE){
       startRoute(p, { key: deptNodeKeys(deptById(pu.homeDeptId)).center, point:{ x:a2.x, z:a2.z, f:pu.currentFloor }, onArrive: begin }, `🚶 indo conversar com ${firstName(partnerE.rec.nome)}`);
       return;
     }
+    if(pu.atHome || pu.commute){ pu.reservedFor = null; goWork(p); return; }   /* parceiro foi pra casa no meio do caminho: conversa cancelada */
     pu.reservedFor = null; dequeue(pu.personId); u.nextConverseAt = autoNow + 90; pu.nextConverseAt = autoNow + 90;   /* respiro pós-conversa pros dois */
     u.mode = 'converse'; u.state = 'stand'; u.activity = `💬 conversando com ${firstName(partnerE.rec.nome)}`;
     u.converseT = 5.5 + autoRand(u)*3; u.partnerId = partnerE.rec.id;
@@ -3822,7 +4137,7 @@ function decide(p){
 }
 function initAutonomy(p, rec, d, seat){
   const u = p.userData;
-  u.personId = rec.id; u.homeDeptId = d.id; u.homeFloor = d.floor; u.currentFloor = d.floor;
+  u.personId = rec.id; u.homeDeptId = d.id; u.houseId = rec.id; u.lot = rec.casa || (EQUIPE_EMBUTIDA.equipe.findIndex(r=>r.id===rec.id) + 1) || 1; u.atHome = false; u.commute = false; u.homeFloor = d.floor; u.currentFloor = d.floor;
   u.seat = seat; u.workAnchor = { x:p.position.x, z:p.position.z };
   u.workMode = (rec.comportamento === 'dormindo' || rec.status === 'pausado') ? 'sleep' : (seat && !seat.stand && rec.comportamento !== 'empe') ? 'sit' : 'stand';
   u.comportamento = rec.comportamento || ''; u.rngState = hashId(rec.id) + 23;
@@ -3882,6 +4197,7 @@ function animatePeople(t, dt){
   for(const p of people) if(p.userData.bubbleSprite) AUTO.activeSpeeches++;
   governHeadSprites();
   workSyncClock -= dt; if(workSyncClock <= 0){ workSyncClock = .3; syncWorkVisuals(); }
+  lifeTick(dt);
   for(const scr of liveScreens){ if(scr.userData.sm) scr.userData.sm.color.setScalar(.92 + .08 * Math.sin(t*2.2 + (scr.userData.ph || 0))); }
   for(const p of people){
     const u = p.userData;
@@ -3963,6 +4279,25 @@ function animatePeople(t, dt){
       }
       continue;
     }
+    if(u.mode === 'home'){
+      u.head.rotation.x = 0; u.head.rotation.y = Math.sin(t * .5 + u.phase) * .2;
+      const H = houseOf(u.houseId);
+      if(u.homeGoBed && H){
+        const dx = H.bed.x - p.position.x, dz = H.bed.z - p.position.z, dd = Math.hypot(dx, dz);
+        if(dd < .25){ u.homeGoBed = false; u.mode = 'sleep'; u.state = 'sleep'; u.activity = '💤 dormindo em casa'; continue; }
+        p.position.x += dx / dd * 1.05 * dt; p.position.z += dz / dd * 1.05 * dt;
+        facePoint(p, H.bed.x, H.bed.z);
+        const swH = Math.sin(t * 7.5 + u.phase) * .5; u.legL.rotation.x = swH; u.legR.rotation.x = -swH;
+        u.body.position.y = Math.abs(Math.sin(t * 7.5 + u.phase)) * .04;
+        continue;
+      }
+      u.body.position.y = Math.sin(t * 2 + u.phase) * .02;
+      u.legL.rotation.x = 0; u.legR.rotation.x = 0;
+      u.armL.rotation.x = Math.sin(t * 1.8 + u.phase) * .3; u.armR.rotation.x = Math.sin(t * 1.8 + u.phase + 1.2) * .3;
+      u.homeT -= dt;
+      if(u.homeT <= 0){ u.homeT = 16 + autoRand(u) * 26; u.activity = autoPick(u, HOME_ACTS); if(autoRand(u) < .55) showSpeech(p, u.activity.split(' ')[0], 2.4); }
+      continue;
+    }
     if(u.mode === 'walk'){
       u.head.rotation.x = 0; u.head.rotation.y = 0;
       const pt = u.route && u.route[u.routeIdx];
@@ -4016,7 +4351,8 @@ function animatePeople(t, dt){
       if((u.validationTick = (u.validationTick || 0) + dt) > .8){
         u.validationTick = 0;
         const fl = Math.round(p.position.y / FH);
-        if(pointBlocked(p.position.x, p.position.z, fl) || p.position.x < BLD.x0 + .4 || p.position.x > BLD.x1 + .6 || p.position.z < BLD.z0 + .4 || p.position.z > BLD.z1 + .6){ AUTO.violations++; (AUTO.lastViolations = AUTO.lastViolations || []).push([u.personId, +p.position.x.toFixed(1), +p.position.y.toFixed(1), +p.position.z.toFixed(1), 'colisor/fora', AUTO.lastCollider]); }
+        const foraBairro = p.position.z > BLD.z1 + 1.5 || p.position.x < BLD.x0 - .5 || p.position.x > BLD.x1 + 1.5;
+        if(!u.commute && (pointBlocked(p.position.x, p.position.z, fl) || (!foraBairro && (p.position.x < BLD.x0 + .4 || p.position.x > BLD.x1 + .6 || p.position.z < BLD.z0 + .4 || p.position.z > BLD.z1 + .6)))){ AUTO.violations++; AUTO.lastViolation = { id:u.personId, mode:u.mode, x:+p.position.x.toFixed(1), z:+p.position.z.toFixed(1), floor:fl }; }
         if(Math.abs(p.position.y - groundYAt(p.position.x, p.position.z, p.position.y)) > .35){ AUTO.violations++; (AUTO.lastViolations = AUTO.lastViolations || []).push([u.personId, +p.position.x.toFixed(1), +p.position.y.toFixed(1), +p.position.z.toFixed(1), 'chão']); }
       }
       continue;
@@ -4032,6 +4368,126 @@ function animatePeople(t, dt){
   }
   for(const c of clouds){ c.g.position.x += c.sp * dt; if(c.g.position.x > 130) c.g.position.x = -130; }
 }
+/* ============ VIDA NO BAIRRO: rotina casa ↔ trabalho (fase 1) ============
+   Relógio da cena = hora real (America/Sao_Paulo), com override de teste
+   ?hora=19 na URL ou __KOV.bairro.setHour(h). Expediente 8h–18h na Torre;
+   18h–22h em casa acordado (lazer); 22h–7h dormindo em casa; 7h–8h em casa. */
+const HORA_URL = parseFloat(new URLSearchParams(location.search).get('hora'));
+let TEST_HORA = isFinite(HORA_URL) ? HORA_URL : null;
+function sceneHour(){
+  if(TEST_HORA != null) return TEST_HORA;
+  try{ const s = new Intl.DateTimeFormat('pt-BR', { timeZone:'America/Sao_Paulo', hour:'2-digit', minute:'2-digit', hour12:false }).format(new Date());
+    const pr = s.split(':').map(Number); return (pr[0] || 0) + (pr[1] || 0) / 60;
+  }catch(e){ const d = new Date(); return d.getHours() + d.getMinutes() / 60; }
+}
+function lifePhase(h){ if(h >= 8 && h < 18) return 'work'; if(h >= 22 || h < 7) return 'sleep'; return 'home'; }
+const HOME_ACTS = ['📺 vendo TV em casa', '🍳 cozinhando em casa', '📖 lendo em casa', '🛋️ descansando no sofá de casa', '🎮 jogando em casa', '☕ tomando um café em casa'];
+const houseOf = id => HOUSES.find(H => H.id === id);
+const hemiLight = scene.children.find(o => o.isHemisphereLight);
+let sceneNight = null;
+function updateHouseLights(){
+  const h = sceneHour();
+  const dark = h >= 17.5 || h < 6.5;
+  lampHeadMat.color.setHex(dark ? 0xffd98a : 0x777d6a);
+  for(const g of lampGlows) g.visible = dark;
+  for(const H of HOUSES){
+    const e = roster.get(H.id), u = e && e.obj.userData;
+    const on = dark && !!u && u.atHome && u.mode !== 'sleep';   /* luz acesa = dono em casa e acordado; dormiu, apagou */
+    for(const g of H.lights) g.visible = on;
+  }
+}
+function applySceneHour(){
+  const h = sceneHour();
+  const night = h >= 18.5 || h < 5.5;
+  updateHouseLights();
+  if(night !== sceneNight){
+    sceneNight = night;
+    scene.background.setHex(night ? 0x0f1c33 : 0x87bfe8);
+    if(scene.fog) scene.fog.color.setHex(night ? 0x0f1c33 : 0x87bfe8);
+    sun.intensity = night ? .28 : 1.55;
+    if(hemiLight) hemiLight.intensity = night ? .5 : 1.08;
+  }
+}
+function freeSocial(p){
+  const u = p.userData;
+  if(u.partnerId){ const pe = roster.get(u.partnerId); if(pe && pe.obj !== p){ const pu = pe.obj.userData; if(pu.mode === 'converse' && pu.partnerId === u.personId){ pu.partnerId = null; goWork(pe.obj); } } u.partnerId = null; }
+  for(const e of roster.values()){ const ou = e.obj.userData; if(ou.reservedFor === u.personId) ou.reservedFor = null; }
+  u.reservedFor = null;
+  dequeue(u.personId);
+  if(u.isTraveler){ u.isTraveler = false; AUTO.travelers = Math.max(0, AUTO.travelers - 1); }
+}
+function arriveHome(p){
+  const u = p.userData, H = houseOf(u.houseId);
+  u.commute = false;
+  if(!H){ enterWork(p); return; }
+  if(Math.abs(p.position.x - H.cx) > 7.5 || p.position.z < H.zMin - 4 || p.position.z > H.zMax + 4){ u.atHome = false; enterWork(p, .3); return; }
+  u.atHome = true; u.currentFloor = 0;
+  if(lifePhase(sceneHour()) === 'sleep'){ p.position.set(H.bed.x, 0, H.bed.z); u.mode = 'sleep'; u.state = 'sleep'; u.activity = '💤 dormindo em casa'; }
+  else { u.mode = 'home'; u.state = 'stand'; u.homeT = 14 + autoRand(u) * 22; u.homeGoBed = false; u.activity = autoPick(u, HOME_ACTS); facePoint(p, H.leisure.x, H.leisure.z); }
+  if(autoRand(u) < .5) showSpeech(p, 'cheguei! 🏠', 2.6);
+}
+function goHome(p){
+  const u = p.userData, H = houseOf(u.houseId); if(!H) return false;
+  freeSocial(p);
+  const dest = lifePhase(sceneHour()) === 'sleep' ? H.bed : H.leisure;
+  const ok = startRoute(p, { key: '0:house:' + H.id, point: { x: dest.x, z: dest.z, f: 0 }, onArrive: ()=> arriveHome(p) }, '🏠 indo pra casa');
+  if(ok){ u.commute = true; u.atHome = false; }
+  return ok;
+}
+function goWorkFromHome(p){
+  const u = p.userData, e = roster.get(u.personId); if(!e) return false;
+  const d = deptById(u.homeDeptId);
+  if(u.workMode === 'sleep'){
+    const pt = { x: d._L.x0 + 2.1, z: d.z + 2.5 };
+    const ok = startRoute(p, { key: deptNodeKeys(d).center, point: { x: pt.x, z: pt.z, f: d.floor }, onArrive: ()=>{ u.commute = false; u.atHome = false; u.currentFloor = d.floor; p.position.set(pt.x, d.floor * FH, pt.z); u.mode = 'sleep'; u.state = 'sleep'; u.activity = '💤 dormindo no sofá'; } }, '🚶 indo pra sede');
+    if(ok) u.commute = true;
+    return ok;
+  }
+  const w = workPointOf(e);
+  const arrive = () => {
+    u.commute = false; u.atHome = false; u.currentFloor = u.homeFloor;
+    if(u.workMode === 'sit' && u.seat){ p.position.set(u.seat.x, u.homeFloor * FH, u.seat.z); setNPCYaw(p, u.seat.rotY); }
+    else if(u.workMode === 'stand'){ p.position.set(u.workAnchor.x, u.homeFloor * FH, u.workAnchor.z); if(u.seat) setNPCYaw(p, u.seat.rotY); }
+    if(u.isTraveler){ u.isTraveler = false; AUTO.travelers = Math.max(0, AUTO.travelers - 1); }
+    u.atHome = false; u.commute = false;
+    enterWork(p, 1);
+  };
+  const tgt = u.workMode === 'sit' ? { x: u.seat.x, z: u.seat.z, f: u.homeFloor } : { x: u.workAnchor.x, z: u.workAnchor.z, f: u.homeFloor };
+  const ok = startRoute(p, { key: w.key || deptNodeKeys(d).center, point: tgt, onArrive: arrive }, '🚶 indo trabalhar');
+  if(ok) u.commute = true;
+  return ok;
+}
+let lifeClock = 0, lastHourKey = -1, lifePhaseCur = null, lifePhaseSince = 0;
+function lifeTick(dt){
+  const hk = Math.floor(sceneHour() * 2);
+  if(hk !== lastHourKey){ lastHourKey = hk; applySceneHour(); }
+  lifeClock -= dt;
+  if(lifeClock > 0) return;
+  lifeClock = 1;
+  updateHouseLights();
+  const ph = lifePhase(sceneHour());
+  if(ph !== lifePhaseCur){ lifePhaseCur = ph; lifePhaseSince = autoNow; }
+  /* partida escalonada: ninguém sai todo mundo no mesmo segundo — delay de
+     0–45s por pessoa (hash do id) + no máximo 6 commuters por vez, senão a
+     escada e a porta engarrafam e o anti-travamento esgota as rotas. */
+  let commuting = 0;
+  for(const e of roster.values()) if(e.obj.userData.commute) commuting++;
+  for(const e of roster.values()){
+    const p = e.obj, u = p.userData;
+    if(!u.autoInit || u.player || u.autonomyDisabled || !u.houseId) continue;
+    if(u.mode === 'walk' || u.mode === 'greet') continue;
+    const myTurn = autoNow - lifePhaseSince > (hashId(u.personId) % 45) && commuting < 6;
+    if(ph === 'work'){ if(u.atHome && myTurn){ if(goWorkFromHome(p)) commuting++; } }
+    else {
+      const physTorre = p.position.x >= BLD.x0 && p.position.x <= BLD.x1 && p.position.z >= BLD.z0 && p.position.z <= BLD.z1 && p.position.y < FH;
+      if(!u.atHome || physTorre){ if(!u.commute && myTurn){ if(goHome(p)) commuting++; } }
+      else if(ph === 'sleep' && u.mode === 'home') u.homeGoBed = true;
+      else if(ph !== 'sleep' && u.mode === 'sleep'){ u.mode = 'home'; u.state = 'stand'; u.homeT = 10 + autoRand(u) * 18; u.activity = autoPick(u, HOME_ACTS); }
+    }
+  }
+}
+applySceneHour();
+
 function autoSnapshot(){
   return { now:autoNow, stats:{ ...AUTO }, people:[...roster.values()].map(e => { const u = e.obj.userData; return {
     id:e.rec.id, nome:e.rec.nome, depto:e.rec.depto, mode:u.mode, activity:simActivity(e.obj),
@@ -4071,7 +4527,11 @@ function renderPanel(rec){
     pNow.style.cssText = 'margin-top:7px;font-size:12px;font-weight:700;color:#24551a;background:#eef7df;border:1.5px dashed #8fbf62;border-radius:8px;padding:7px 10px';
     document.getElementById('pDoing').after(pNow);
   }
-  { const eNow = roster.get(rec.id); pNow.textContent = 'Agora na sede: ' + (eNow ? simActivity(eNow.obj) : '—'); }
+  { const eNow = roster.get(rec.id); pNow.textContent = (eNow && eNow.obj.userData.atHome) ? 'Agora: ' + simActivity(eNow.obj) : 'Agora na sede: ' + (eNow ? simActivity(eNow.obj) : '—'); }
+  let pHome = document.getElementById('pHome');
+  if(!pHome){ pHome = document.createElement('div'); pHome.id = 'pHome'; pHome.style.cssText = pNow.style.cssText; pNow.after(pHome); }
+  { const lot = rec.casa || (EQUIPE_EMBUTIDA.equipe.findIndex(r=>r.id===rec.id) + 1) || 1;
+    pHome.textContent = '🏠 Casa: Lote ' + String(lot).padStart(2, '0') + ' — Bairro Kovantu'; }
   if(!rec._needs) rec._needs = needsOf(rec);
   document.getElementById('pNeeds').innerHTML = rec._needs.map(([n,v]) =>
     `<div class="need"><div class="row"><span>${n}</span><span>${v}%</span></div><div class="nbar"><i class="${v<35?'low':v<60?'mid':''}" style="width:${v}%"></i></div></div>`).join('');
@@ -4205,7 +4665,7 @@ btnTour.onclick = ()=>{
 const btnSpin = document.getElementById('btnSpin');
 btnSpin.onclick = ()=>{ controls.autoRotate = !controls.autoRotate; controls.autoRotateSpeed = 1.0; btnSpin.classList.toggle('on', controls.autoRotate); };
 document.getElementById('btnTop').onclick = ()=>{ stopTour(); if(!pov.on){ showExterior(); focusTarget = new THREE.Vector3(0,0,0); focusCam = new THREE.Vector3(0, 125, 14); } };
-document.getElementById('btnReset').onclick = ()=>{ stopTour(); if(!pov.on){ showExterior(); focusTarget = new THREE.Vector3(0,6,-2); focusCam = new THREE.Vector3(56, 34, 86); } };
+document.getElementById('btnReset').onclick = ()=>{ stopTour(); if(!pov.on){ showExterior(); focusTarget = new THREE.Vector3(62,2,8); focusCam = new THREE.Vector3(62, 95, 185); } };   /* visão geral: Torre à esquerda + Bairro Kovantu no flanco leste, lado a lado */
 
 /* ticker + relógio */
 function buildTicker(){
@@ -4238,7 +4698,7 @@ __bindPlayer = ()=>{
   }
 };
 __bindPlayer();
-const pov = { on:false, first:false, yaw:0, pitch:.3, dist:7.5, keys:{}, joyX:0, joyY:0, moving:false };
+const pov = { on:false, first:false, yaw:0, pitch:.3, dist:7.5, keys:{}, joyX:0, joyY:0, moving:false, vy:0, jumpOff:0, grounded:true };
 /* RUMO DO JOGADOR — escrever SEMPRE nos dois lados da rotação (Euler + quaternion).
    Causa do "andando de costas": o scene.attach() que tirou o jogador do grupo do
    andar dessincroniza rotation×quaternion neste three embutido — o decompose do
@@ -4260,7 +4720,11 @@ window.__pov = false;
 let povFloor = 0, povSpawn = null;
 function playerAnim(p, t, dt){
   const u = p.userData;
-  if(pov.moving){
+  if(pov.on && !pov.grounded){
+    u.legL.rotation.x = .75; u.legR.rotation.x = -.45;
+    u.armL.rotation.x = -2.4; u.armR.rotation.x = -2.9;
+    u.body.position.y = .02;
+  } else if(pov.moving){
     const sw = Math.sin(t*9.5) * .55;
     u.legL.rotation.x = sw; u.legR.rotation.x = -sw;
     u.armL.rotation.x = -sw * .7; u.armR.rotation.x = sw * .7;
@@ -4293,11 +4757,18 @@ function povStep(dt){
     let nx = player.position.x + mx * sp * dt, nz = player.position.z + mz * sp * dt;
     [nx, nz] = collide(nx, nz, .5, activeFloors());
     player.position.x = nx; player.position.z = nz;
-    player.position.y = groundYAt(nx, nz, player.position.y);
     setPlayerYaw(Math.atan2(mx, mz));
-  } else {
-    player.position.y = groundYAt(player.position.x, player.position.z, player.position.y);
   }
+  /* PULO (bug corrigido 31/out: NÃO existia física vertical — o y era cravado
+     em groundYAt todo frame e o Espaço não fazia nada). Gravidade própria:
+     jumpOff sobe com vy, cai com -14,5 e pousa em 0 sobre o chão de groundYAt
+     (que continua cuidando de escadas/andares com a altura SEM o pulo). */
+  if(!pov.grounded){
+    pov.vy -= 14.5 * dt;
+    pov.jumpOff += pov.vy * dt;
+    if(pov.jumpOff <= 0){ pov.jumpOff = 0; pov.vy = 0; pov.grounded = true; }
+  }
+  player.position.y = groundYAt(player.position.x, player.position.z, player.position.y - pov.jumpOff) + pov.jumpOff;
   const fl = Math.max(0, Math.min(4, Math.round(player.position.y / FH)));
   if(fl !== povFloor){ povFloor = fl; viewMode = 'cut'; cutFloor = fl; applyVisibility(); }
 }
@@ -4364,6 +4835,7 @@ function enterPOV(){
   if(povSpawn === null){ player.position.set(0, 0, 36); povFloor = 0; setPlayerYaw(Math.PI); pov.yaw = 0; }
   else { player.position.set(-0.5, povSpawn * FH, -4); povFloor = povSpawn; setPlayerYaw(0); pov.yaw = Math.PI; }
   pov.pitch = .3;
+  pov.vy = 0; pov.jumpOff = 0; pov.grounded = true;
   pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
   clearSpeech(player);   /* POV não herda balão da vida de NPC do Charlis */
   viewMode = 'cut'; cutFloor = povFloor; applyVisibility();
@@ -4386,6 +4858,7 @@ function exitPOV(){
   if(s){ player.position.set(s.x, u.baseY, s.z); setPlayerYaw(s.rotY); }
   u.state = 'sit'; u.timer = 5 + Math.random()*5;
   if(u.autoInit){ u.mode = 'work'; u.route = null; u.routeIdx = 0; u.currentFloor = u.homeFloor; u.activity = '💻 trabalhando na mesa'; u.workT = 7; }
+  pov.vy = 0; pov.jumpOff = 0; pov.grounded = true;
   pov.joyX = 0; pov.joyY = 0; lookId = null; lookLast = null; joyId = null;
   document.getElementById('joyKnob').style.transform = 'translate(0px,0px)';
   povSpawn = null;
@@ -4402,11 +4875,20 @@ btnView.onclick = ()=>{
   btnView.textContent = pov.first ? '👁️ Câmera: 1ª pessoa' : '👁️ Câmera: 3ª pessoa';
 };
 addEventListener('keydown', e=>{
+  if(e.code === 'Space' && pov.on){
+    e.preventDefault();   /* sem rolar a página... */
+    const ae = document.activeElement;   /* ...e sem "clicar" o botão que ficou focado (ex.: o próprio botão do POV) */
+    if(ae && (ae.tagName === 'BUTTON' || ae.tagName === 'INPUT')) ae.blur();
+    if(!e.repeat && pov.grounded){ pov.vy = 5.4; pov.grounded = false; }
+  }
   pov.keys[e.code] = true;
   if(e.code === 'Escape' && pov.on) exitPOV();
   if(pov.on && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) e.preventDefault();
 });
-addEventListener('keyup', e=>{ pov.keys[e.code] = false; });
+addEventListener('keyup', e=>{
+  pov.keys[e.code] = false;
+  if(e.code === 'Space' && pov.on) e.preventDefault();
+});
 /* ============ INPUT DO POV — Pointer Events unificados, um dedo por função ============
    Olhar e joystick têm pointerId próprio: dá pra ANDAR e OLHAR ao mesmo tempo
    (multi-toque de verdade), e o gesto de um nunca contamina o outro. */
@@ -4525,12 +5007,240 @@ renderer.setAnimationLoop(()=>{
 });
 addEventListener('resize', ()=>{ camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
 
+/* ============ CONVERSAR COM O FUNCIONÁRIO (chat + ligação, 100% client-side) ============
+   Motor dirigido pelo ESTADO VIVO da simulação: a pessoa responde com os dados
+   dela na cena (atividade atual, onde está, necessidades, tarefas, casa/lote).
+   Voz de leitura: Web Speech (speechSynthesis) com pitch/rate estáveis por
+   pessoa. Ligação: overlay + reconhecimento de voz (webkitSpeechRecognition)
+   quando o navegador suporta; sem suporte, aviso claro e o chat segue por texto. */
+const chatEl = document.getElementById('chatPanel');
+const chLog = document.getElementById('chLog'), chInput = document.getElementById('chInput'), chTyping = document.getElementById('chTyping');
+const chatState = { personId: null, voiceOn: false, lastByPerson: {} };
+document.getElementById('chVoiceOn').addEventListener('change', e=>{ chatState.voiceOn = e.target.checked; if(!chatState.voiceOn) speechSynthesis.cancel(); });
+
+function chatCtx(id){
+  const e = roster.get(id); if(!e) return null;
+  const rec = e.rec, d = deptById(rec.depto) || DEPTS[0], u = e.obj.userData;
+  if(!rec._needs) rec._needs = needsOf(rec);
+  const needs = {}; rec._needs.forEach(([n, v])=> needs[n] = v);
+  const H = houseOf(id);
+  const lot = H ? H.lot : (rec.casa || 1);
+  let where;
+  if(u.atHome) where = 'em casa, no Lote ' + String(lot).padStart(2, '0') + ' do Bairro Kovantu';
+  else if(u.commute) where = 'na Rua Kovantu, no caminho';
+  else if(u.atHome === false && (lifePhase(sceneHour()) !== 'work')) where = 'a caminho de casa';
+  else where = 'na Torre (' + (u.currentFloor >= 4 ? 'Cobertura' : ['térreo', '1º andar', '2º andar', '3º andar'][Math.max(0, Math.min(3, u.currentFloor || 0))]) + ', ' + d.name + ')';
+  return { rec, d, u, needs, tasks: normTarefas(rec.tarefas || []), H, lot, atHome: !!u.atHome,
+    sleeping: u.mode === 'sleep', where, act: simActivity(e.obj), phase: lifePhase(sceneHour()) };
+}
+function stripEmoji(s){ return String(s).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '').replace(/\s+/g, ' ').trim(); }
+function firstSentence(s){ const m = String(s || '').match(/^[^.!?]+[.!?]?/); return m ? m[0].trim() : ''; }
+function pickFresh(id, pool){
+  const last = chatState.lastByPerson[id] || [];
+  let c = pool[Math.floor(Math.random() * pool.length)];
+  let guard = 0;
+  while(last.includes(c) && guard++ < 8) c = pool[Math.floor(Math.random() * pool.length)];
+  last.push(c); if(last.length > 2) last.shift();
+  chatState.lastByPerson[id] = last;
+  return c;
+}
+function chatIntent(msg){
+  const s = ' ' + String(msg || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[?!.,;]/g, ' ') + ' ';
+  if(/\b(tchau|adeus|ate mais|falou|obrigad)/.test(s)) return 'bye';
+  if(/(quem e voce|se apresenta|seu nome|qual (e )?seu cargo|o que voce faz da vida)/.test(s)) return 'who';
+  if(/(o que (voce )?(esta|ta) fazendo|fazendo o que|ta fazendo|faz o que agora)/.test(s)) return 'doing';
+  if(/(trabalho|frente|projeto|tarefa|andamento|progresso|empresa|vendas|receita)/.test(s)) return 'work';
+  if(/(casa|vida|bairro|lote|mora|vizinh|familia|descans)/.test(s)) return 'life';
+  if(/(como (voce )?(esta|ta|vai)|tudo bem|como andas|como ce ta|beleza)/.test(s)) return 'how';
+  if(/(dormindo|dormir|sono|acordad)/.test(s)) return 'sleepq';
+  if(/^\s(oi+|ola|eae|e ai|bom dia|boa tarde|boa noite|hey|salve|opa)\s/.test(s)) return 'hello';
+  return 'fallback';
+}
+function chatReply(id, msg){
+  const ctx = chatCtx(id); if(!ctx) return 'Não achei essa pessoa na sede agora.';
+  const { rec, d, needs, tasks } = ctx;
+  const fn = firstName(rec.nome);
+  if(ctx.sleeping){
+    return pickFresh(id, [
+      `Zzz... oi, chefe... 😴 Tô dormindo ${ctx.atHome ? 'aqui em casa' : 'no sofá da sede'}. Amanhã depois das 8h eu respondo direito, prometo.`,
+      `Hmm... 😴 sou eu, ${fn}... tô no meio do sono aqui ${ctx.atHome ? 'em casa, no Lote ' + String(ctx.lot).padStart(2, '0') : 'na sede'}. De manhã a gente conversa com calma.`,
+    ]);
+  }
+  const intent = chatIntent(msg);
+  const lowN = Object.entries(needs).sort((a, b)=> a[1] - b[1])[0];
+  const moodExtra = needs['⚡ Energia'] < 35 ? ' Confesso que tô meio cansado agora.' : (needs['😄 Moral'] > 80 ? ' Tô num dia ótimo, aliás!' : '');
+  if(intent === 'hello') return pickFresh(id, [
+    `E aí, chefe! ${fn} por aqui, do ${d.name}. Que manda?`,
+    `Salve, chefe! Sou o(a) ${fn}, ${rec.cargo || ''} do ${d.name}. Pode falar.`,
+    `Opa! ${fn} na escuta. Tô ${ctx.where}. Em que posso ajudar?`,
+  ]);
+  if(intent === 'how') return pickFresh(id, [
+    `Tô bem, chefe! Energia em ${needs['⚡ Energia']}%, moral em ${needs['😄 Moral']}% e café em ${needs['☕ Café']}%. Agora eu tô ${stripEmoji(ctx.act).toLowerCase()}, ${ctx.where}.${moodExtra}`,
+    `Vou bem! Meu ponto de atenção agora é ${lowN[0].replace(/^\S+ /, '').toLowerCase()} (${lowN[1]}%), mas energia tá em ${needs['⚡ Energia']}% e moral em ${needs['😄 Moral']}%. Tô ${ctx.where}, ${stripEmoji(ctx.act).toLowerCase()}.`,
+    `Tudo certo por aqui, chefe. ${stripEmoji(ctx.act)} — ${ctx.where}. Moral em ${needs['😄 Moral']}% e subindo.${moodExtra}`,
+  ]);
+  if(intent === 'doing') return pickFresh(id, [
+    `Agora, neste minuto? Tô ${stripEmoji(ctx.act).toLowerCase()}, ${ctx.where}.`,
+    `Tô ${ctx.where}, ${stripEmoji(ctx.act).toLowerCase()}. Isso faz parte do meu trabalho: ${firstSentence(rec.fazendo || '')}`,
+    `Neste exato momento: ${stripEmoji(ctx.act).toLowerCase()}. Estou ${ctx.where}.`,
+  ]);
+  if(intent === 'work'){
+    const t0 = tasks[0], tL = tasks[tasks.length - 1];
+    const taskBit = t0 ? ` Minha tarefa mais avançada é "${t0[0]}" (${t0[1]}%)${tL && tL !== t0 ? ` e a mais atrasada é "${tL[0]}" (${tL[1]}%)` : ''}.` : '';
+    return pickFresh(id, [
+      `Na frente do ${d.name} tá assim: ${firstSentence(rec.fazendo || '')}${taskBit}`,
+      `O trabalho anda, chefe.${taskBit} Meu foco agora tá em ${needs['💻 Foco']}% — qualquer coisa, cobra o Titiku que ele me acha.`,
+    ]);
+  }
+  if(intent === 'life') return pickFresh(id, [
+    `Minha vida fora da Torre é no Bairro Kovantu: moro no Lote ${String(ctx.lot).padStart(2, '0')}, casinha com a cor do ${d.name}. ${ctx.atHome ? 'Inclusive tô em casa agora: ' + stripEmoji(ctx.act).toLowerCase() + '.' : 'Saio da sede às 18h, janto em casa e às 22h apago tudo pra dormir.'}`,
+    `Moro no Lote ${String(ctx.lot).padStart(2, '0')} do Bairro Kovantu, chefe. ${ctx.atHome ? 'Tô em casa neste momento, ' + stripEmoji(ctx.act).toLowerCase() + '.' : 'Durante o dia fico na Torre; a casinha me espera no fim do expediente.'} Adoro meu cantinho.`,
+  ]);
+  if(intent === 'who') return pickFresh(id, [
+    `Sou ${rec.nome}, ${rec.cargo || 'da equipe'} do ${d.name}. Meu trabalho: ${firstSentence(rec.fazendo || '')} Moro no Lote ${String(ctx.lot).padStart(2, '0')} do Bairro Kovantu.`,
+    `Prazer, chefe: ${fn}, do ${d.name} (${rec.cargo || 'equipe'}). ${firstSentence(rec.fazendo || '')}`,
+  ]);
+  if(intent === 'sleepq') return pickFresh(id, [
+    `Acordadíssimo(a), chefe! Só durmo às 22h, lá em casa no Lote ${String(ctx.lot).padStart(2, '0')}. Agora tô ${ctx.where}.`,
+    `Sono? Um pouco sempre dá depois do almoço 😅 Mas sigo firme: ${stripEmoji(ctx.act).toLowerCase()}, ${ctx.where}.`,
+  ]);
+  if(intent === 'bye') return pickFresh(id, [
+    `Falou, chefe! Qualquer coisa me chama aqui ou passa na minha sala. ${d.emoji}`,
+    `Até mais! Vou voltar pro batente aqui no ${d.name}. 👋`,
+  ]);
+  const opin = (AUTO_OPINIONS[d.id] || AUTO_OPINIONS.generic || [])[Math.floor(Math.random() * 4)] || 'a casa tá rendendo';
+  return pickFresh(id, [
+    `Boa pergunta, chefe! Do meu lado aqui no ${d.name}, ${opin}. Quer saber do meu trabalho, de como eu tô ou da minha casa no bairro?`,
+    `Hmm, isso eu vejo assim: ${opin}. Se quiser, te conto o que tô fazendo agora ou como anda minha frente.`,
+    `Direto do ${d.name}: ${opin}. Me pergunta "o que você tá fazendo?" ou "como tá o trabalho?" que eu te mostro com meus números.`,
+  ]);
+}
+/* voz por pessoa: pitch/rate estáveis derivados do id */
+function voiceProfile(rec){ const h = hashId(rec.id); return { pitch: .78 + (h % 46) / 100, rate: .93 + ((h >> 3) % 18) / 100 }; }
+function speakFor(id, text, force){
+  if(!force && !chatState.voiceOn && !callState.active) return;
+  if(!('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(stripEmoji(text));
+    const e = roster.get(id); const prof = voiceProfile(e ? e.rec : { id });
+    u.pitch = prof.pitch; u.rate = prof.rate; u.lang = 'pt-BR';
+    const vs = speechSynthesis.getVoices().filter(v => /^pt/i.test(v.lang || ''));
+    if(vs.length) u.voice = vs[hashId(id) % vs.length];
+    speechSynthesis.speak(u);
+  }catch(_){ }
+}
+if('speechSynthesis' in window) speechSynthesis.getVoices();
+function chatAddMsg(kind, text, personId){
+  const div = document.createElement('div'); div.className = 'msg ' + kind; div.textContent = text;
+  if(kind === 'them' && personId){
+    const b = document.createElement('button'); b.className = 'spk'; b.textContent = '🔊 ouvir';
+    b.onclick = ()=> speakFor(personId, text, true);
+    div.appendChild(b);
+  }
+  chLog.appendChild(div); chLog.scrollTop = chLog.scrollHeight;
+  return div;
+}
+function chatDeliver(id, userText){
+  chTyping.style.display = 'block'; chTyping.textContent = firstName((roster.get(id) || {}).rec?.nome || '') + ' está digitando…';
+  const delay = 550 + Math.random() * 650;
+  setTimeout(()=>{
+    chTyping.style.display = 'none';
+    const reply = chatReply(id, userText);
+    chatAddMsg('them', reply, id);
+    const e = roster.get(id);
+    if(e && !e.obj.userData.player) showSpeech(e.obj, reply.length > 64 ? reply.slice(0, 61) + '…' : reply, 3.6);
+    speakFor(id, reply, false);
+    if(callState.active && callState.personId === id){ document.getElementById('callLast').textContent = '“' + reply + '”'; document.getElementById('callStatus').textContent = 'em ligação — fala que eu escuto 🎙️'; }
+  }, delay);
+}
+function chatSend(text){
+  const id = chatState.personId; if(!id) return;
+  const msg = String(text || '').trim(); if(!msg) return;
+  chatAddMsg('me', msg);
+  chatDeliver(id, msg);
+}
+function openChat(id){
+  const e = roster.get(id); if(!e) return;
+  chatState.personId = id;
+  const rec = e.rec, d = deptById(rec.depto) || DEPTS[0];
+  document.getElementById('chAvatar').textContent = d.emoji;
+  document.getElementById('chAvatar').style.background = `radial-gradient(circle at 35% 30%, ${d.css}55, ${d.css}22), #fff`;
+  document.getElementById('chName').textContent = rec.nome;
+  const ctx = chatCtx(id);
+  document.getElementById('chSub').textContent = `${rec.cargo || ''} • ${d.name} • ${ctx.sleeping ? '😴 dormindo' : stripEmoji(ctx.act)}`;
+  chLog.innerHTML = '';
+  chatEl.classList.remove('hidden');
+  chatAddMsg('them', chatReply(id, 'oi'), id);
+  setTimeout(()=> chInput.focus(), 60);
+}
+function closeChat(){ chatEl.classList.add('hidden'); if('speechSynthesis' in window) speechSynthesis.cancel(); }
+document.getElementById('chClose').onclick = closeChat;
+document.getElementById('chForm').addEventListener('submit', e=>{ e.preventDefault(); const v = chInput.value; chInput.value = ''; chatSend(v); });
+document.getElementById('pChatBtn').onclick = ()=>{ if(selectedPersonId) openChat(selectedPersonId); };
+
+/* ============ LIGAÇÃO (voz ao vivo) ============ */
+const callState = { active: false, personId: null, t0: 0, timerInt: null, recog: null };
+const callOverlay = document.getElementById('callOverlay');
+function callFmt(ms){ const s = Math.floor(ms / 1000); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+function startCall(id){
+  const e = roster.get(id); if(!e) return;
+  if(chatState.personId !== id || chatEl.classList.contains('hidden')) openChat(id);
+  callState.active = true; callState.personId = id; callState.t0 = Date.now();
+  const rec = e.rec, d = deptById(rec.depto) || DEPTS[0];
+  document.getElementById('callAvatar').textContent = d.emoji;
+  document.getElementById('callName').textContent = rec.nome;
+  document.getElementById('callStatus').textContent = '📞 chamando…';
+  document.getElementById('callTimer').textContent = '00:00';
+  document.getElementById('callLast').textContent = '';
+  callOverlay.classList.add('on');
+  if(callState.timerInt) clearInterval(callState.timerInt);
+  callState.timerInt = setInterval(()=>{ document.getElementById('callTimer').textContent = callFmt(Date.now() - callState.t0); }, 500);
+  setTimeout(()=>{
+    if(!callState.active) return;
+    const greet = chatReply(id, 'oi');
+    document.getElementById('callLast').textContent = '“' + greet + '”';
+    speakFor(id, greet, true);
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){
+      document.getElementById('callStatus').textContent = '⚠️ este navegador não reconhece voz (precisa Chrome/Android) — fala pelo teclado no chat aqui atrás';
+      return;
+    }
+    try{
+      const r = new SR();
+      r.lang = 'pt-BR'; r.continuous = true; r.interimResults = false;
+      r.onresult = ev=>{
+        const res = ev.results[ev.results.length - 1];
+        if(res && res[0] && res[0].isFinal){ const said = res[0][0].transcript.trim(); if(said){ chatAddMsg('me', '🎙️ ' + said); chatDeliver(id, said); } }
+      };
+      r.onend = ()=>{ if(callState.active){ try{ r.start(); }catch(_){ } } };
+      r.onerror = ev=>{ if(ev.error === 'not-allowed' || ev.error === 'service-not-allowed') document.getElementById('callStatus').textContent = '🎙️ microfone bloqueado — libera a permissão ou usa o teclado no chat'; };
+      callState.recog = r; r.start();
+      document.getElementById('callStatus').textContent = 'em ligação — fala que eu escuto 🎙️';
+    }catch(_){ document.getElementById('callStatus').textContent = '⚠️ não consegui abrir o microfone — usa o teclado no chat'; }
+  }, 900);
+}
+function endCall(){
+  callState.active = false;
+  if(callState.timerInt) clearInterval(callState.timerInt); callState.timerInt = null;
+  if(callState.recog){ try{ callState.recog.onend = null; callState.recog.stop(); }catch(_){ } callState.recog = null; }
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  callOverlay.classList.remove('on');
+}
+document.getElementById('chCall').onclick = ()=>{ if(chatState.personId) startCall(chatState.personId); };
+document.getElementById('callEnd').onclick = endCall;
+
+const CHAT_API = { open: openChat, close: closeChat, ask: chatReply, send: chatSend, call: startCall, endCall,
+  state: ()=> ({ personId: chatState.personId, callActive: callState.active, voiceOn: chatState.voiceOn }),
+  voiceProfile: id => voiceProfile((roster.get(id) || {}).rec || { id }) };
+
 /* ganchos de diagnóstico/teste */
 window.__KOV = { THREE, scene, camera, renderer, controls, DEPTS, people, roster, selectDept, selectPerson, applyEquipe, pollEquipe, enterPOV, exitPOV, pov, groundYAt, setCut, showExterior, goFloor, floorGroups, wallSEGroups,
   playerNow: ()=> player,
   EQUIPE: ()=> EQUIPE_ATUAL,
   live: ()=>({ on: LIVE.on, atualizadoEm: LIVE.atualizadoEm, count: roster.size }),
-  PAGE_VERSION, checkVersion, showSpeech, clearSpeech, onStairs, startConversation, autonomy:{ snapshot:autoSnapshot, simulate:autoSimulate, stats:()=> ({ ...AUTO }) }, colliders,
+  PAGE_VERSION, checkVersion,
+  bairro: { houses: HOUSES, sceneHour, phase: ()=> lifePhase(sceneHour()), setHour: (h)=>{ TEST_HORA = (h == null ? null : +h); lastHourKey = -1; applySceneHour(); }, atHome: ()=> people.filter(p=> p.userData.atHome).length, lampsOn: ()=> lampGlows.filter(g=> g.visible).length }, chat: CHAT_API, showSpeech, clearSpeech, onStairs, startConversation, autonomy:{ snapshot:autoSnapshot, simulate:autoSimulate, stats:()=> ({ ...AUTO }) }, colliders,
   collide:(x, z, r)=> collide(x, z, r, new Set([0,1,2,3,4])),
   camFree:(x, y, z)=> camFree(x, y, z), clampCamPos:(v)=> clampCamPos(v), surfacesAt:(x, z)=> surfacesAt(x, z),
   view:()=>({ mode: viewMode, cut: cutFloor }),
