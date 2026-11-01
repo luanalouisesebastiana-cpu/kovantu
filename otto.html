@@ -53,6 +53,9 @@
   <div class="sub" style="margin-top:8px">Splits completados: <span id="splits">0</span> · Trades paper: <span id="trades">0</span> · Oportunidades avaliadas: <span id="opps">0</span> · Melhor edge visto: <span id="melhorEdge">—</span> · Edge médio: <span id="edgeMedio">—</span></div>
 </div>
 
+<h2>Decisões do Otto — loop Jev</h2>
+<div id="listaDecisoes" class="vazio">Carregando…</div>
+
 <h2>Últimos trades paper</h2>
 <div id="listaTrades" class="vazio">Carregando…</div>
 
@@ -94,6 +97,11 @@ async function carregar() {
     $('opps').textContent = d.oportunidadesAvaliadas ?? 0;
     $('melhorEdge').textContent = pct(d.melhorEdgePct);
     $('edgeMedio').textContent = pct(d.edgeMedioPct);
+    const decisoes = d.ultimasDecisoes || [];
+    $('listaDecisoes').innerHTML = decisoes.length
+      ? '<table><tr><th>Quando</th><th>Decisão</th><th>Alvo</th><th>Motivo do Otto</th><th>Executado</th></tr>' +
+        decisoes.map(x => '<tr><td>' + fmtData(x.ts) + '</td><td>' + (x.acao === 'entrar' ? '<span class="pos">ENTRAR</span>' : 'OBSERVAR') + '</td><td>' + (x.alvo || '—') + '</td><td>' + (x.motivo || '') + (x.motivoFrescor ? ' <em>(' + x.motivoFrescor + ')</em>' : '') + '</td><td>' + (x.executado ? '<span class="pos">sim</span>' : 'não') + '</td></tr>').join('') + '</table>'
+      : 'Nenhuma decisão registrada ainda — o Otto decide quando aparece oportunidade acionável.';
     const trades = d.ultimosTrades || [];
     $('listaTrades').innerHTML = trades.length
       ? '<table><tr><th>Quando</th><th>Par</th><th>Edge líq.</th><th>Resultado</th><th>Banca após</th></tr>' +
