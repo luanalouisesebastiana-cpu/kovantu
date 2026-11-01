@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Otto — Painel ao vivo · Sala Trader · Kovantu</title>
+<style>
+  :root { --verde:#009e57; --verde-claro:#58cc02; --fundo:#0b0f0c; --cartao:#131a15; --linha:#223528; --texto:#e8f5e9; --dim:#9db8a4; --erro:#ff7a7a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--fundo); color: var(--texto); font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; padding: 18px; max-width: 880px; margin: 0 auto; }
+  header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--linha); padding-bottom: 12px; margin-bottom: 16px; }
+  h1 { font-size: 22px; letter-spacing: 1px; }
+  h1 .k { color: var(--verde-claro); }
+  .vivo { color: var(--verde-claro); font-size: 13px; }
+  .vivo::before { content: '● '; animation: pisca 1.6s infinite; }
+  @keyframes pisca { 50% { opacity: .35; } }
+  .sub { color: var(--dim); font-size: 12.5px; width: 100%; }
+  .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .cartao { background: var(--cartao); border: 1px solid var(--linha); border-radius: 10px; padding: 12px 14px; }
+  .cartao .rot { color: var(--dim); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .cartao .val { font-size: 24px; margin-top: 4px; }
+  .cartao .val small { font-size: 13px; color: var(--dim); }
+  .pos { color: var(--verde-claro); } .neg { color: var(--erro); }
+  .barra { background: #0a0f0b; border: 1px solid var(--linha); border-radius: 6px; height: 16px; overflow: hidden; margin-top: 8px; }
+  .barra > div { background: linear-gradient(90deg, var(--verde), var(--verde-claro)); height: 100%; width: 0%; transition: width .6s; }
+  h2 { font-size: 14px; letter-spacing: 1px; margin: 18px 0 8px; color: var(--dim); text-transform: uppercase; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--linha); }
+  th { color: var(--dim); font-weight: normal; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .vazio { color: var(--dim); font-size: 13px; padding: 8px 0; }
+  footer { margin-top: 22px; color: var(--dim); font-size: 12px; border-top: 1px solid var(--linha); padding-top: 10px; }
+  a { color: var(--verde-claro); }
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="k">K</span> OTTO — SALA TRADER</h1>
+  <span class="vivo" id="status">AO VIVO</span>
+  <span class="sub">Simulação paper-trading de arbitragem na Solana — nenhum dinheiro real. Os dados atualizam a cada ~10 minutos. Última leitura: <span id="quando">—</span></span>
+</header>
+
+<div class="grade">
+  <div class="cartao"><div class="rot">Banca paper</div><div class="val" id="banca">—</div></div>
+  <div class="cartao"><div class="rot">Lucro total paper</div><div class="val" id="lucro">—</div></div>
+  <div class="cartao"><div class="rot">Estágio da escada</div><div class="val" id="estagio" style="font-size:19px">—</div></div>
+  <div class="cartao"><div class="rot">SOL</div><div class="val" id="sol">—</div></div>
+</div>
+
+<div class="cartao" style="margin-bottom:14px">
+  <div class="rot">Ciclo atual — rumo a +US$ 100 de lucro (fecha com US$ 50 pro CEO / US$ 50 pro Otto)</div>
+  <div class="val" style="font-size:19px"><span id="cicloAtual">—</span> <small id="cicloPct"></small></div>
+  <div class="barra"><div id="barraCiclo"></div></div>
+  <div class="sub" style="margin-top:8px">Splits completados: <span id="splits">0</span> · Trades paper: <span id="trades">0</span> · Oportunidades avaliadas: <span id="opps">0</span> · Melhor edge visto: <span id="melhorEdge">—</span> · Edge médio: <span id="edgeMedio">—</span></div>
+</div>
+
+<h2>Últimos trades paper</h2>
+<div id="listaTrades" class="vazio">Carregando…</div>
+
+<h2>Últimas oportunidades avaliadas</h2>
+<div id="listaOpps" class="vazio">Carregando…</div>
+
+<footer>
+  Otto é o trader da Kovantu Digital. Regras da simulação: liquidez &gt; US$ 50 mil · volume 24h &gt; US$ 100 mil · impacto &lt; 1% · posição = 12,5% da banca.
+  <br>Ver a <a href="./">Torre Kovantu</a> · Relatório final da simulação: 07/nov/2026, ~21:55.
+</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const usd = (v) => v === null || v === undefined ? '—' : 'US$ ' + Number(v).toFixed(2);
+const pct = (v) => v === null || v === undefined ? '—' : Number(v).toFixed(3) + '%';
+function fmtData(iso) {
+  if (!iso) return '—';
+  try { return new Date(iso).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }); }
+  catch { return iso; }
+}
+async function carregar() {
+  try {
+    const r = await fetch('otto.json?ts=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    $('quando').textContent = fmtData(d.atualizadoEm) + ' (Brasília)';
+    $('status').textContent = d.servicoAtivo ? 'AO VIVO' : 'PAUSADO';
+    $('banca').innerHTML = usd(d.bancaPaperUsd);
+    const lucro = Number(d.lucroTotalPaperUsd || 0);
+    $('lucro').innerHTML = '<span class="' + (lucro >= 0 ? 'pos' : 'neg') + '">' + usd(lucro) + '</span>';
+    $('estagio').textContent = d.estagio === 'ciclo' ? 'CICLO DOS US$ 100' : 'ACÚMULO (Meta 1)';
+    $('sol').textContent = d.precoSolUsd ? 'US$ ' + Number(d.precoSolUsd).toFixed(2) : '—';
+    const ciclo = Number(d.lucroDoCicloUsd || 0);
+    $('cicloAtual').textContent = usd(ciclo) + ' de US$ 100,00';
+    $('cicloPct').textContent = '(' + Math.max(0, Math.min(100, ciclo)).toFixed(1) + '%)';
+    $('barraCiclo').style.width = Math.max(0, Math.min(100, ciclo)) + '%';
+    $('splits').textContent = d.splitsCompletados ?? 0;
+    $('trades').textContent = d.tradesPaper ?? 0;
+    $('opps').textContent = d.oportunidadesAvaliadas ?? 0;
+    $('melhorEdge').textContent = pct(d.melhorEdgePct);
+    $('edgeMedio').textContent = pct(d.edgeMedioPct);
+    const trades = d.ultimosTrades || [];
+    $('listaTrades').innerHTML = trades.length
+      ? '<table><tr><th>Quando</th><th>Par</th><th>Edge líq.</th><th>Resultado</th><th>Banca após</th></tr>' +
+        trades.map(t => '<tr><td>' + fmtData(t.ts) + '</td><td>' + t.pool + '</td><td class="pos">' + pct(t.netEdgePct) + '</td><td class="pos">+' + usd(t.pnlUsd) + '</td><td>' + usd(t.bancaAposUsd) + '</td></tr>').join('') + '</table>'
+      : 'Nenhum trade paper ainda — o scanner só entra quando o lucro líquido é positivo.';
+    const opps = d.ultimasOportunidades || [];
+    $('listaOpps').innerHTML = opps.length
+      ? '<table><tr><th>Quando</th><th>Par</th><th>Liquidez</th><th>Edge líq.</th><th>Veredito</th></tr>' +
+        opps.map(o => '<tr><td>' + fmtData(o.ts) + '</td><td>' + o.pool + '</td><td>' + usd(o.liquidityUsd) + '</td><td class="' + (o.netEdgePct >= 0 ? 'pos' : 'neg') + '">' + pct(o.netEdgePct) + '</td><td>' + o.verdict + '</td></tr>').join('') + '</table>'
+      : 'Aguardando a primeira varredura…';
+  } catch (e) {
+    $('status').textContent = 'SEM SINAL';
+    $('listaTrades').textContent = 'Não consegui ler os dados agora (' + e.message + '). Tentando de novo em 1 min…';
+  }
+}
+carregar();
+setInterval(carregar, 60000);
+</script>
+</body>
+</html>
