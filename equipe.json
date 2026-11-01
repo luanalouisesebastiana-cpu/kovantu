@@ -640,7 +640,7 @@
    "cargo": "O trader",
    "depto": "trader",
    "status": "ativo",
-   "fazendo": "NO AR na Sala Trader: ligado e operando — pensa pela titiku-api (cérebro da casa), carteira Solana compartilhada com o robô do PC, em modo sobrevivência até reforço de SOL. Conway real segue em tentativa automática.",
+   "fazendo": "Rodando a SIMULAÇÃO de 7 dias do scanner de arbitragem (paper, sem dinheiro real): medindo se a rota SOL→token→SOL paga as taxas. Escada de metas do CEO: juntar US$100 de banca → ciclos de +US$100 com split 50/50 → banca e operações crescem juntas. Veredito sai 07/nov.",
    "tarefas": [
     {
      "nome": "Auditoria do motor (Automaton)",
@@ -648,15 +648,15 @@
     },
     {
      "nome": "Estratégia e backtest",
-     "progresso": 30
+     "progresso": 55
     },
     {
-     "nome": "Oxigênio: meta de lucro do ciclo",
+     "nome": "Escada: Meta 1 = US$100 de banca; ciclos de +US$100 (50/50)",
      "progresso": 0
     }
    ],
    "desde": "2026-10-31",
-   "atualizadoEm": "2026-10-31T21:20:38-03:00",
+   "atualizadoEm": "2026-10-31T21:43:47-03:00",
    "genero": "M",
    "casa": 25
   }
