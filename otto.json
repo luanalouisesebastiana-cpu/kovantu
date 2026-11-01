@@ -1,0 +1,44 @@
+{
+ "atualizadoEm": "2026-11-01T00:49:49.969Z",
+ "inicioSimulacao": "2026-11-01T00:41:19.027Z",
+ "servicoAtivo": true,
+ "bancaPaperUsd": 100,
+ "estagio": "ciclo",
+ "lucroTotalPaperUsd": 0,
+ "lucroDoCicloUsd": 0,
+ "splitsCompletados": 0,
+ "oportunidadesAvaliadas": 0,
+ "tradesPaper": 0,
+ "melhorEdgePct": null,
+ "edgeMedioPct": null,
+ "precoSolUsd": null,
+ "ultimosTrades": [],
+ "ultimasOportunidades": [
+  {
+   "ts": "2026-11-01T00:41:27.614Z",
+   "token": "FWatMYieKhRuJ1yuTcmVG1njRhZWwqHwjR11pBympump",
+   "pool": "Leverhedge / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 79682,
+   "volume24hUsd": 1711350,
+   "positionUsd": 12.5,
+   "priceImpactPct": 0.0135,
+   "netEdgePct": -2.1671,
+   "netSol": -0.002834,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-01T00:41:19.026Z",
+   "token": "GYKnd6jGUSQoBUnj6LdGCBtCWYDgr2Zd6QwNPcy5pump",
+   "pool": "AAPLCAT / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 76998,
+   "volume24hUsd": 1821173,
+   "positionUsd": 12.5,
+   "priceImpactPct": 0.0064,
+   "netEdgePct": -2.0835,
+   "netSol": -0.002725,
+   "verdict": "avaliada"
+  }
+ ]
+}
