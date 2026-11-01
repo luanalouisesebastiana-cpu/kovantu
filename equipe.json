@@ -1,639 +1,664 @@
 {
-  "empresa": "Kovantu Digital",
-  "atualizadoEm": "2026-10-31T17:37:01-03:00",
-  "equipe": [
+ "empresa": "Kovantu Digital",
+ "atualizadoEm": "2026-10-31T17:37:01-03:00",
+ "equipe": [
+  {
+   "id": "charlis",
+   "nome": "Charlis",
+   "cargo": "Dono / CEO",
+   "depto": "diretoria",
+   "status": "ativo",
+   "fazendo": "Aprova tudo que vai ao ar e decide onde investir.",
+   "tarefas": [
     {
-      "id": "charlis",
-      "nome": "Charlis",
-      "cargo": "Dono / CEO",
-      "depto": "diretoria",
-      "status": "ativo",
-      "fazendo": "Aprova tudo que vai ao ar e decide onde investir.",
-      "tarefas": [
-        {
-          "nome": "Aprovações do dia",
-          "progresso": 82
-        },
-        {
-          "nome": "Relatório das frentes",
-          "progresso": 46
-        },
-        {
-          "nome": "Decisões de investimento",
-          "progresso": 30
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-29T08:22:00-03:00",
-      "uniforme": "blazer-preto",
-      "genero": "M"
+     "nome": "Aprovações do dia",
+     "progresso": 82
     },
     {
-      "id": "titiku",
-      "nome": "Titiku",
-      "cargo": "Gerente-geral",
-      "depto": "diretoria",
-      "status": "ativo",
-      "fazendo": "Distribui tarefas, cobra funcionário parado e só entrega com prova.",
-      "tarefas": [
-        {
-          "nome": "Aprovações do dia",
-          "progresso": 82
-        },
-        {
-          "nome": "Relatório das frentes",
-          "progresso": 46
-        },
-        {
-          "nome": "Decisões de investimento",
-          "progresso": 30
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-29T08:22:00-03:00",
-      "comportamento": "empe",
-      "uniforme": "blazer-cinza",
-      "genero": "M"
+     "nome": "Relatório das frentes",
+     "progresso": 46
     },
     {
-      "id": "baltazar",
-      "nome": "Baltazar",
-      "cargo": "O escriba",
-      "depto": "abuelo",
-      "status": "ativo",
-      "fazendo": "Plano Premium S1: Abuelo em cadência — vídeos 19:30, infográficos IG 11:30/17:45, varredura de comentários 20:30 e Pinterest nativo diário.",
-      "tarefas": [
-        {
-          "nome": "Vídeo do dia",
-          "progresso": 64
-        },
-        {
-          "nome": "Infográfico FB/IG",
-          "progresso": 38
-        },
-        {
-          "nome": "Série Bebidas",
-          "progresso": 55
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-31T16:50:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "valdo",
-      "nome": "Valdomiro “Valdo”",
-      "cargo": "O caixa",
-      "depto": "hotmart",
-      "status": "ativo",
-      "fazendo": "Plano Premium S1: auditoria do funil Hotmart entregue; vigia da 1ª venda ativa — 6/6 produtos ACTIVE, 0 vendas medidas.",
-      "tarefas": [
-        {
-          "nome": "Funil — 6 produtos ES",
-          "progresso": 71
-        },
-        {
-          "nome": "Hub de vendas",
-          "progresso": 88
-        },
-        {
-          "nome": "Vigia da 1ª venda",
-          "progresso": 100
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-31T16:50:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "assistente-hotmart",
-      "nome": "Bianca",
-      "cargo": "Assistente de Vendas",
-      "depto": "hotmart",
-      "status": "ativo",
-      "fazendo": "Apoia o Valdo: organiza o hub de vendas, confere os 6 infoprodutos e mantém a vigia da primeira venda ligada.",
-      "tarefas": [
-        {
-          "nome": "Funil — 6 produtos ES",
-          "progresso": 71
-        },
-        {
-          "nome": "Hub de vendas",
-          "progresso": 88
-        },
-        {
-          "nome": "Vigia da 1ª venda",
-          "progresso": 100
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-29T08:22:00-03:00",
-      "genero": "F",
-      "cabelo": "coque"
-    },
-    {
-      "id": "iris",
-      "nome": "Íris",
-      "cargo": "O olho",
-      "depto": "stock",
-      "status": "ativo",
-      "fazendo": "Gerando imagens e vídeos por IA. O lote piloto de 20 imagens está em moderação na Adobe Stock.",
-      "tarefas": [
-        {
-          "nome": "Lote piloto — 20 imagens",
-          "progresso": 100
-        },
-        {
-          "nome": "Moderação Adobe",
-          "progresso": 35
-        },
-        {
-          "nome": "Próximo lote IA",
-          "progresso": 22
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-29T08:22:00-03:00",
-      "genero": "F",
-      "cabelo": "longo"
-    },
-    {
-      "id": "plinio",
-      "nome": "Plínio",
-      "cargo": "O cronista",
-      "depto": "blogs",
-      "status": "ativo",
-      "fazendo": "Plano Premium S1: blogs em cadência — Blog 1 fechando dezembro (47 posts), Blog 2 com 23+ programados; novembro em publicação seg/qua/sex.",
-      "tarefas": [
-        {
-          "nome": "Blog 1 — sprint 30 posts",
-          "progresso": 40
-        },
-        {
-          "nome": "Blog 2 — artigos agendados",
-          "progresso": 90
-        },
-        {
-          "nome": "Blog 3 — estrutura",
-          "progresso": 30
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-31T16:50:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "assistente-blogs",
-      "nome": "Marina",
-      "cargo": "Redatora Assistente",
-      "depto": "blogs",
-      "status": "ativo",
-      "fazendo": "Apoia o Plínio: revisa rascunhos, agenda publicações e organiza a pauta dos três blogs.",
-      "tarefas": [
-        {
-          "nome": "Blog 1 — sprint 30 posts",
-          "progresso": 40
-        },
-        {
-          "nome": "Blog 2 — artigos agendados",
-          "progresso": 90
-        },
-        {
-          "nome": "Blog 3 — estrutura",
-          "progresso": 30
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-29T08:22:00-03:00",
-      "genero": "F",
-      "cabelo": "longo"
-    },
-    {
-      "id": "vetor",
-      "nome": "VETOR",
-      "cargo": "O gestor de tráfego",
-      "depto": "trafego",
-      "status": "ativo",
-      "fazendo": "Gestor de tráfego da Kovantu (Kusmich + BPM + Sobral, era Andromeda). Cliente ativo: Ilumine — funil Instagram → link da bio → WhatsApp no ar, anúncio VETOR 01 ativo e medindo.",
-      "tarefas": [
-        {
-          "nome": "Ilumine — funil da bio (VETOR 01)",
-          "progresso": 60
-        },
-        {
-          "nome": "Relatório semanal de tráfego",
-          "progresso": 25
-        },
-        {
-          "nome": "Novos conceitos de criativo",
-          "progresso": 40
-        }
-      ],
-      "desde": "2026-10-30",
-      "atualizadoEm": "2026-10-30T16:52:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "fliper",
-      "nome": "Fliper",
-      "cargo": "O fliperama",
-      "depto": "arcade",
-      "status": "ativo",
-      "fazendo": "Plano Premium S1: distribuição dos games — GameDistribution travado no login (falta o \"vai\" do CEO); CrazyGames com título a escolher.",
-      "tarefas": [
-        {
-          "nome": "Jogos no Facebook (4/20)",
-          "progresso": 20
-        },
-        {
-          "nome": "Lote 1 — 4 jogos novos",
-          "progresso": 35
-        },
-        {
-          "nome": "Kit dos portais",
-          "progresso": 60
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-31T16:50:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "otavio",
-      "nome": "Otávio",
-      "cargo": "O diretor dark",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "Plano Premium S1: Dinero Claro na grade de novembro — longos dias pares 18:30 e Shorts diários; cada pacote só sobe com OK do CEO.",
-      "tarefas": [
-        {
-          "nome": "Roteiro piloto — entregue",
-          "progresso": 100
-        },
-        {
-          "nome": "Treinamento da equipe",
-          "progresso": 92
-        },
-        {
-          "nome": "Produção do piloto",
-          "progresso": 10
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-31T16:50:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "severo",
-      "nome": "Severo",
-      "cargo": "Pesquisa",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "Pesquisa temas, dados e referências pros roteiros do Dinero Claro.",
-      "tarefas": [
-        {
-          "nome": "Roteiro piloto — entregue",
-          "progresso": 100
-        },
-        {
-          "nome": "Treinamento da equipe",
-          "progresso": 92
-        },
-        {
-          "nome": "Produção do piloto",
-          "progresso": 10
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-28T23:00:27-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "rui",
-      "nome": "Rui",
-      "cargo": "Roteiro",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "Escreve e revisa os roteiros do canal Dinero Claro.",
-      "tarefas": [
-        {
-          "nome": "Roteiro piloto — entregue",
-          "progresso": 100
-        },
-        {
-          "nome": "Treinamento da equipe",
-          "progresso": 92
-        },
-        {
-          "nome": "Produção do piloto",
-          "progresso": 10
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-28T23:00:27-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "tito",
-      "nome": "Tito",
-      "cargo": "Títulos",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "Fecha o par título+capa de cada vídeo do Dinero Claro: 5 opções por vídeo, espanhol pros hispanos dos EUA, curiosidade sem clickbait.",
-      "tarefas": [
-        {
-          "nome": "5 títulos do próximo vídeo",
-          "progresso": 45
-        },
-        {
-          "nome": "Par título+capa com o Miro",
-          "progresso": 30
-        },
-        {
-          "nome": "Palavra-chave de busca ES",
-          "progresso": 55
-        }
-      ],
-      "desde": "2026-10-28",
-      "atualizadoEm": "2026-10-30T11:55:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "miro",
-      "nome": "Miro",
-      "cargo": "Thumbnails",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "Desenha as capas do Dinero Claro: 3 conceitos por vídeo, julgados pela rubrica oficial da casa — abaixo de 85, volta pra prancheta.",
-      "tarefas": [
-        {
-          "nome": "3 conceitos de capa",
-          "progresso": 40
-        },
-        {
-          "nome": "Rubrica da capa (mín. 85)",
-          "progresso": 25
-        },
-        {
-          "nome": "QA em 3 tamanhos",
-          "progresso": 60
-        }
-      ],
-      "desde": "2026-10-28",
-      "atualizadoEm": "2026-10-30T11:55:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "beto",
-      "nome": "Beto",
-      "cargo": "Imagens",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "Gera as imagens de apoio dos vídeos do Dinero Claro no estilo visual único do canal, 16:9, sem texto dentro da imagem.",
-      "tarefas": [
-        {
-          "nome": "Imagens do próximo vídeo",
-          "progresso": 50
-        },
-        {
-          "nome": "Base das capas do Miro",
-          "progresso": 35
-        },
-        {
-          "nome": "Cenas próprias do canal",
-          "progresso": 20
-        }
-      ],
-      "desde": "2026-10-28",
-      "atualizadoEm": "2026-10-30T11:55:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "tom",
-      "nome": "Tom",
-      "cargo": "Áudio e voz",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "A voz do Dinero Claro: narração em espanhol natural com a voz fixa do canal, trilha licenciada por baixo da voz.",
-      "tarefas": [
-        {
-          "nome": "Narração do próximo vídeo",
-          "progresso": 30
-        },
-        {
-          "nome": "Trilha e SFX licenciados",
-          "progresso": 65
-        },
-        {
-          "nome": "Pronúncia ES conferida",
-          "progresso": 80
-        }
-      ],
-      "desde": "2026-10-28",
-      "atualizadoEm": "2026-10-30T11:55:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "vitor",
-      "nome": "Vítor",
-      "cargo": "Vídeo e stock",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "O material em movimento do Dinero Claro: stock livre com licença registrada e clips gerados casando com a narração, segundo a segundo.",
-      "tarefas": [
-        {
-          "nome": "Clips do próximo vídeo",
-          "progresso": 42
-        },
-        {
-          "nome": "Licenças registradas",
-          "progresso": 90
-        },
-        {
-          "nome": "Cenas geradas por IA",
-          "progresso": 28
-        }
-      ],
-      "desde": "2026-10-28",
-      "atualizadoEm": "2026-10-30T11:55:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "edson",
-      "nome": "Edson",
-      "cargo": "Edição",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "Monta os vídeos do Dinero Claro: troca visual a cada 3–6s, gráfico sempre que sai um número, legenda ES e áudio em -14 LUFS.",
-      "tarefas": [
-        {
-          "nome": "Montagem do próximo vídeo",
-          "progresso": 22
-        },
-        {
-          "nome": "Gráficos e legendas ES",
-          "progresso": 38
-        },
-        {
-          "nome": "Loudness -14 LUFS",
-          "progresso": 70
-        }
-      ],
-      "desde": "2026-10-28",
-      "atualizadoEm": "2026-10-30T11:55:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "decio",
-      "nome": "Décio",
-      "cargo": "Descrição e SEO",
-      "depto": "youtube",
-      "status": "ativo",
-      "fazendo": "Descrição, capítulos e SEO de cada vídeo do Dinero Claro: texto único por vídeo, com o disclaimer financeiro em espanhol.",
-      "tarefas": [
-        {
-          "nome": "Descrição do próximo vídeo",
-          "progresso": 15
-        },
-        {
-          "nome": "Capítulos conferidos",
-          "progresso": 48
-        },
-        {
-          "nome": "Tags e comentário fixado",
-          "progresso": 33
-        }
-      ],
-      "desde": "2026-10-28",
-      "atualizadoEm": "2026-10-30T11:55:00-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "teodoro",
-      "nome": "Teodoro",
-      "cargo": "O editor",
-      "depto": "kdp",
-      "status": "pausado",
-      "fazendo": "Pausado por ordem do CEO. Backlog de 11 livros de colorir prontos — só religa com o upload do livro de Natal confirmado.",
-      "tarefas": [
-        {
-          "nome": "Backlog — 11 livros",
-          "progresso": 100
-        },
-        {
-          "nome": "Upload livro de Natal",
-          "progresso": 0
-        },
-        {
-          "nome": "Novos livros",
-          "progresso": 0
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-28T23:00:27-03:00",
-      "comportamento": "dormindo",
-      "genero": "M"
-    },
-    {
-      "id": "tonhao",
-      "nome": "Tonhão",
-      "cargo": "O montador",
-      "depto": "apps",
-      "status": "ativo",
-      "fazendo": "Apps Android sob demanda: cada pedido do CEO vira app testado e provado no aparelho antes de entregar.",
-      "tarefas": [
-        {
-          "nome": "Apps sob demanda",
-          "progresso": 58
-        },
-        {
-          "nome": "Prova no binário",
-          "progresso": 74
-        },
-        {
-          "nome": "Fila de pedidos",
-          "progresso": 33
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-28T23:00:27-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "assistente-apps",
-      "nome": "Júlia",
-      "cargo": "Assistente de Apps",
-      "depto": "apps",
-      "status": "ativo",
-      "fazendo": "Apoia o Tonhão: testa cada app no aparelho e organiza a fila de pedidos do CEO.",
-      "tarefas": [
-        {
-          "nome": "Apps sob demanda",
-          "progresso": 58
-        },
-        {
-          "nome": "Prova no binário",
-          "progresso": 74
-        },
-        {
-          "nome": "Fila de pedidos",
-          "progresso": 33
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-29T08:22:00-03:00",
-      "genero": "F",
-      "cabelo": "rabo"
-    },
-    {
-      "id": "rex",
-      "nome": "Rex",
-      "cargo": "O farejador",
-      "depto": "farejador",
-      "status": "ativo",
-      "fazendo": "Farejando novas fontes de renda e propondo ranqueado por ROI no relatório de segunda ~09:18. Ele propõe, a empresa executa.",
-      "tarefas": [
-        {
-          "nome": "Varredura semanal",
-          "progresso": 67
-        },
-        {
-          "nome": "Relatório por ROI",
-          "progresso": 45
-        },
-        {
-          "nome": "Radar de tendências",
-          "progresso": 80
-        }
-      ],
-      "desde": "2026-10-27",
-      "atualizadoEm": "2026-10-28T23:00:27-03:00",
-      "genero": "M"
-    },
-    {
-      "id": "otto",
-      "nome": "Otto",
-      "cargo": "O trader",
-      "depto": "trader",
-      "status": "ativo",
-      "fazendo": "Operando na Sala Trader do 3º andar: vive do saldo (oxigênio) — precisa lucrar pra sobreviver; se o saldo zerar, ele desliga. Origem técnica: agente Automaton (Conway Research), em auditoria antes de receber conta e saldo reais.",
-      "tarefas": [
-        {
-          "nome": "Auditoria do motor (Automaton)",
-          "progresso": 40
-        },
-        {
-          "nome": "Estratégia e backtest",
-          "progresso": 15
-        },
-        {
-          "nome": "Oxigênio: meta de lucro do ciclo",
-          "progresso": 0
-        }
-      ],
-      "desde": "2026-10-31",
-      "atualizadoEm": "2026-10-31T17:37:01-03:00",
-      "genero": "M"
+     "nome": "Decisões de investimento",
+     "progresso": 30
     }
-  ]
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "uniforme": "blazer-preto",
+   "genero": "M",
+   "casa": 1
+  },
+  {
+   "id": "titiku",
+   "nome": "Titiku",
+   "cargo": "Gerente-geral",
+   "depto": "diretoria",
+   "status": "ativo",
+   "fazendo": "Distribui tarefas, cobra funcionário parado e só entrega com prova.",
+   "tarefas": [
+    {
+     "nome": "Aprovações do dia",
+     "progresso": 82
+    },
+    {
+     "nome": "Relatório das frentes",
+     "progresso": 46
+    },
+    {
+     "nome": "Decisões de investimento",
+     "progresso": 30
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "comportamento": "empe",
+   "uniforme": "blazer-cinza",
+   "genero": "M",
+   "casa": 2
+  },
+  {
+   "id": "baltazar",
+   "nome": "Baltazar",
+   "cargo": "O escriba",
+   "depto": "abuelo",
+   "status": "ativo",
+   "fazendo": "Plano Premium S1: Abuelo em cadência — vídeos 19:30, infográficos IG 11:30/17:45, varredura de comentários 20:30 e Pinterest nativo diário.",
+   "tarefas": [
+    {
+     "nome": "Vídeo do dia",
+     "progresso": 64
+    },
+    {
+     "nome": "Infográfico FB/IG",
+     "progresso": 38
+    },
+    {
+     "nome": "Série Bebidas",
+     "progresso": 55
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-31T16:50:00-03:00",
+   "genero": "M",
+   "casa": 3
+  },
+  {
+   "id": "valdo",
+   "nome": "Valdomiro “Valdo”",
+   "cargo": "O caixa",
+   "depto": "hotmart",
+   "status": "ativo",
+   "fazendo": "Plano Premium S1: auditoria do funil Hotmart entregue; vigia da 1ª venda ativa — 6/6 produtos ACTIVE, 0 vendas medidas.",
+   "tarefas": [
+    {
+     "nome": "Funil — 6 produtos ES",
+     "progresso": 71
+    },
+    {
+     "nome": "Hub de vendas",
+     "progresso": 88
+    },
+    {
+     "nome": "Vigia da 1ª venda",
+     "progresso": 100
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-31T16:50:00-03:00",
+   "genero": "M",
+   "casa": 4
+  },
+  {
+   "id": "assistente-hotmart",
+   "nome": "Bianca",
+   "cargo": "Assistente de Vendas",
+   "depto": "hotmart",
+   "status": "ativo",
+   "fazendo": "Apoia o Valdo: organiza o hub de vendas, confere os 6 infoprodutos e mantém a vigia da primeira venda ligada.",
+   "tarefas": [
+    {
+     "nome": "Funil — 6 produtos ES",
+     "progresso": 71
+    },
+    {
+     "nome": "Hub de vendas",
+     "progresso": 88
+    },
+    {
+     "nome": "Vigia da 1ª venda",
+     "progresso": 100
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "genero": "F",
+   "cabelo": "coque",
+   "casa": 5
+  },
+  {
+   "id": "iris",
+   "nome": "Íris",
+   "cargo": "O olho",
+   "depto": "stock",
+   "status": "ativo",
+   "fazendo": "Gerando imagens e vídeos por IA. O lote piloto de 20 imagens está em moderação na Adobe Stock.",
+   "tarefas": [
+    {
+     "nome": "Lote piloto — 20 imagens",
+     "progresso": 100
+    },
+    {
+     "nome": "Moderação Adobe",
+     "progresso": 35
+    },
+    {
+     "nome": "Próximo lote IA",
+     "progresso": 22
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "genero": "F",
+   "cabelo": "longo",
+   "casa": 6
+  },
+  {
+   "id": "plinio",
+   "nome": "Plínio",
+   "cargo": "O cronista",
+   "depto": "blogs",
+   "status": "ativo",
+   "fazendo": "Plano Premium S1: blogs em cadência — Blog 1 fechando dezembro (47 posts), Blog 2 com 23+ programados; novembro em publicação seg/qua/sex.",
+   "tarefas": [
+    {
+     "nome": "Blog 1 — sprint 30 posts",
+     "progresso": 40
+    },
+    {
+     "nome": "Blog 2 — artigos agendados",
+     "progresso": 90
+    },
+    {
+     "nome": "Blog 3 — estrutura",
+     "progresso": 30
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-31T16:50:00-03:00",
+   "genero": "M",
+   "casa": 7
+  },
+  {
+   "id": "assistente-blogs",
+   "nome": "Marina",
+   "cargo": "Redatora Assistente",
+   "depto": "blogs",
+   "status": "ativo",
+   "fazendo": "Apoia o Plínio: revisa rascunhos, agenda publicações e organiza a pauta dos três blogs.",
+   "tarefas": [
+    {
+     "nome": "Blog 1 — sprint 30 posts",
+     "progresso": 40
+    },
+    {
+     "nome": "Blog 2 — artigos agendados",
+     "progresso": 90
+    },
+    {
+     "nome": "Blog 3 — estrutura",
+     "progresso": 30
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "genero": "F",
+   "cabelo": "longo",
+   "casa": 8
+  },
+  {
+   "id": "vetor",
+   "nome": "VETOR",
+   "cargo": "O gestor de tráfego",
+   "depto": "trafego",
+   "status": "ativo",
+   "fazendo": "Gestor de tráfego da Kovantu (Kusmich + BPM + Sobral, era Andromeda). Cliente ativo: Ilumine — funil Instagram → link da bio → WhatsApp no ar, anúncio VETOR 01 ativo e medindo.",
+   "tarefas": [
+    {
+     "nome": "Ilumine — funil da bio (VETOR 01)",
+     "progresso": 60
+    },
+    {
+     "nome": "Relatório semanal de tráfego",
+     "progresso": 25
+    },
+    {
+     "nome": "Novos conceitos de criativo",
+     "progresso": 40
+    }
+   ],
+   "desde": "2026-10-30",
+   "atualizadoEm": "2026-10-30T16:52:00-03:00",
+   "genero": "M",
+   "casa": 9
+  },
+  {
+   "id": "fliper",
+   "nome": "Fliper",
+   "cargo": "O fliperama",
+   "depto": "arcade",
+   "status": "ativo",
+   "fazendo": "Plano Premium S1: distribuição dos games — GameDistribution travado no login (falta o \"vai\" do CEO); CrazyGames com título a escolher.",
+   "tarefas": [
+    {
+     "nome": "Jogos no Facebook (4/20)",
+     "progresso": 20
+    },
+    {
+     "nome": "Lote 1 — 4 jogos novos",
+     "progresso": 35
+    },
+    {
+     "nome": "Kit dos portais",
+     "progresso": 60
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-31T16:50:00-03:00",
+   "genero": "M",
+   "casa": 10
+  },
+  {
+   "id": "otavio",
+   "nome": "Otávio",
+   "cargo": "O diretor dark",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Plano Premium S1: Dinero Claro na grade de novembro — longos dias pares 18:30 e Shorts diários; cada pacote só sobe com OK do CEO.",
+   "tarefas": [
+    {
+     "nome": "Roteiro piloto — entregue",
+     "progresso": 100
+    },
+    {
+     "nome": "Treinamento da equipe",
+     "progresso": 92
+    },
+    {
+     "nome": "Produção do piloto",
+     "progresso": 10
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-31T16:50:00-03:00",
+   "genero": "M",
+   "casa": 11
+  },
+  {
+   "id": "severo",
+   "nome": "Severo",
+   "cargo": "Pesquisa",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Pesquisa temas, dados e referências pros roteiros do Dinero Claro.",
+   "tarefas": [
+    {
+     "nome": "Roteiro piloto — entregue",
+     "progresso": 100
+    },
+    {
+     "nome": "Treinamento da equipe",
+     "progresso": 92
+    },
+    {
+     "nome": "Produção do piloto",
+     "progresso": 10
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "genero": "M",
+   "casa": 12
+  },
+  {
+   "id": "rui",
+   "nome": "Rui",
+   "cargo": "Roteiro",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Escreve e revisa os roteiros do canal Dinero Claro.",
+   "tarefas": [
+    {
+     "nome": "Roteiro piloto — entregue",
+     "progresso": 100
+    },
+    {
+     "nome": "Treinamento da equipe",
+     "progresso": 92
+    },
+    {
+     "nome": "Produção do piloto",
+     "progresso": 10
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "genero": "M",
+   "casa": 13
+  },
+  {
+   "id": "tito",
+   "nome": "Tito",
+   "cargo": "Títulos",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Fecha o par título+capa de cada vídeo do Dinero Claro: 5 opções por vídeo, espanhol pros hispanos dos EUA, curiosidade sem clickbait.",
+   "tarefas": [
+    {
+     "nome": "5 títulos do próximo vídeo",
+     "progresso": 45
+    },
+    {
+     "nome": "Par título+capa com o Miro",
+     "progresso": 30
+    },
+    {
+     "nome": "Palavra-chave de busca ES",
+     "progresso": 55
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M",
+   "casa": 14
+  },
+  {
+   "id": "miro",
+   "nome": "Miro",
+   "cargo": "Thumbnails",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Desenha as capas do Dinero Claro: 3 conceitos por vídeo, julgados pela rubrica oficial da casa — abaixo de 85, volta pra prancheta.",
+   "tarefas": [
+    {
+     "nome": "3 conceitos de capa",
+     "progresso": 40
+    },
+    {
+     "nome": "Rubrica da capa (mín. 85)",
+     "progresso": 25
+    },
+    {
+     "nome": "QA em 3 tamanhos",
+     "progresso": 60
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M",
+   "casa": 15
+  },
+  {
+   "id": "beto",
+   "nome": "Beto",
+   "cargo": "Imagens",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Gera as imagens de apoio dos vídeos do Dinero Claro no estilo visual único do canal, 16:9, sem texto dentro da imagem.",
+   "tarefas": [
+    {
+     "nome": "Imagens do próximo vídeo",
+     "progresso": 50
+    },
+    {
+     "nome": "Base das capas do Miro",
+     "progresso": 35
+    },
+    {
+     "nome": "Cenas próprias do canal",
+     "progresso": 20
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M",
+   "casa": 16
+  },
+  {
+   "id": "tom",
+   "nome": "Tom",
+   "cargo": "Áudio e voz",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "A voz do Dinero Claro: narração em espanhol natural com a voz fixa do canal, trilha licenciada por baixo da voz.",
+   "tarefas": [
+    {
+     "nome": "Narração do próximo vídeo",
+     "progresso": 30
+    },
+    {
+     "nome": "Trilha e SFX licenciados",
+     "progresso": 65
+    },
+    {
+     "nome": "Pronúncia ES conferida",
+     "progresso": 80
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M",
+   "casa": 17
+  },
+  {
+   "id": "vitor",
+   "nome": "Vítor",
+   "cargo": "Vídeo e stock",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "O material em movimento do Dinero Claro: stock livre com licença registrada e clips gerados casando com a narração, segundo a segundo.",
+   "tarefas": [
+    {
+     "nome": "Clips do próximo vídeo",
+     "progresso": 42
+    },
+    {
+     "nome": "Licenças registradas",
+     "progresso": 90
+    },
+    {
+     "nome": "Cenas geradas por IA",
+     "progresso": 28
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M",
+   "casa": 18
+  },
+  {
+   "id": "edson",
+   "nome": "Edson",
+   "cargo": "Edição",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Monta os vídeos do Dinero Claro: troca visual a cada 3–6s, gráfico sempre que sai um número, legenda ES e áudio em -14 LUFS.",
+   "tarefas": [
+    {
+     "nome": "Montagem do próximo vídeo",
+     "progresso": 22
+    },
+    {
+     "nome": "Gráficos e legendas ES",
+     "progresso": 38
+    },
+    {
+     "nome": "Loudness -14 LUFS",
+     "progresso": 70
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M",
+   "casa": 19
+  },
+  {
+   "id": "decio",
+   "nome": "Décio",
+   "cargo": "Descrição e SEO",
+   "depto": "youtube",
+   "status": "ativo",
+   "fazendo": "Descrição, capítulos e SEO de cada vídeo do Dinero Claro: texto único por vídeo, com o disclaimer financeiro em espanhol.",
+   "tarefas": [
+    {
+     "nome": "Descrição do próximo vídeo",
+     "progresso": 15
+    },
+    {
+     "nome": "Capítulos conferidos",
+     "progresso": 48
+    },
+    {
+     "nome": "Tags e comentário fixado",
+     "progresso": 33
+    }
+   ],
+   "desde": "2026-10-28",
+   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "genero": "M",
+   "casa": 20
+  },
+  {
+   "id": "teodoro",
+   "nome": "Teodoro",
+   "cargo": "O editor",
+   "depto": "kdp",
+   "status": "pausado",
+   "fazendo": "Pausado por ordem do CEO. Backlog de 11 livros de colorir prontos — só religa com o upload do livro de Natal confirmado.",
+   "tarefas": [
+    {
+     "nome": "Backlog — 11 livros",
+     "progresso": 100
+    },
+    {
+     "nome": "Upload livro de Natal",
+     "progresso": 0
+    },
+    {
+     "nome": "Novos livros",
+     "progresso": 0
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "comportamento": "dormindo",
+   "genero": "M",
+   "casa": 21
+  },
+  {
+   "id": "tonhao",
+   "nome": "Tonhão",
+   "cargo": "O montador",
+   "depto": "apps",
+   "status": "ativo",
+   "fazendo": "Apps Android sob demanda: cada pedido do CEO vira app testado e provado no aparelho antes de entregar.",
+   "tarefas": [
+    {
+     "nome": "Apps sob demanda",
+     "progresso": 58
+    },
+    {
+     "nome": "Prova no binário",
+     "progresso": 74
+    },
+    {
+     "nome": "Fila de pedidos",
+     "progresso": 33
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "genero": "M",
+   "casa": 22
+  },
+  {
+   "id": "assistente-apps",
+   "nome": "Júlia",
+   "cargo": "Assistente de Apps",
+   "depto": "apps",
+   "status": "ativo",
+   "fazendo": "Apoia o Tonhão: testa cada app no aparelho e organiza a fila de pedidos do CEO.",
+   "tarefas": [
+    {
+     "nome": "Apps sob demanda",
+     "progresso": 58
+    },
+    {
+     "nome": "Prova no binário",
+     "progresso": 74
+    },
+    {
+     "nome": "Fila de pedidos",
+     "progresso": 33
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "genero": "F",
+   "cabelo": "rabo",
+   "casa": 23
+  },
+  {
+   "id": "rex",
+   "nome": "Rex",
+   "cargo": "O farejador",
+   "depto": "farejador",
+   "status": "ativo",
+   "fazendo": "Farejando novas fontes de renda e propondo ranqueado por ROI no relatório de segunda ~09:18. Ele propõe, a empresa executa.",
+   "tarefas": [
+    {
+     "nome": "Varredura semanal",
+     "progresso": 67
+    },
+    {
+     "nome": "Relatório por ROI",
+     "progresso": 45
+    },
+    {
+     "nome": "Radar de tendências",
+     "progresso": 80
+    }
+   ],
+   "desde": "2026-10-27",
+   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "genero": "M",
+   "casa": 24
+  },
+  {
+   "id": "otto",
+   "nome": "Otto",
+   "cargo": "O trader",
+   "depto": "trader",
+   "status": "ativo",
+   "fazendo": "NO AR na Sala Trader: ligado e operando — pensa pela titiku-api (cérebro da casa), carteira Solana compartilhada com o robô do PC, em modo sobrevivência até reforço de SOL. Conway real segue em tentativa automática.",
+   "tarefas": [
+    {
+     "nome": "Auditoria do motor (Automaton)",
+     "progresso": 100
+    },
+    {
+     "nome": "Estratégia e backtest",
+     "progresso": 30
+    },
+    {
+     "nome": "Oxigênio: meta de lucro do ciclo",
+     "progresso": 0
+    }
+   ],
+   "desde": "2026-10-31",
+   "atualizadoEm": "2026-10-31T21:20:38-03:00",
+   "genero": "M",
+   "casa": 25
+  }
+ ]
 }
