@@ -310,8 +310,8 @@ setTimeout(function(){ if(!window.__kovStarted) __kovShowErr('O motor 3D n\u00E3
   <h3>📊 Resumo da Torre</h3>
   <div class="rrow"><span>🏢 Pisos</span><b>4</b></div>
   <div class="rrow"><span>👥 Pessoas</span><b id="statPeople">–</b></div>
-  <div class="rrow"><span>🚀 Frentes ativas</span><b class="green">8</b></div>
-  <div class="rrow"><span>⏸️ Pausada</span><b class="amber">1</b></div>
+  <div class="rrow"><span>🚀 Frentes ativas</span><b class="green" id="statFronts">–</b></div>
+  <div class="rrow"><span>⏸️ Pausada</span><b class="amber" id="statPaused">–</b></div>
 </div>
 
 <div id="side">
@@ -1652,7 +1652,7 @@ function doorZOf(d){ return d.doorZ != null ? d.doorZ : (d.floor === 0 ? 1.5 : (
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-11-01.6';
+const PAGE_VERSION = '2026-11-02.1';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -1661,7 +1661,7 @@ const PAGE_VERSION = '2026-11-01.6';
    embutida abaixo e o selo mostra MODO ARQUIVO. */
 const EQUIPE_EMBUTIDA = {
  "empresa": "Kovantu Digital",
- "atualizadoEm": "2026-10-30T16:52:00-03:00",
+ "atualizadoEm": "2026-11-02T08:22:08-03:00",
  "equipe": [
   {
    "id": "charlis",
@@ -1670,23 +1670,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Dono / CEO",
    "depto": "diretoria",
    "status": "ativo",
-   "fazendo": "Aprova tudo que vai ao ar e decide onde investir.",
+   "fazendo": "Segunda de comando: relatório semanal das frentes às 10:30, aprovações do dia e o portão do vídeo 003 do Dinero Claro, que estreia hoje às 18:30.",
    "tarefas": [
     {
+     "nome": "Portão do vídeo 003 — estreia hoje 18:30",
+     "progresso": 70
+    },
+    {
+     "nome": "Relatório semanal das frentes",
+     "progresso": 55
+    },
+    {
      "nome": "Aprovações do dia",
-     "progresso": 82
-    },
-    {
-     "nome": "Relatório das frentes",
-     "progresso": 46
-    },
-    {
-     "nome": "Decisões de investimento",
-     "progresso": 30
+     "progresso": 40
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "uniforme": "blazer-preto",
    "genero": "M"
   },
@@ -1697,23 +1697,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Gerente-geral",
    "depto": "diretoria",
    "status": "ativo",
-   "fazendo": "Distribui tarefas, cobra funcionário parado e só entrega com prova.",
+   "fazendo": "Gerência da segunda: consolida o relatório semanal das frentes, confere as publicações automáticas dos blogs de hoje e cobra as filas de cada frente.",
    "tarefas": [
     {
-     "nome": "Aprovações do dia",
-     "progresso": 82
+     "nome": "Relatório semanal das frentes",
+     "progresso": 65
     },
     {
-     "nome": "Relatório das frentes",
-     "progresso": 46
+     "nome": "Conferência das publicações de hoje",
+     "progresso": 50
     },
     {
-     "nome": "Decisões de investimento",
-     "progresso": 30
+     "nome": "Cobrança das filas (FILA.md)",
+     "progresso": 40
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "comportamento": "empe",
    "uniforme": "blazer-cinza",
    "genero": "M"
@@ -1725,23 +1725,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O escriba",
    "depto": "abuelo",
    "status": "ativo",
-   "fazendo": "Produzindo vídeos e infográficos do Abuelo Francisco em espanhol, a série Bebidas e respondendo comentários GUÍA.",
+   "fazendo": "Abuelo em cadência: vídeo do dia às 19:30, infográficos no IG às 11:30 e 17:45, varredura de comentários às 20:30 e a série de espelhos do Instagram novo (18 de 60 no ar).",
    "tarefas": [
     {
-     "nome": "Vídeo do dia",
-     "progresso": 64
+     "nome": "Vídeo do dia — 19:30",
+     "progresso": 45
     },
     {
-     "nome": "Infográfico FB/IG",
-     "progresso": 38
+     "nome": "Infográficos IG — 11:30/17:45",
+     "progresso": 60
     },
     {
-     "nome": "Série Bebidas",
-     "progresso": 55
+     "nome": "Espelhos do IG novo — 18/60",
+     "progresso": 30
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -1751,23 +1751,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O caixa",
    "depto": "hotmart",
    "status": "ativo",
-   "fazendo": "Funil dos 6 infoprodutos em espanhol, hub de vendas e piloto GUÍA. A vigia da primeira venda está ligada.",
+   "fazendo": "Funil Hotmart no ar com os 6 produtos publicados: acompanha as métricas e o checkout do dia, mantém o hub de vendas em dia e a vigia da primeira venda ligada.",
    "tarefas": [
     {
-     "nome": "Funil — 6 produtos ES",
-     "progresso": 71
+     "nome": "Funil — 6 produtos no ar",
+     "progresso": 85
     },
     {
-     "nome": "Hub de vendas",
-     "progresso": 88
+     "nome": "Métricas e checkout do dia",
+     "progresso": 50
     },
     {
-     "nome": "Vigia da 1ª venda",
+     "nome": "Order bumps da Botica — no ar",
      "progresso": 100
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -1777,23 +1777,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Assistente de Vendas",
    "depto": "hotmart",
    "status": "ativo",
-   "fazendo": "Apoia o Valdo: organiza o hub de vendas, confere os 6 infoprodutos e mantém a vigia da primeira venda ligada.",
+   "fazendo": "Apoia o Valdo: confere os 6 infoprodutos no ar, organiza o hub de vendas e ajuda a acompanhar as métricas do checkout.",
    "tarefas": [
     {
-     "nome": "Funil — 6 produtos ES",
-     "progresso": 71
+     "nome": "Conferência dos 6 produtos",
+     "progresso": 80
     },
     {
-     "nome": "Hub de vendas",
-     "progresso": 88
+     "nome": "Hub de vendas em dia",
+     "progresso": 90
     },
     {
-     "nome": "Vigia da 1ª venda",
-     "progresso": 100
+     "nome": "Métricas do checkout",
+     "progresso": 45
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "F",
    "cabelo": "coque"
   },
@@ -1804,23 +1804,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O olho",
    "depto": "stock",
    "status": "ativo",
-   "fazendo": "Gerando imagens e vídeos por IA. O lote piloto de 20 imagens está em moderação na Adobe Stock.",
+   "fazendo": "Ciclo diário de stock rodando: o lote piloto de 20 imagens está em revisão na Adobe (7 já aceitas) e o lote de hoje sai dentro das regras — IA marcada, sem texto, sem marca e até 3 variações por tema.",
    "tarefas": [
     {
-     "nome": "Lote piloto — 20 imagens",
-     "progresso": 100
+     "nome": "Lote do dia — produção e envio",
+     "progresso": 50
     },
     {
-     "nome": "Moderação Adobe",
+     "nome": "Lote piloto — revisão Adobe (7/20 aceitas)",
      "progresso": 35
     },
     {
-     "nome": "Próximo lote IA",
-     "progresso": 22
+     "nome": "Curadoria e metadados",
+     "progresso": 60
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "F",
    "cabelo": "longo"
   },
@@ -1831,23 +1831,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O cronista",
    "depto": "blogs",
    "status": "ativo",
-   "fazendo": "Blog 1 do Abuelo rumo a 30 posts, Blog 2 Dinero Claro lançado com 3 artigos agendados e Blog 3 em preparação.",
+   "fazendo": "Blogs de novembro e dezembro 100% programados nos dois blogs: Blog 1 com 47 posts e Blog 2 com 26. Hoje ele confere as publicações automáticas — o Blog 2 Dinero Claro estreia hoje às 08:00.",
    "tarefas": [
     {
-     "nome": "Blog 1 — sprint 30 posts",
-     "progresso": 40
+     "nome": "Blog 2 — estreia de hoje, 08:00",
+     "progresso": 85
     },
     {
-     "nome": "Blog 2 — artigos agendados",
-     "progresso": 90
+     "nome": "Conferência das publicações do dia",
+     "progresso": 55
     },
     {
-     "nome": "Blog 3 — estrutura",
-     "progresso": 30
+     "nome": "Grade nov/dez — programada",
+     "progresso": 100
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -1857,23 +1857,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Redatora Assistente",
    "depto": "blogs",
    "status": "ativo",
-   "fazendo": "Apoia o Plínio: revisa rascunhos, agenda publicações e organiza a pauta dos três blogs.",
+   "fazendo": "Apoia o Plínio: confere as publicações automáticas dos dois blogs, revisa os próximos posts da fila e organiza imagem e pin de cada artigo.",
    "tarefas": [
     {
-     "nome": "Blog 1 — sprint 30 posts",
-     "progresso": 40
+     "nome": "Publicações automáticas de hoje",
+     "progresso": 60
     },
     {
-     "nome": "Blog 2 — artigos agendados",
-     "progresso": 90
+     "nome": "Revisão dos próximos posts",
+     "progresso": 50
     },
     {
-     "nome": "Blog 3 — estrutura",
-     "progresso": 30
+     "nome": "Imagens e pins dos artigos",
+     "progresso": 45
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "F",
    "cabelo": "longo"
   },
@@ -1884,23 +1884,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O gestor de tráfego",
    "depto": "trafego",
    "status": "ativo",
-   "fazendo": "Gestor de tráfego da Kovantu (Kusmich + BPM + Sobral, era Andromeda). Cliente ativo: Ilumine — funil Instagram → link da bio → WhatsApp no ar, anúncio VETOR 01 ativo e medindo.",
+   "fazendo": "Tráfego da Ilumine no ar: funil Instagram → bio → WhatsApp rodando com o anúncio VETOR 01 e medindo; o 6006 já é WhatsApp Business validado, em preparação pra próxima ativação.",
    "tarefas": [
     {
      "nome": "Ilumine — funil da bio (VETOR 01)",
+     "progresso": 75
+    },
+    {
+     "nome": "Medição e relatório de tráfego",
+     "progresso": 45
+    },
+    {
+     "nome": "Preparação do 6006 Business",
      "progresso": 60
-    },
-    {
-     "nome": "Relatório semanal de tráfego",
-     "progresso": 25
-    },
-    {
-     "nome": "Novos conceitos de criativo",
-     "progresso": 40
     }
    ],
    "desde": "2026-10-30",
-   "atualizadoEm": "2026-10-30T16:52:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -1910,23 +1910,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O fliperama",
    "depto": "arcade",
    "status": "ativo",
-   "fazendo": "Games HTML5: 4 jogos jogáveis no Facebook em teste — e a meta nova do CEO: 20 jogos na conta, em lotes de 4.",
+   "fazendo": "Distribuição dos games a todo vapor: 15 jogos no ar com cross-promo e música, 5 prontos na fila de publicação e a rota de portais na ordem GameDistribution, CrazyGames e Poki.",
    "tarefas": [
     {
-     "nome": "Jogos no Facebook (4/20)",
-     "progresso": 20
+     "nome": "Jogos no ar — 15 publicados",
+     "progresso": 75
     },
     {
-     "nome": "Lote 1 — 4 jogos novos",
-     "progresso": 35
+     "nome": "Portais — GameDistribution primeiro",
+     "progresso": 40
     },
     {
-     "nome": "Kit dos portais",
+     "nome": "Fila de publicação — 5 jogos",
      "progresso": 60
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -1936,23 +1936,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O diretor dark",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "Canal Dinero Claro (finanças ES). Roteiro piloto de crédito/FICO entregue, aguardando o OK do Charlis. Equipe de 9 sub-agentes.",
+   "fazendo": "Rotina diária do Dinero Claro rodando: a equipe avança o pipeline toda manhã e hoje tem estreia — vídeo 003 (o custo de ter carro: US$ 787/mês) às 18:30, no portão do CEO. Empire Obituaries no ar, com o piloto WeWork em produção.",
    "tarefas": [
     {
-     "nome": "Roteiro piloto — entregue",
-     "progresso": 100
+     "nome": "Vídeo 003 — estreia hoje, 18:30",
+     "progresso": 80
     },
     {
-     "nome": "Treinamento da equipe",
-     "progresso": 92
+     "nome": "Ciclo diário do canal",
+     "progresso": 60
     },
     {
-     "nome": "Produção do piloto",
-     "progresso": 10
+     "nome": "Empire — piloto WeWork",
+     "progresso": 35
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -1962,23 +1962,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Pesquisa",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "Pesquisa temas, dados e referências pros roteiros do Dinero Claro.",
+   "fazendo": "Pesquisa do Dinero Claro: pauta 004 (casas congeladas) em levantamento e radar de virais do nicho rodando pra alimentar os próximos roteiros.",
    "tarefas": [
     {
-     "nome": "Roteiro piloto — entregue",
-     "progresso": 100
+     "nome": "Pesquisa da pauta 004",
+     "progresso": 55
     },
     {
-     "nome": "Treinamento da equipe",
-     "progresso": 92
+     "nome": "Radar de virais do nicho",
+     "progresso": 65
     },
     {
-     "nome": "Produção do piloto",
-     "progresso": 10
+     "nome": "Dados e fontes do roteiro",
+     "progresso": 40
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -1988,23 +1988,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Roteiro",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "Escreve e revisa os roteiros do canal Dinero Claro.",
+   "fazendo": "Roteiro do Dinero Claro: escrevendo o vídeo 004 a partir da pesquisa do Severo, no formato dos virais modelados — tema e fórmula reescritos em espanhol, nunca tradução.",
    "tarefas": [
     {
-     "nome": "Roteiro piloto — entregue",
-     "progresso": 100
+     "nome": "Roteiro do vídeo 004",
+     "progresso": 45
     },
     {
-     "nome": "Treinamento da equipe",
-     "progresso": 92
+     "nome": "Banco de ganchos ES",
+     "progresso": 35
     },
     {
-     "nome": "Produção do piloto",
-     "progresso": 10
+     "nome": "Revisão com o Otávio",
+     "progresso": 55
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2014,23 +2014,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Títulos",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "Fecha o par título+capa de cada vídeo do Dinero Claro: 5 opções por vídeo, espanhol pros hispanos dos EUA, curiosidade sem clickbait.",
+   "fazendo": "Títulos do Dinero Claro: fecha o par título+capa de cada vídeo e acompanha o Test & Compare rodando nos vídeos 001 e 002.",
    "tarefas": [
     {
-     "nome": "5 títulos do próximo vídeo",
-     "progresso": 45
+     "nome": "5 títulos do vídeo 004",
+     "progresso": 50
     },
     {
-     "nome": "Par título+capa com o Miro",
-     "progresso": 30
+     "nome": "Test & Compare — 001 e 002",
+     "progresso": 65
     },
     {
-     "nome": "Palavra-chave de busca ES",
-     "progresso": 55
+     "nome": "Palavra-chave ES do 004",
+     "progresso": 40
     }
    ],
    "desde": "2026-10-28",
-   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2040,23 +2040,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Thumbnails",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "Desenha as capas do Dinero Claro: 3 conceitos por vídeo, julgados pela rubrica oficial da casa — abaixo de 85, volta pra prancheta.",
+   "fazendo": "Capas do Dinero Claro com modelagem completa do viral (quem domina o frame, onde vai o texto, quantas palavras): capa do 003 em versão final pro portão e conceitos do 004 na prancheta.",
    "tarefas": [
     {
-     "nome": "3 conceitos de capa",
+     "nome": "Capa do 003 — versão final",
+     "progresso": 85
+    },
+    {
+     "nome": "Conceitos de capa do 004",
      "progresso": 40
     },
     {
-     "nome": "Rubrica da capa (mín. 85)",
-     "progresso": 25
-    },
-    {
-     "nome": "QA em 3 tamanhos",
-     "progresso": 60
+     "nome": "QA da capa em 3 tamanhos",
+     "progresso": 55
     }
    ],
    "desde": "2026-10-28",
-   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2066,23 +2066,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Imagens",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "Gera as imagens de apoio dos vídeos do Dinero Claro no estilo visual único do canal, 16:9, sem texto dentro da imagem.",
+   "fazendo": "Imagens dos vídeos do Dinero Claro no estilo visual do canal, 16:9 e sem texto dentro da imagem: lote do 004 em geração e base pras capas do Miro.",
    "tarefas": [
     {
-     "nome": "Imagens do próximo vídeo",
-     "progresso": 50
+     "nome": "Imagens do vídeo 004",
+     "progresso": 45
     },
     {
      "nome": "Base das capas do Miro",
-     "progresso": 35
+     "progresso": 50
     },
     {
      "nome": "Cenas próprias do canal",
-     "progresso": 20
+     "progresso": 35
     }
    ],
    "desde": "2026-10-28",
-   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2092,11 +2092,11 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Áudio e voz",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "A voz do Dinero Claro: narração em espanhol natural com a voz fixa do canal, trilha licenciada por baixo da voz.",
+   "fazendo": "A voz do Dinero Claro: narração em espanhol com a voz fixa do canal, trilha por baixo e pronúncia conferida palavra por palavra.",
    "tarefas": [
     {
-     "nome": "Narração do próximo vídeo",
-     "progresso": 30
+     "nome": "Narração do vídeo 004",
+     "progresso": 35
     },
     {
      "nome": "Trilha e SFX licenciados",
@@ -2104,11 +2104,11 @@ const EQUIPE_EMBUTIDA = {
     },
     {
      "nome": "Pronúncia ES conferida",
-     "progresso": 80
+     "progresso": 75
     }
    ],
    "desde": "2026-10-28",
-   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2118,23 +2118,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Vídeo e stock",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "O material em movimento do Dinero Claro: stock livre com licença registrada e clips gerados casando com a narração, segundo a segundo.",
+   "fazendo": "Material em movimento do Dinero Claro: clips de stock livre com licença registrada e cenas geradas casando com a narração; o Short de hoje entra como isca pro longo das 18:30.",
    "tarefas": [
     {
-     "nome": "Clips do próximo vídeo",
-     "progresso": 42
+     "nome": "Short de hoje — isca do longo",
+     "progresso": 55
+    },
+    {
+     "nome": "Clips do vídeo 004",
+     "progresso": 40
     },
     {
      "nome": "Licenças registradas",
      "progresso": 90
-    },
-    {
-     "nome": "Cenas geradas por IA",
-     "progresso": 28
     }
    ],
    "desde": "2026-10-28",
-   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2144,15 +2144,15 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Edição",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "Monta os vídeos do Dinero Claro: troca visual a cada 3–6s, gráfico sempre que sai um número, legenda ES e áudio em -14 LUFS.",
+   "fazendo": "Edição do Dinero Claro: montagem do 004 em curso, Short diário no corte e áudio fechado em -14 LUFS com troca visual a cada 3–6 segundos.",
    "tarefas": [
     {
-     "nome": "Montagem do próximo vídeo",
-     "progresso": 22
+     "nome": "Montagem do vídeo 004",
+     "progresso": 25
     },
     {
-     "nome": "Gráficos e legendas ES",
-     "progresso": 38
+     "nome": "Short diário de hoje",
+     "progresso": 60
     },
     {
      "nome": "Loudness -14 LUFS",
@@ -2160,7 +2160,7 @@ const EQUIPE_EMBUTIDA = {
     }
    ],
    "desde": "2026-10-28",
-   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2170,23 +2170,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Descrição e SEO",
    "depto": "youtube",
    "status": "ativo",
-   "fazendo": "Descrição, capítulos e SEO de cada vídeo do Dinero Claro: texto único por vídeo, com o disclaimer financeiro em espanhol.",
+   "fazendo": "Descrição e SEO do Dinero Claro: pacote do vídeo 003 pronto pra estreia de hoje — descrição com disclaimer, capítulos e o comentário da estreia marcado pra fixar.",
    "tarefas": [
     {
-     "nome": "Descrição do próximo vídeo",
-     "progresso": 15
+     "nome": "Descrição e SEO do 003 — estreia hoje",
+     "progresso": 70
     },
     {
-     "nome": "Capítulos conferidos",
-     "progresso": 48
+     "nome": "Capítulos do 003",
+     "progresso": 60
     },
     {
-     "nome": "Tags e comentário fixado",
-     "progresso": 33
+     "nome": "Comentário fixado pós-estreia",
+     "progresso": 30
     }
    ],
    "desde": "2026-10-28",
-   "atualizadoEm": "2026-10-30T11:55:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2196,23 +2196,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O editor",
    "depto": "kdp",
    "status": "pausado",
-   "fazendo": "Pausado por ordem do CEO. Backlog de 11 livros de colorir prontos — só religa com o upload do livro de Natal confirmado.",
+   "fazendo": "Pausado por decisão do CEO: backlog de 11 livros de colorir prontos e o kit de upload do livro de Natal fechado — a produção religa assim que o upload do Natal for confirmado.",
    "tarefas": [
     {
-     "nome": "Backlog — 11 livros",
+     "nome": "Livro de Natal — kit de upload pronto",
      "progresso": 100
     },
     {
-     "nome": "Upload livro de Natal",
-     "progresso": 0
+     "nome": "Backlog — 11 livros prontos",
+     "progresso": 100
     },
     {
-     "nome": "Novos livros",
+     "nome": "Produção nova — religa após o upload do Natal",
      "progresso": 0
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "comportamento": "dormindo",
    "genero": "M"
   },
@@ -2223,23 +2223,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O montador",
    "depto": "apps",
    "status": "ativo",
-   "fazendo": "Apps Android sob demanda: cada pedido do CEO vira app testado e provado no aparelho antes de entregar.",
+   "fazendo": "Fábrica de Apps a todo vapor: Brilho Extra v2.1 entregue pro teste no aparelho do CEO e o Mika v0.1.33 pronto pra instalar e parear.",
    "tarefas": [
     {
-     "nome": "Apps sob demanda",
-     "progresso": 58
+     "nome": "Brilho Extra v2.1 — entregue",
+     "progresso": 100
     },
     {
-     "nome": "Prova no binário",
-     "progresso": 74
+     "nome": "Mika v0.1.33 — instalação e pareamento",
+     "progresso": 40
     },
     {
-     "nome": "Fila de pedidos",
-     "progresso": 33
+     "nome": "Fila de pedidos do CEO",
+     "progresso": 35
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
   {
@@ -2249,23 +2249,23 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "Assistente de Apps",
    "depto": "apps",
    "status": "ativo",
-   "fazendo": "Apoia o Tonhão: testa cada app no aparelho e organiza a fila de pedidos do CEO.",
+   "fazendo": "Apoia o Tonhão: organiza os testes de cada app no aparelho, confere os gates de QA da fábrica e mantém a fila de pedidos do CEO em dia.",
    "tarefas": [
     {
-     "nome": "Apps sob demanda",
-     "progresso": 58
+     "nome": "Testes no aparelho",
+     "progresso": 55
     },
     {
-     "nome": "Prova no binário",
-     "progresso": 74
+     "nome": "Gates de QA da fábrica",
+     "progresso": 65
     },
     {
-     "nome": "Fila de pedidos",
-     "progresso": 33
+     "nome": "Fila de pedidos do CEO",
+     "progresso": 40
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-29T08:22:00-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "F",
    "cabelo": "rabo"
   },
@@ -2276,51 +2276,51 @@ const EQUIPE_EMBUTIDA = {
    "cargo": "O farejador",
    "depto": "farejador",
    "status": "ativo",
-   "fazendo": "Farejando novas fontes de renda e propondo ranqueado por ROI no relatório de segunda ~09:18. Ele propõe, a empresa executa.",
+   "fazendo": "Farejando a semana: varredura de novas fontes de renda em curso e o relatório ranqueado por ROI sendo montado pra mesa do CEO. Ele propõe, a empresa executa.",
    "tarefas": [
     {
      "nome": "Varredura semanal",
-     "progresso": 67
+     "progresso": 55
     },
     {
-     "nome": "Relatório por ROI",
-     "progresso": 45
+     "nome": "Relatório ranqueado por ROI",
+     "progresso": 40
     },
     {
      "nome": "Radar de tendências",
-     "progresso": 80
+     "progresso": 70
     }
    ],
    "desde": "2026-10-27",
-   "atualizadoEm": "2026-10-28T23:00:27-03:00",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "M"
   },
-   {
-     "id": "otto",
+  {
+   "id": "otto",
    "casa": 25,
-     "nome": "Otto",
-     "cargo": "O trader",
-     "depto": "trader",
-     "status": "ativo",
-     "fazendo": "Operando na Sala Trader do 3º andar: vive do saldo (oxigênio) — precisa lucrar pra sobreviver; se o saldo zerar, ele desliga. Origem técnica: agente Automaton (Conway Research), em auditoria antes de receber conta e saldo reais.",
-     "tarefas": [
-       {
-         "nome": "Auditoria do motor (Automaton)",
-         "progresso": 40
-       },
-       {
-         "nome": "Estratégia e backtest",
-         "progresso": 15
-       },
-       {
-         "nome": "Oxigênio: meta de lucro do ciclo",
-         "progresso": 0
-       }
-     ],
-     "desde": "2026-10-31",
-     "atualizadoEm": "2026-10-31T17:37:01-03:00",
-     "genero": "M"
-   }
+   "nome": "Otto",
+   "cargo": "O trader",
+   "depto": "trader",
+   "status": "ativo",
+   "fazendo": "Simulação em papel rumo à banca de US$ 100: o scanner só observa e indexa oportunidades, o cérebro decide uma por ciclo e re-cota antes de qualquer passo. O veredito da simulação sai sábado, 07/nov.",
+   "tarefas": [
+    {
+     "nome": "Scanner em modo simulação",
+     "progresso": 70
+    },
+    {
+     "nome": "Ciclos de decisão — 1 por vez",
+     "progresso": 55
+    },
+    {
+     "nome": "Veredito da simulação — sáb 07/nov",
+     "progresso": 30
+    }
+   ],
+   "desde": "2026-10-31",
+   "atualizadoEm": "2026-11-02T08:22:08-03:00",
+   "genero": "M"
+  }
  ]
 };
 let EQUIPE_ATUAL = null;
@@ -2449,6 +2449,10 @@ function applyEquipe(data, source){
 function refreshLiveUI(){
   const el = document.getElementById('statPeople');
   if(el) el.textContent = roster.size;
+  const elF = document.getElementById('statFronts'), elP = document.getElementById('statPaused');
+  if(elF || elP){ const act = new Set(); let pz = 0;
+    for(const e of roster.values()){ if(e.rec.status === 'pausado') pz++; else act.add(e.rec.depto); }
+    if(elF) elF.textContent = act.size; if(elP) elP.textContent = pz; }
   if(!UI_READY) return;
   buildSimbar(); buildTicker();
   document.querySelectorAll('.sim').forEach(b => b.classList.toggle('sel', b.dataset.pid === selectedPersonId));
