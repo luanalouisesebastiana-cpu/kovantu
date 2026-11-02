@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-02T15:14:28.693Z",
+ "atualizadoEm": "2026-11-02T15:17:18.183Z",
  "inicioSimulacao": "2026-11-01T00:41:19.027Z",
  "servicoAtivo": true,
  "bancaPaperUsd": 101.2,
@@ -7,10 +7,10 @@
  "lucroTotalPaperUsd": 1.2,
  "lucroDoCicloUsd": 1.2,
  "splitsCompletados": 0,
- "oportunidadesAvaliadas": 1816,
+ "oportunidadesAvaliadas": 1820,
  "tradesPaper": 9,
  "melhorEdgePct": 3.5627,
- "edgeMedioPct": -1.4076,
+ "edgeMedioPct": -1.4073,
  "precoSolUsd": 94.46,
  "ultimosTrades": [
   {
@@ -264,6 +264,32 @@
  ],
  "ultimasOportunidades": [
   {
+   "ts": "2026-11-02T15:17:17.081Z",
+   "token": "HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k",
+   "pool": "jeff / SOL",
+   "dex": "raydium",
+   "liquidityUsd": 95409,
+   "volume24hUsd": 254108,
+   "positionUsd": 12.65,
+   "priceImpactPct": 0.0184,
+   "netEdgePct": -2.1906,
+   "netSol": -0.002934,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-02T15:17:15.543Z",
+   "token": "npz2FhoufQ7pKqhGpaipYWacrAkidyW2yDpVWSvpump",
+   "pool": "DESSA / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 335662,
+   "volume24hUsd": 1576323,
+   "positionUsd": 12.65,
+   "priceImpactPct": 0.0041,
+   "netEdgePct": -0.6232,
+   "netSol": -0.000835,
+   "verdict": "avaliada"
+  },
+  {
    "ts": "2026-11-02T15:17:02.683Z",
    "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
    "pool": "GATO / SOL",
@@ -365,32 +391,6 @@
    "priceImpactPct": 0.0034,
    "netEdgePct": -1.042,
    "netSol": -0.001398,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-02T15:11:32.015Z",
-   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
-   "pool": "GATO / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 343783,
-   "volume24hUsd": 2356644,
-   "positionUsd": 12.65,
-   "priceImpactPct": 0.0092,
-   "netEdgePct": -0.7617,
-   "netSol": -0.001022,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-02T15:11:30.460Z",
-   "token": "8s4bNqEztH1JP7mkU747uMr7AckCQdiV47FDqYnDpump",
-   "pool": "ANAKIN / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 147816,
-   "volume24hUsd": 6346862,
-   "positionUsd": 12.65,
-   "priceImpactPct": 0.0082,
-   "netEdgePct": -1.7741,
-   "netSol": -0.00238,
    "verdict": "avaliada"
   }
  ],
