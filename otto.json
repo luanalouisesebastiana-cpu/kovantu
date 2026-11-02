@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-02T05:09:37.975Z",
+ "atualizadoEm": "2026-11-02T05:31:31.290Z",
  "inicioSimulacao": "2026-11-01T00:41:19.027Z",
  "servicoAtivo": true,
  "bancaPaperUsd": 101.3,
@@ -11,7 +11,7 @@
  "tradesPaper": 8,
  "melhorEdgePct": 3.5627,
  "edgeMedioPct": -1.4313,
- "precoSolUsd": 95.44,
+ "precoSolUsd": 94.63,
  "ultimosTrades": [
   {
    "ts": "2026-11-01T18:22:27.255Z",
