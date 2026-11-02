@@ -1652,7 +1652,7 @@ function doorZOf(d){ return d.doorZ != null ? d.doorZ : (d.floor === 0 ? 1.5 : (
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-11-01.5';
+const PAGE_VERSION = '2026-11-01.6';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -5218,9 +5218,9 @@ addEventListener('resize', __kovResize);
 addEventListener('orientationchange', ()=>setTimeout(__kovResize, 60));
 if(window.visualViewport) visualViewport.addEventListener('resize', __kovResize);
 
-/* ============ CONVERSAR COM O FUNCIONÁRIO (chat + ligação, 100% client-side) ============
-   Motor dirigido pelo ESTADO VIVO da simulação: a pessoa responde com os dados
-   dela na cena (atividade atual, onde está, necessidades, tarefas, casa/lote).
+/* ============ CONVERSAR COM O FUNCIONÁRIO (chat + ligação) ============
+   Quem responde é IA DE VERDADE (bloco aiAsk abaixo) alimentada pelo ESTADO
+   VIVO da simulação; o motor roteirizado chatReply fica como RESERVA offline.
    Voz de leitura: Web Speech (speechSynthesis) com pitch/rate estáveis por
    pessoa. Ligação: overlay + reconhecimento de voz (webkitSpeechRecognition)
    quando o navegador suporta; sem suporte, aviso claro e o chat segue por texto. */
@@ -5326,6 +5326,92 @@ function chatReply(id, msg){
     `Direto do ${d.name}: ${opin}. Me pergunta "o que você tá fazendo?" ou "como tá o trabalho?" que eu te mostro com meus números.`,
   ]);
 }
+/* ============ IA REAL NO CHAT (Pollinations — gratuito, SEM chave) ============
+   Pedido do Charlis em 01/nov: a conversa roteirizada "parecia simulada".
+   Agora quem responde é IA de verdade: POST estilo OpenAI pra
+   https://text.pollinations.ai/openai (modelo anônimo, CORS aberto, sem
+   chave embutida — a página é estática e pública). A persona monta com os
+   dados da pessoa + o CONTEXTO AO VIVO da cena (onde está, o que faz agora,
+   fase da rotina). Se a IA falhar (offline, timeout, erro, limite do tier
+   anônimo), o motor roteirizado chatReply assume — a conversa nunca fica muda.
+   As chamadas são ENFILEIRADAS (1 por vez): o tier anônimo limita rajadas. */
+const AI_CHAT_URL = 'https://text.pollinations.ai/openai';
+const AI_TIMEOUT_MS = 35000; /* medido em 01/nov: o tier anônimo responde em ~7–35s; passou disso, o roteiro assume */
+let aiLastStart = 0;         /* espaçamento mínimo entre chamadas (o tier anônimo pune rajada com 402) */
+const aiHistory = {};              /* histórico por pessoa, só nesta sessão */
+let aiChain = Promise.resolve();   /* fila serial de chamadas */
+const AI_DEPT_TEMA = {
+  diretoria: 'gestão da empresa, decisões e números gerais da Kovantu',
+  abuelo: 'conteúdo de bem-estar e remédios naturais (página Abuelo Francisco, em espanhol), vídeos e legendas',
+  hotmart: 'vendas de produtos digitais, funil, checkout e conversão',
+  stock: 'imagens e vídeos de stock gerados por IA, prompts e curadoria visual',
+  blogs: 'crônicas, posts de blog, SEO e agenda de publicações',
+  trafego: 'tráfego pago, campanhas, anúncios, métricas e custo por resultado',
+  arcade: 'jogos da Kovantu Games, game design, fases e publicação',
+  youtube: 'canal dark Dinero Claro: roteiros, capas e retenção de vídeos',
+  kdp: 'livros, editoração e publicação na Amazon KDP',
+  apps: 'aplicativos Android, builds, testes e publicação',
+  farejador: 'prospecção de oportunidades, pesquisa e análise de nichos',
+  trader: 'mercado financeiro, cripto, operações, gráficos e gestão de risco',
+};
+const AI_FASE_TXT = { work: 'horário de trabalho', home: 'fora do expediente, em casa', sleep: 'hora de dormir', wake: 'começo do dia, em casa se arrumando', commute: 'no trajeto entre casa e trabalho' };
+function aiClean(s){
+  return String(s || '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1')
+    .replace(/^#{1,4}\s+/gm, '').replace(/\s+/g, ' ').trim().slice(0, 700);
+}
+function aiSystemPrompt(ctx){
+  const { rec, d, needs, tasks } = ctx;
+  const hh = String(Math.floor(sceneHour())).padStart(2, '0');
+  const t0 = tasks && tasks[0] ? ` Sua tarefa mais avançada agora: "${tasks[0][0]}" (${tasks[0][1]}%).` : '';
+  const lines = [
+    `Você é ${rec.nome}, ${rec.cargo || 'funcionário(a)'} do departamento ${d.name} da empresa Kovantu Digital. Você NÃO é uma IA nem um robô de respostas prontas: é essa pessoa, conversando com o Charlis, o dono da empresa (ele é seu chefe). Nunca diga que é IA, modelo de linguagem ou roteiro, e nunca saia do personagem.`,
+    `Seu trabalho: ${stripEmoji(rec.fazendo || '')} Seu tema do dia a dia: ${AI_DEPT_TEMA[d.id] || 'o trabalho do seu departamento'}.${t0}`,
+    `Contexto AGORA (use isto, não invente outra situação): são ${hh}h na cena; fase: ${AI_FASE_TXT[ctx.phase] || ctx.phase}. Você está ${ctx.where}, ${stripEmoji(ctx.act).toLowerCase()}. Energia ${needs['⚡ Energia']}%, moral ${needs['😄 Moral']}%, foco ${needs['💻 Foco']}%. Você mora no Lote ${String(ctx.lot).padStart(2, '0')} do Bairro Kovantu.`,
+    ctx.sleeping
+      ? 'Você está DORMINDO e foi acordado pela mensagem: responda MUITO curto, sonolento, meio grogue, e deixe claro que amanhã conversa direito.'
+      : 'Responda em português brasileiro, curto e natural como numa conversa de WhatsApp: 1 a 3 frases (só passe disso se pedirem uma explicação). Sem markdown, sem asteriscos, sem listas. Seja coerente com o contexto acima: não diga que está trabalhando se estiver em casa, nem que está acordado se estiver dormindo.',
+  ];
+  return lines.join('\n');
+}
+async function aiAskOnce(id, userText){
+  const ctx = chatCtx(id); if(!ctx) return null;
+  const hist = (aiHistory[id] || []).slice(-6);
+  const url = window.__AI_CHAT_URL_OVERRIDE || AI_CHAT_URL; /* gancho de diagnóstico/teste */
+  const payload = JSON.stringify({ model: 'openai', messages: [
+    { role: 'system', content: aiSystemPrompt(ctx) },
+    ...hist,
+    { role: 'user', content: String(userText).slice(0, 500) },
+  ] });
+  const gap = 8000 - (Date.now() - aiLastStart);
+  if(gap > 0) await new Promise(r=> setTimeout(r, gap));
+  for(let attempt = 0; attempt < 2; attempt++){
+    aiLastStart = Date.now();
+    const ctrl = new AbortController();
+    const to = setTimeout(()=> ctrl.abort(), AI_TIMEOUT_MS);
+    try{
+      const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, signal: ctrl.signal });
+      if(res.status === 402 || res.status === 429){ /* limite do tier anônimo: respira e tenta 1x mais */
+        if(attempt === 0){ await new Promise(r=> setTimeout(r, 12000)); continue; }
+        return null;
+      }
+      if(!res.ok) return null;
+      const data = await res.json();
+      const raw = data && data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : '';
+      const text = aiClean(raw);
+      if(!text) return null;
+      aiHistory[id] = [...hist, { role: 'user', content: String(userText).slice(0, 500) }, { role: 'assistant', content: text }].slice(-8);
+      return text;
+    }catch(_){ return null; }
+    finally{ clearTimeout(to); }
+  }
+  return null;
+}
+function aiAsk(id, userText){
+  const run = aiChain.then(()=> aiAskOnce(id, userText));
+  aiChain = run.then(()=> {}, ()=> {});
+  return run;
+}
+
 /* voz por pessoa: pitch/rate estáveis derivados do id */
 function voiceProfile(rec){ const h = hashId(rec.id); return { pitch: .78 + (h % 46) / 100, rate: .93 + ((h >> 3) % 18) / 100 }; }
 function speakFor(id, text, force){
@@ -5354,16 +5440,16 @@ function chatAddMsg(kind, text, personId){
 }
 function chatDeliver(id, userText){
   chTyping.style.display = 'block'; chTyping.textContent = firstName((roster.get(id) || {}).rec?.nome || '') + ' está digitando…';
-  const delay = 550 + Math.random() * 650;
-  setTimeout(()=>{
+  const finish = reply => {
     chTyping.style.display = 'none';
-    const reply = chatReply(id, userText);
     chatAddMsg('them', reply, id);
     const e = roster.get(id);
     if(e && !e.obj.userData.player) showSpeech(e.obj, reply.length > 64 ? reply.slice(0, 61) + '…' : reply, 3.6);
     speakFor(id, reply, false);
     if(callState.active && callState.personId === id){ document.getElementById('callLast').textContent = '“' + reply + '”'; document.getElementById('callStatus').textContent = 'em ligação — fala que eu escuto 🎙️'; }
-  }, delay);
+  };
+  /* IA de verdade primeiro; qualquer falha cai no roteiro (reserva) */
+  aiAsk(id, userText).then(text => finish(text || chatReply(id, userText)), ()=> finish(chatReply(id, userText)));
 }
 function chatSend(text){
   const id = chatState.personId; if(!id) return;
@@ -5443,6 +5529,7 @@ document.getElementById('chCall').onclick = ()=>{ if(chatState.personId) startCa
 document.getElementById('callEnd').onclick = endCall;
 
 const CHAT_API = { open: openChat, close: closeChat, ask: chatReply, send: chatSend, call: startCall, endCall,
+  ai: { ask: aiAsk, history: id => (aiHistory[id] || []).slice(), endpoint: AI_CHAT_URL, systemPrompt: id => { const c = chatCtx(id); return c ? aiSystemPrompt(c) : null; } },
   state: ()=> ({ personId: chatState.personId, callActive: callState.active, voiceOn: chatState.voiceOn }),
   voiceProfile: id => voiceProfile((roster.get(id) || {}).rec || { id }) };
 
