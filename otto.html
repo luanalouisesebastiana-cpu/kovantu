@@ -36,9 +36,18 @@
 <header>
   <h1><span class="k">K</span> OTTO — SALA TRADER</h1>
   <span class="vivo" id="status">AO VIVO</span>
-  <span class="sub">Simulação paper-trading de arbitragem na Solana — nenhum dinheiro real. Os dados atualizam a cada ~10 minutos. Última leitura: <span id="quando">—</span></span>
+  <span class="sub">Arbitragem na Solana: o Otto decide na simulação e o executor opera <strong>REAL MICRO</strong> (teto de 0,002 SOL por troca). Os dados atualizam a cada ~10 minutos. Última leitura: <span id="quando">—</span></span>
 </header>
 
+<h2 style="color:var(--verde-claro)">💰 Real — dinheiro de verdade</h2>
+<div class="grade">
+  <div class="cartao" style="border-color:var(--verde-claro)"><div class="rot">Saldo real da carteira</div><div class="val" id="saldoReal">—</div></div>
+  <div class="cartao" style="border-color:var(--verde-claro)"><div class="rot">Operações reais concluídas</div><div class="val" id="opsReais">—</div></div>
+  <div class="cartao" style="border-color:var(--verde-claro)"><div class="rot">Movimentado real hoje</div><div class="val" id="gastoReal">—</div></div>
+</div>
+<div id="listaReais" class="vazio">Carregando…</div>
+
+<h2>Simulação (paper) — o treino onde o Otto decide · não é dinheiro</h2>
 <div class="grade">
   <div class="cartao"><div class="rot">Banca paper</div><div class="val" id="banca">—</div></div>
   <div class="cartao"><div class="rot">Lucro total paper</div><div class="val" id="lucro">—</div></div>
@@ -64,7 +73,7 @@
 
 <footer>
   Otto é o trader da Kovantu Digital. Regras da simulação: liquidez &gt; US$ 50 mil · volume 24h &gt; US$ 100 mil · impacto &lt; 1% · posição = 12,5% da banca.
-  <br>Ver a <a href="./">Torre Kovantu</a> · Relatório final da simulação: 07/nov/2026, ~21:55.
+  <br>Execução REAL MICRO: teto de 0,002 SOL por troca · teto diário de US$ 1,95 · piso intocável de 0,01 SOL · kill switch REAL-OFF. Ver a <a href="./">Torre Kovantu</a>.
 </footer>
 
 <script>
@@ -81,6 +90,18 @@ async function carregar() {
     const r = await fetch('otto.json?ts=' + Date.now(), { cache: 'no-store' });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const d = await r.json();
+    const R = d.real || {};
+    $('saldoReal').innerHTML = R.saldoSol !== null && R.saldoSol !== undefined
+      ? Number(R.saldoSol).toFixed(6) + ' <small>SOL ≈ ' + usd(Number(R.saldoSol) * Number(d.precoSolUsd || 0)) + '</small>' : '—';
+    $('opsReais').textContent = R.executadasTotal ?? 0;
+    $('gastoReal').textContent = R.gastoHojeUsd !== null && R.gastoHojeUsd !== undefined ? usd(R.gastoHojeUsd) : '—';
+    const reais = R.ultimasOperacoes || [];
+    const rotStatus = { 'executado': '<span class="pos">EXECUTADO</span>', 'fechamento-manual': '<span class="pos">FECHAMENTO</span>', 'erro': '<span class="neg">ERRO</span>', 'pulado': 'PULADO' };
+    const linkTx = (tx) => tx ? ' <a href="https://solscan.io/tx/' + tx + '" target="_blank" rel="noopener">ver na cadeia</a>' : '';
+    $('listaReais').innerHTML = reais.length
+      ? '<table><tr><th>Quando</th><th>Par</th><th>Status</th><th>Detalhe</th><th>Transação</th></tr>' +
+        reais.map(x => '<tr><td>' + fmtData(x.ts) + '</td><td>' + (x.pool || '—') + '</td><td>' + (rotStatus[x.status] || x.status) + '</td><td>' + (x.motivo || '') + '</td><td>' + linkTx(x.txidSell || x.txidBuy) + '</td></tr>').join('') + '</table>'
+      : 'Nenhuma operação real ainda.';
     $('quando').textContent = fmtData(d.atualizadoEm) + ' (Brasília)';
     $('status').textContent = d.servicoAtivo ? 'AO VIVO' : 'PAUSADO';
     $('banca').innerHTML = usd(d.bancaPaperUsd);
@@ -105,7 +126,7 @@ async function carregar() {
     const trades = d.ultimosTrades || [];
     $('listaTrades').innerHTML = trades.length
       ? '<table><tr><th>Quando</th><th>Par</th><th>Edge líq.</th><th>Resultado</th><th>Banca após</th></tr>' +
-        trades.map(t => '<tr><td>' + fmtData(t.ts) + '</td><td>' + t.pool + '</td><td class="pos">' + pct(t.netEdgePct) + '</td><td class="pos">+' + usd(t.pnlUsd) + '</td><td>' + usd(t.bancaAposUsd) + '</td></tr>').join('') + '</table>'
+        trades.map(t => '<tr><td>' + fmtData(t.ts) + '</td><td>' + t.pool + '</td><td class="' + (Number(t.netEdgePct) >= 0 ? 'pos' : 'neg') + '">' + pct(t.netEdgePct) + '</td><td class="' + (Number(t.pnlUsd) >= 0 ? 'pos' : 'neg') + '">' + (Number(t.pnlUsd) >= 0 ? '+' : '') + usd(t.pnlUsd) + '</td><td>' + usd(t.bancaAposUsd) + '</td></tr>').join('') + '</table>'
       : 'Nenhum trade paper ainda — o scanner só entra quando o lucro líquido é positivo.';
     const opps = d.ultimasOportunidades || [];
     $('listaOpps').innerHTML = opps.length
