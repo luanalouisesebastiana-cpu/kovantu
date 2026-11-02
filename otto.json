@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-02T16:29:10.177Z",
+ "atualizadoEm": "2026-11-02T16:31:59.170Z",
  "inicioSimulacao": "2026-11-01T00:41:19.027Z",
  "servicoAtivo": true,
  "bancaPaperUsd": 101.2,
@@ -7,11 +7,11 @@
  "lucroTotalPaperUsd": 1.2,
  "lucroDoCicloUsd": 1.2,
  "splitsCompletados": 0,
- "oportunidadesAvaliadas": 1920,
+ "oportunidadesAvaliadas": 1923,
  "tradesPaper": 9,
  "melhorEdgePct": 3.5627,
- "edgeMedioPct": -1.405,
- "precoSolUsd": 93.34,
+ "edgeMedioPct": -1.4047,
+ "precoSolUsd": 93.33,
  "ultimosTrades": [
   {
    "ts": "2026-11-02T14:25:54.180Z",
@@ -264,6 +264,45 @@
  ],
  "ultimasOportunidades": [
   {
+   "ts": "2026-11-02T16:31:58.058Z",
+   "token": "HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k",
+   "pool": "jeff / SOL",
+   "dex": "raydium",
+   "liquidityUsd": 91510,
+   "volume24hUsd": 252103,
+   "positionUsd": 12.65,
+   "priceImpactPct": 0.0209,
+   "netEdgePct": -2.191,
+   "netSol": -0.00297,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-02T16:31:44.662Z",
+   "token": "npz2FhoufQ7pKqhGpaipYWacrAkidyW2yDpVWSvpump",
+   "pool": "DESSA / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 319485,
+   "volume24hUsd": 1658841,
+   "positionUsd": 12.65,
+   "priceImpactPct": 0.0055,
+   "netEdgePct": -0.7614,
+   "netSol": -0.001032,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-02T16:31:43.019Z",
+   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
+   "pool": "GATO / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 339137,
+   "volume24hUsd": 2398823,
+   "positionUsd": 12.65,
+   "priceImpactPct": 0.018,
+   "netEdgePct": -0.7605,
+   "netSol": -0.001031,
+   "verdict": "avaliada"
+  },
+  {
    "ts": "2026-11-02T16:29:09.066Z",
    "token": "HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k",
    "pool": "jeff / SOL",
@@ -352,45 +391,6 @@
    "priceImpactPct": 0.0198,
    "netEdgePct": -2.131,
    "netSol": -0.002887,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-02T16:23:40.478Z",
-   "token": "GD52VfoPZdad4hiNPg4UnjtDGsS4WiM3mqS8j1czpump",
-   "pool": "WWIII / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 317764,
-   "volume24hUsd": 822471,
-   "positionUsd": 12.65,
-   "priceImpactPct": 0.0187,
-   "netEdgePct": -2.2488,
-   "netSol": -0.003047,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-02T16:23:26.984Z",
-   "token": "npz2FhoufQ7pKqhGpaipYWacrAkidyW2yDpVWSvpump",
-   "pool": "DESSA / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 327562,
-   "volume24hUsd": 1657480,
-   "positionUsd": 12.65,
-   "priceImpactPct": 0.0044,
-   "netEdgePct": -0.7612,
-   "netSol": -0.001031,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-02T16:23:25.661Z",
-   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
-   "pool": "GATO / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 340966,
-   "volume24hUsd": 2401958,
-   "positionUsd": 12.65,
-   "priceImpactPct": 0.0057,
-   "netEdgePct": -0.7604,
-   "netSol": -0.00103,
    "verdict": "avaliada"
   }
  ],
