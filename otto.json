@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-02T03:36:15.738Z",
+ "atualizadoEm": "2026-11-02T03:47:10.359Z",
  "inicioSimulacao": "2026-11-01T00:41:19.027Z",
  "servicoAtivo": true,
  "bancaPaperUsd": 101.3,
@@ -7,10 +7,10 @@
  "lucroTotalPaperUsd": 1.3,
  "lucroDoCicloUsd": 1.3,
  "splitsCompletados": 0,
- "oportunidadesAvaliadas": 1398,
+ "oportunidadesAvaliadas": 1399,
  "tradesPaper": 8,
  "melhorEdgePct": 3.5627,
- "edgeMedioPct": -1.4367,
+ "edgeMedioPct": -1.4374,
  "precoSolUsd": 94.97,
  "ultimosTrades": [
   {
@@ -204,6 +204,19 @@
  ],
  "ultimasOportunidades": [
   {
+   "ts": "2026-11-02T03:47:09.245Z",
+   "token": "HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k",
+   "pool": "jeff / SOL",
+   "dex": "raydium",
+   "liquidityUsd": 104398,
+   "volume24hUsd": 222423,
+   "positionUsd": 12.66,
+   "priceImpactPct": 0.0002,
+   "netEdgePct": -2.3339,
+   "netSol": -0.003112,
+   "verdict": "avaliada"
+  },
+  {
    "ts": "2026-11-02T03:36:14.628Z",
    "token": "HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k",
    "pool": "jeff / SOL",
@@ -318,19 +331,6 @@
    "priceImpactPct": 0.0065,
    "netEdgePct": -0.8242,
    "netSol": -0.001099,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-02T03:23:17.737Z",
-   "token": "8s4bNqEztH1JP7mkU747uMr7AckCQdiV47FDqYnDpump",
-   "pool": "ANAKIN / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 151817,
-   "volume24hUsd": 4326954,
-   "positionUsd": 12.66,
-   "priceImpactPct": 0.0098,
-   "netEdgePct": -1.6714,
-   "netSol": -0.002228,
    "verdict": "avaliada"
   }
  ]
