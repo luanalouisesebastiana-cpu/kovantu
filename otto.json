@@ -259,6 +259,45 @@
  ],
  "ultimasOportunidades": [
   {
+   "ts": "2026-11-03T18:10:41.637Z",
+   "token": "8muc9DdhqWfAPcvmEebNQCG89bLiwi12T2KtBtzVpump",
+   "pool": "ANONVOYAGE / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 104710,
+   "volume24hUsd": 2589553,
+   "positionUsd": 12.65,
+   "priceImpactPct": 0.011,
+   "netEdgePct": -1.978,
+   "netSol": -0.002671,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-03T18:10:40.245Z",
+   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
+   "pool": "GATO / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 360881,
+   "volume24hUsd": 3217958,
+   "positionUsd": 12.65,
+   "priceImpactPct": 0.0058,
+   "netEdgePct": -0.7601,
+   "netSol": -0.001027,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-03T18:07:16.606Z",
+   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
+   "pool": "GATO / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 360381,
+   "volume24hUsd": 3217701,
+   "positionUsd": 12.65,
+   "priceImpactPct": 0.0068,
+   "netEdgePct": -0.7427,
+   "netSol": -0.001004,
+   "verdict": "avaliada"
+  },
+  {
    "ts": "2026-11-03T18:03:59.380Z",
    "token": "npz2FhoufQ7pKqhGpaipYWacrAkidyW2yDpVWSvpump",
    "pool": "DESSA / SOL",
@@ -347,45 +386,6 @@
    "priceImpactPct": 0.0124,
    "netEdgePct": -2.2085,
    "netSol": -0.002995,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-03T17:59:49.680Z",
-   "token": "4nuj5NLHMtQSezfmz6CwBpCRJisFie6F6MxNNz1dpump",
-   "pool": "Ahsoka / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 72267,
-   "volume24hUsd": 2202496,
-   "positionUsd": 12.65,
-   "priceImpactPct": 0.0142,
-   "netEdgePct": -2.1944,
-   "netSol": -0.002976,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-03T17:59:22.346Z",
-   "token": "8muc9DdhqWfAPcvmEebNQCG89bLiwi12T2KtBtzVpump",
-   "pool": "ANONVOYAGE / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 112954,
-   "volume24hUsd": 2560451,
-   "positionUsd": 12.65,
-   "priceImpactPct": 0.0116,
-   "netEdgePct": -1.9494,
-   "netSol": -0.002643,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-03T17:59:20.398Z",
-   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
-   "pool": "GATO / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 350556,
-   "volume24hUsd": 3218894,
-   "positionUsd": 12.65,
-   "priceImpactPct": 0.0049,
-   "netEdgePct": -0.7599,
-   "netSol": -0.00103,
    "verdict": "avaliada"
   }
  ],
