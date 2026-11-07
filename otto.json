@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-07T23:04:24.587Z",
+ "atualizadoEm": "2026-11-07T23:16:52.001Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.021656364,
@@ -8,88 +8,88 @@
   "posicao": null,
   "decisoes": [
    {
-    "ts": "2026-11-07T23:06:24.202Z",
+    "ts": "2026-11-07T23:17:29.114Z",
     "bot": "chefe",
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
    },
    {
-    "ts": "2026-11-07T23:06:24.193Z",
+    "ts": "2026-11-07T23:17:29.075Z",
+    "bot": "tecnico",
+    "acao": "veto",
+    "alvo": "TAOLF / SOL",
+    "motivo": "tecnico: velas indisponiveis (This operation was aborted) — sem leitura, sem entrada"
+   },
+   {
+    "ts": "2026-11-07T23:16:43.850Z",
+    "bot": "rastreador",
+    "acao": "sinal",
+    "alvo": "TAOLF / SOL",
+    "motivo": "1 candidato(s); topo h1 42.5% score 212"
+   },
+   {
+    "ts": "2026-11-07T23:15:03.162Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T23:15:03.154Z",
+    "bot": "tecnico",
+    "acao": "veto",
+    "alvo": "TAOLF / SOL",
+    "motivo": "aula v3: RSI 71 acima de 65 — zona de topo, nao entra"
+   },
+   {
+    "ts": "2026-11-07T23:14:37.115Z",
+    "bot": "rastreador",
+    "acao": "sinal",
+    "alvo": "TAOLF / SOL",
+    "motivo": "1 candidato(s); topo h1 54.9% score 276"
+   },
+   {
+    "ts": "2026-11-07T23:13:12.643Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T23:13:12.633Z",
+    "bot": "tecnico",
+    "acao": "veto",
+    "alvo": "TAOLF / SOL",
+    "motivo": "aula v3: RSI 71 acima de 65 — zona de topo, nao entra"
+   },
+   {
+    "ts": "2026-11-07T23:12:50.453Z",
+    "bot": "rastreador",
+    "acao": "sinal",
+    "alvo": "TAOLF / SOL",
+    "motivo": "1 candidato(s); topo h1 34.8% score 371"
+   },
+   {
+    "ts": "2026-11-07T23:11:29.852Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T23:10:12.817Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T23:10:12.801Z",
     "bot": "tecnico",
     "acao": "veto",
     "alvo": "TAOLF / SOL",
     "motivo": "aula v3: RSI 68 acima de 65 — zona de topo, nao entra"
-   },
-   {
-    "ts": "2026-11-07T23:05:40.594Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "TAOLF / SOL",
-    "motivo": "1 candidato(s); topo h1 44.2% score 226"
-   },
-   {
-    "ts": "2026-11-07T23:04:01.312Z",
-    "bot": "chefe",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T23:04:01.299Z",
-    "bot": "tecnico",
-    "acao": "veto",
-    "alvo": "TAOLF / SOL",
-    "motivo": "tecnico: velas indisponiveis (This operation was aborted) — sem leitura, sem entrada"
-   },
-   {
-    "ts": "2026-11-07T23:03:16.289Z",
-    "bot": "verificador",
-    "acao": "veto",
-    "alvo": "GTA6 / SOL",
-    "motivo": "verificador: FDV/liquidez 37x — liquidez fina pro tamanho"
-   },
-   {
-    "ts": "2026-11-07T23:03:16.275Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "GTA6 / SOL",
-    "motivo": "2 candidato(s); topo h1 11.3% score 672"
-   },
-   {
-    "ts": "2026-11-07T23:01:34.077Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:59:04.068Z",
-    "bot": "chefe",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:59:04.059Z",
-    "bot": "tecnico",
-    "acao": "veto",
-    "alvo": "MAMESUKE / SOL",
-    "motivo": "tecnico: velas indisponiveis (This operation was aborted) — sem leitura, sem entrada"
-   },
-   {
-    "ts": "2026-11-07T22:58:19.038Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "MAMESUKE / SOL",
-    "motivo": "1 candidato(s); topo h1 18.7% score 121"
-   },
-   {
-    "ts": "2026-11-07T22:56:39.022Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
    }
   ],
   "trades": []
