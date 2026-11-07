@@ -297,6 +297,19 @@
  ],
  "ultimasOportunidades": [
   {
+   "ts": "2026-11-07T20:02:48.732Z",
+   "token": "8UQdy5sHMVWUWSHeA5B3ZuuAVNumjSLPXdf19MXcpump",
+   "pool": "COGE / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 262319,
+   "volume24hUsd": 2457123,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0052,
+   "netEdgePct": -0.8044,
+   "netSol": -0.001135,
+   "verdict": "avaliada"
+  },
+  {
    "ts": "2026-11-07T19:52:59.074Z",
    "token": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
    "pool": "STONK / SOL",
@@ -411,19 +424,6 @@
    "priceImpactPct": 0.0076,
    "netEdgePct": -2.3693,
    "netSol": -0.003344,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-07T19:40:02.337Z",
-   "token": "41WpXn15fxQXEGhiKnkqHcoJn14tNXXgmymLKE57pump",
-   "pool": "scamsem / PUMP",
-   "dex": "pumpswap",
-   "liquidityUsd": 72465,
-   "volume24hUsd": 3078127,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.035,
-   "netEdgePct": -5.978,
-   "netSol": -0.008437,
    "verdict": "avaliada"
   }
  ],
