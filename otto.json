@@ -1,5 +1,43 @@
 {
- "atualizadoEm": "2026-11-07T20:44:11.841Z",
+ "atualizadoEm": "2026-11-07T20:55:06.649Z",
+ "mesa": {
+  "ativa": true,
+  "bancaVirtualSol": 0.021656364,
+  "entradasHoje": 0,
+  "gastoHojeUsd": 0,
+  "posicao": null,
+  "decisoes": [
+   {
+    "ts": "2026-11-07T20:53:55.148Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T20:52:25.141Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T20:50:55.137Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T20:49:25.133Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   }
+  ],
+  "trades": []
+ },
  "inicioSimulacao": "2026-11-01T00:41:19.027Z",
  "servicoAtivo": true,
  "bancaPaperUsd": 101.01,
