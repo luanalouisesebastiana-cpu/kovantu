@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-07T22:56:06.554Z",
+ "atualizadoEm": "2026-11-07T23:04:24.587Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.021656364,
@@ -8,84 +8,84 @@
   "posicao": null,
   "decisoes": [
    {
-    "ts": "2026-11-07T22:56:39.022Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:53:22.068Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:51:52.053Z",
+    "ts": "2026-11-07T23:06:24.202Z",
     "bot": "chefe",
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
    },
    {
-    "ts": "2026-11-07T22:51:52.053Z",
+    "ts": "2026-11-07T23:06:24.193Z",
+    "bot": "tecnico",
+    "acao": "veto",
+    "alvo": "TAOLF / SOL",
+    "motivo": "aula v3: RSI 68 acima de 65 — zona de topo, nao entra"
+   },
+   {
+    "ts": "2026-11-07T23:05:40.594Z",
+    "bot": "rastreador",
+    "acao": "sinal",
+    "alvo": "TAOLF / SOL",
+    "motivo": "1 candidato(s); topo h1 44.2% score 226"
+   },
+   {
+    "ts": "2026-11-07T23:04:01.312Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T23:04:01.299Z",
+    "bot": "tecnico",
+    "acao": "veto",
+    "alvo": "TAOLF / SOL",
+    "motivo": "tecnico: velas indisponiveis (This operation was aborted) — sem leitura, sem entrada"
+   },
+   {
+    "ts": "2026-11-07T23:03:16.289Z",
+    "bot": "verificador",
+    "acao": "veto",
+    "alvo": "GTA6 / SOL",
+    "motivo": "verificador: FDV/liquidez 37x — liquidez fina pro tamanho"
+   },
+   {
+    "ts": "2026-11-07T23:03:16.275Z",
+    "bot": "rastreador",
+    "acao": "sinal",
+    "alvo": "GTA6 / SOL",
+    "motivo": "2 candidato(s); topo h1 11.3% score 672"
+   },
+   {
+    "ts": "2026-11-07T23:01:34.077Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T22:59:04.068Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T22:59:04.059Z",
     "bot": "tecnico",
     "acao": "veto",
     "alvo": "MAMESUKE / SOL",
-    "motivo": "aula v3: sem tendencia de alta confirmada (preco/EMA21 e estrutura HH/HL nao batem)"
+    "motivo": "tecnico: velas indisponiveis (This operation was aborted) — sem leitura, sem entrada"
    },
    {
-    "ts": "2026-11-07T22:51:50.558Z",
+    "ts": "2026-11-07T22:58:19.038Z",
     "bot": "rastreador",
     "acao": "sinal",
     "alvo": "MAMESUKE / SOL",
-    "motivo": "1 candidato(s); topo h1 22.6% score 124"
+    "motivo": "1 candidato(s); topo h1 18.7% score 121"
    },
    {
-    "ts": "2026-11-07T22:50:38.363Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:49:08.343Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:47:38.329Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:46:08.312Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:44:38.298Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:43:08.282Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-07T22:41:38.269Z",
+    "ts": "2026-11-07T22:56:39.022Z",
     "bot": "rastreador",
     "acao": "observa",
     "alvo": "-",
