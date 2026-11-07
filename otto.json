@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-07T19:46:38.523Z",
+ "atualizadoEm": "2026-11-07T20:12:32.723Z",
  "inicioSimulacao": "2026-11-01T00:41:19.027Z",
  "servicoAtivo": true,
  "bancaPaperUsd": 101.01,
@@ -7,10 +7,10 @@
  "lucroTotalPaperUsd": 1.01,
  "lucroDoCicloUsd": 1.01,
  "splitsCompletados": 0,
- "oportunidadesAvaliadas": 12840,
+ "oportunidadesAvaliadas": 12844,
  "tradesPaper": 11,
  "melhorEdgePct": 14.51956220559042,
- "edgeMedioPct": -1.6693,
+ "edgeMedioPct": -1.6691,
  "precoSolUsd": 89.47,
  "ultimosTrades": [
   {
