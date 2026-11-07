@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-07T20:55:06.649Z",
+ "atualizadoEm": "2026-11-07T21:03:24.811Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.021656364,
@@ -7,6 +7,55 @@
   "gastoHojeUsd": 0,
   "posicao": null,
   "decisoes": [
+   {
+    "ts": "2026-11-07T21:04:25.216Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T21:02:55.212Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T21:01:25.201Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T20:59:55.192Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T20:58:25.177Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T20:56:55.169Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-07T20:55:25.163Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
    {
     "ts": "2026-11-07T20:53:55.148Z",
     "bot": "rastreador",
