@@ -96,7 +96,7 @@ async function carregar() {
     $('opsReais').textContent = R.executadasTotal ?? 0;
     $('gastoReal').textContent = R.gastoHojeUsd !== null && R.gastoHojeUsd !== undefined ? usd(R.gastoHojeUsd) : '—';
     const reais = R.ultimasOperacoes || [];
-    const rotStatus = { 'executado': '<span class="pos">EXECUTADO</span>', 'executado-atomico': '<span class="pos">EXECUTADO ⚛ ATÔMICO</span>', 'fechamento-manual': '<span class="pos">FECHAMENTO</span>', 'erro': '<span class="neg">ERRO</span>', 'pulado': 'PULADO' };
+    const rotStatus = { 'executado': '<span class="pos">EXECUTADO</span>', 'executado-atomico': '<span class="pos">EXECUTADO ⚛ ATÔMICO</span>', 'executado-momentum': '<span class="pos">EXECUTADO ⚡ MOMENTUM</span>', 'momentum-entrou': 'ENTROU ⚡', 'fechamento-manual': '<span class="pos">FECHAMENTO</span>', 'erro': '<span class="neg">ERRO</span>', 'pulado': 'PULADO' };
     const linkTx = (tx) => tx ? ' <a href="https://solscan.io/tx/' + tx + '" target="_blank" rel="noopener">ver na cadeia</a>' : '';
     $('listaReais').innerHTML = reais.length
       ? '<table><tr><th>Quando</th><th>Par</th><th>Status</th><th>Detalhe</th><th>Transação</th></tr>' +
