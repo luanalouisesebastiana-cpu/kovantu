@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-07T16:24:04.961Z",
+ "atualizadoEm": "2026-11-07T16:37:40.940Z",
  "inicioSimulacao": "2026-11-01T00:41:19.027Z",
  "servicoAtivo": true,
  "bancaPaperUsd": 101.01,
@@ -7,11 +7,11 @@
  "lucroTotalPaperUsd": 1.01,
  "lucroDoCicloUsd": 1.01,
  "splitsCompletados": 0,
- "oportunidadesAvaliadas": 12738,
+ "oportunidadesAvaliadas": 12741,
  "tradesPaper": 11,
  "melhorEdgePct": 14.51956220559042,
- "edgeMedioPct": -1.6726,
- "precoSolUsd": 89.56,
+ "edgeMedioPct": -1.6725,
+ "precoSolUsd": 89.54,
  "ultimosTrades": [
   {
    "ts": "2026-11-07T09:02:45.508Z",
@@ -297,6 +297,45 @@
  ],
  "ultimasOportunidades": [
   {
+   "ts": "2026-11-07T16:37:39.423Z",
+   "token": "8Xg89xT8Ve34sKiYqYuMs46mycREsCA2F362UscRpump",
+   "pool": "GLITCH / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 140028,
+   "volume24hUsd": 368888,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0156,
+   "netEdgePct": -1.764,
+   "netSol": -0.002488,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-07T16:36:15.363Z",
+   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
+   "pool": "GATO / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 380286,
+   "volume24hUsd": 1782148,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0054,
+   "netEdgePct": -0.6527,
+   "netSol": -0.00092,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-07T16:36:05.802Z",
+   "token": "DKtofLM6bhb54GQy5YFSWQjQmGiZqAkjzkQJ1LTopump",
+   "pool": "HODL / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 176343,
+   "volume24hUsd": 3340873,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0038,
+   "netEdgePct": -1.3829,
+   "netSol": -0.00195,
+   "verdict": "avaliada"
+  },
+  {
    "ts": "2026-11-07T16:24:03.857Z",
    "token": "8Xg89xT8Ve34sKiYqYuMs46mycREsCA2F362UscRpump",
    "pool": "GLITCH / SOL",
@@ -386,49 +425,10 @@
    "netEdgePct": -1.7782,
    "netSol": -0.002507,
    "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-07T16:12:20.092Z",
-   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
-   "pool": "GATO / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 382665,
-   "volume24hUsd": 1774672,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.0055,
-   "netEdgePct": -0.7531,
-   "netSol": -0.001062,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-07T16:12:17.196Z",
-   "token": "DKtofLM6bhb54GQy5YFSWQjQmGiZqAkjzkQJ1LTopump",
-   "pool": "HODL / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 173044,
-   "volume24hUsd": 3225460,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.0071,
-   "netEdgePct": -0.9126,
-   "netSol": -0.001287,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-07T16:08:06.037Z",
-   "token": "8Xg89xT8Ve34sKiYqYuMs46mycREsCA2F362UscRpump",
-   "pool": "GLITCH / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 138874,
-   "volume24hUsd": 361615,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.0144,
-   "netEdgePct": -1.7643,
-   "netSol": -0.002487,
-   "verdict": "avaliada"
   }
  ],
  "real": {
-  "saldoSol": 0.029251726,
+  "saldoSol": 0.021656364,
   "gastoHojeUsd": 0.1876747497397904,
   "operacoesHoje": 0,
   "executadasTotal": 15,
