@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-08T19:27:54.319Z",
+ "atualizadoEm": "2026-11-08T19:34:40.053Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.029882672,
@@ -8,88 +8,88 @@
   "posicao": null,
   "decisoes": [
    {
-    "ts": "2026-11-08T19:28:10.312Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T19:26:53.994Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T19:25:19.484Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T19:23:46.424Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T19:22:14.395Z",
+    "ts": "2026-11-08T19:38:17.088Z",
     "bot": "chefe",
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
    },
    {
-    "ts": "2026-11-08T19:22:14.395Z",
-    "bot": "bear",
+    "ts": "2026-11-08T19:38:17.081Z",
+    "bot": "tecnico",
     "acao": "veto",
     "alvo": "GIGAHUG / SOL",
-    "motivo": "bear VETOU: boost pago + objecao tecnica = combinacao classica de distribuicao; pavio superior de 68% — rejeicao aparecendo; liquidez de US$ 62k — saida apertada"
+    "motivo": "tecnico (video): sem tendencia de alta confirmada (preco/EMA21 e estrutura HH/HL nao batem)"
    },
    {
-    "ts": "2026-11-08T19:22:14.394Z",
-    "bot": "tecnico",
-    "acao": "aprova",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "tecnico (video) OK (RSI 45, dist EMA9 -5.0%, tendencia confirmada, sem pullback)"
-   },
-   {
-    "ts": "2026-11-08T19:21:46.230Z",
+    "ts": "2026-11-08T19:37:46.883Z",
     "bot": "rastreador",
     "acao": "sinal",
     "alvo": "GIGAHUG / SOL",
-    "motivo": "1 candidato(s); topo h1 22.4% score 259"
+    "motivo": "1 candidato(s); topo h1 17.9% score 191"
    },
    {
-    "ts": "2026-11-08T19:20:08.074Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T19:18:35.987Z",
+    "ts": "2026-11-08T19:36:08.960Z",
     "bot": "chefe",
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
    },
    {
-    "ts": "2026-11-08T19:18:35.986Z",
+    "ts": "2026-11-08T19:36:08.955Z",
     "bot": "tecnico",
     "acao": "veto",
     "alvo": "GIGAHUG / SOL",
-    "motivo": "tecnico: velas indisponiveis (This operation was aborted) — sem leitura, sem entrada"
+    "motivo": "tecnico (video): sem tendencia de alta confirmada (preco/EMA21 e estrutura HH/HL nao batem)"
    },
    {
-    "ts": "2026-11-08T19:17:50.957Z",
+    "ts": "2026-11-08T19:35:35.713Z",
     "bot": "rastreador",
     "acao": "sinal",
     "alvo": "GIGAHUG / SOL",
-    "motivo": "1 candidato(s); topo h1 20.3% score 188"
+    "motivo": "1 candidato(s); topo h1 14.7% score 156"
+   },
+   {
+    "ts": "2026-11-08T19:33:53.980Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T19:33:53.980Z",
+    "bot": "tecnico",
+    "acao": "veto",
+    "alvo": "GIGAHUG / SOL",
+    "motivo": "tecnico (video): sem tendencia de alta confirmada (preco/EMA21 e estrutura HH/HL nao batem)"
+   },
+   {
+    "ts": "2026-11-08T19:33:24.315Z",
+    "bot": "rastreador",
+    "acao": "sinal",
+    "alvo": "GIGAHUG / SOL",
+    "motivo": "1 candidato(s); topo h1 14.3% score 89"
+   },
+   {
+    "ts": "2026-11-08T19:31:50.682Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T19:31:50.682Z",
+    "bot": "tecnico",
+    "acao": "veto",
+    "alvo": "GIGAHUG / SOL",
+    "motivo": "tecnico (video): sem tendencia de alta confirmada (preco/EMA21 e estrutura HH/HL nao batem)"
+   },
+   {
+    "ts": "2026-11-08T19:31:17.588Z",
+    "bot": "rastreador",
+    "acao": "sinal",
+    "alvo": "GIGAHUG / SOL",
+    "motivo": "1 candidato(s); topo h1 8.7% score 87"
    }
   ],
   "trades": [
@@ -619,7 +619,7 @@
   }
  ],
  "real": {
-  "saldoSol": 0.029251726,
+  "saldoSol": 0.023264114,
   "gastoHojeUsd": 0.1876747497397904,
   "operacoesHoje": 18,
   "executadasTotal": 23,
