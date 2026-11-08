@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-08T17:57:36.753Z",
+ "atualizadoEm": "2026-11-08T18:04:03.763Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.029882672,
@@ -7,6 +7,55 @@
   "gastoHojeUsd": 7.271626451838,
   "posicao": null,
   "decisoes": [
+   {
+    "ts": "2026-11-08T18:08:06.750Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:06:40.316Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:05:09.923Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:03:45.063Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:02:17.083Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:00:48.104Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T17:59:20.174Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
    {
     "ts": "2026-11-08T17:57:50.448Z",
     "bot": "chefe",
@@ -41,55 +90,6 @@
     "acao": "veto",
     "alvo": "ELYSION / SOL",
     "motivo": "tecnico (video): sem tendencia de alta confirmada (preco/EMA21 e estrutura HH/HL nao batem)"
-   },
-   {
-    "ts": "2026-11-08T17:55:18.867Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "ELYSION / SOL",
-    "motivo": "1 candidato(s); topo h1 13.0% score 158"
-   },
-   {
-    "ts": "2026-11-08T17:53:51.733Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:52:29.170Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:51:01.207Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:49:37.559Z",
-    "bot": "chefe",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:49:37.559Z",
-    "bot": "bear",
-    "acao": "veto",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "bear VETOU: boost pago + objecao tecnica = combinacao classica de distribuicao; dist EMA9 8.8% ja esticada; liquidez de US$ 75k — saida apertada"
-   },
-   {
-    "ts": "2026-11-08T17:49:37.559Z",
-    "bot": "tecnico",
-    "acao": "aprova",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "tecnico (video) OK (RSI 63, dist EMA9 8.8%, tendencia confirmada, sem pullback)"
    }
   ],
   "trades": [
@@ -206,7 +206,7 @@
  "tradesPaper": 11,
  "melhorEdgePct": 14.51956220559042,
  "edgeMedioPct": -1.6738,
- "precoSolUsd": 88.99,
+ "precoSolUsd": 89.07,
  "ultimosTrades": [
   {
    "ts": "2026-11-07T09:02:45.508Z",
