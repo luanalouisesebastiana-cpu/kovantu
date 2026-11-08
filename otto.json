@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-08T17:25:25.774Z",
+ "atualizadoEm": "2026-11-08T17:32:11.499Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.029882672,
@@ -8,88 +8,88 @@
   "posicao": null,
   "decisoes": [
    {
-    "ts": "2026-11-08T17:27:48.986Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "1 candidato(s); topo h1 23.7% score 359"
-   },
-   {
-    "ts": "2026-11-08T17:26:24.717Z",
+    "ts": "2026-11-08T17:37:06.317Z",
     "bot": "chefe",
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
    },
    {
-    "ts": "2026-11-08T17:26:24.716Z",
-    "bot": "tecnico",
-    "acao": "veto",
-    "alvo": "COGE / SOL",
-    "motivo": "tecnico (video): preco esticado 13.4% acima da EMA9 — comprar topo"
-   },
-   {
-    "ts": "2026-11-08T17:26:00.529Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "COGE / SOL",
-    "motivo": "1 candidato(s); topo h1 21.1% score 128"
-   },
-   {
-    "ts": "2026-11-08T17:24:36.350Z",
-    "bot": "chefe",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:24:36.350Z",
+    "ts": "2026-11-08T17:37:06.317Z",
     "bot": "bear",
     "acao": "veto",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "bear VETOU: boost pago + objecao tecnica = combinacao classica de distribuicao; volume da retomada abaixo da media; liquidez de US$ 71k — saida apertada"
+    "alvo": "COGE / SOL",
+    "motivo": "bear VETOU: boost pago + objecao tecnica = combinacao classica de distribuicao; dist EMA9 9.3% ja esticada; liquidez de US$ 81k — saida apertada"
    },
    {
-    "ts": "2026-11-08T17:24:36.349Z",
+    "ts": "2026-11-08T17:37:06.316Z",
     "bot": "tecnico",
     "acao": "aprova",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "tecnico (video) OK (RSI 54, dist EMA9 6.1%, tendencia confirmada, sem pullback)"
+    "alvo": "COGE / SOL",
+    "motivo": "tecnico (video) OK (RSI 63, dist EMA9 9.3%, tendencia confirmada, sem pullback)"
    },
    {
-    "ts": "2026-11-08T17:24:12.011Z",
+    "ts": "2026-11-08T17:36:36.014Z",
     "bot": "rastreador",
     "acao": "sinal",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "1 candidato(s); topo h1 14.0% score 225"
+    "alvo": "COGE / SOL",
+    "motivo": "1 candidato(s); topo h1 23.3% score 179"
    },
    {
-    "ts": "2026-11-08T17:22:43.878Z",
+    "ts": "2026-11-08T17:35:10.670Z",
     "bot": "chefe",
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
    },
    {
-    "ts": "2026-11-08T17:22:43.878Z",
+    "ts": "2026-11-08T17:35:10.670Z",
     "bot": "bear",
     "acao": "veto",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "bear VETOU: m5 vertical de 13% — comprar topo; boost pago + objecao tecnica = combinacao classica de distribuicao; volume da retomada abaixo da media; liquidez de US$ 73k — saida apertada"
+    "alvo": "COGE / SOL",
+    "motivo": "bear VETOU: boost pago + objecao tecnica = combinacao classica de distribuicao; dist EMA9 9.3% ja esticada; liquidez de US$ 81k — saida apertada"
    },
    {
-    "ts": "2026-11-08T17:22:43.878Z",
+    "ts": "2026-11-08T17:35:10.669Z",
     "bot": "tecnico",
     "acao": "aprova",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "tecnico (video) OK (RSI 54, dist EMA9 6.1%, tendencia confirmada, sem pullback)"
+    "alvo": "COGE / SOL",
+    "motivo": "tecnico (video) OK (RSI 63, dist EMA9 9.3%, tendencia confirmada, sem pullback)"
    },
    {
-    "ts": "2026-11-08T17:22:33.601Z",
+    "ts": "2026-11-08T17:34:43.821Z",
     "bot": "rastreador",
     "acao": "sinal",
-    "alvo": "GIGAHUG / SOL",
-    "motivo": "1 candidato(s); topo h1 29.0% score 232"
+    "alvo": "COGE / SOL",
+    "motivo": "1 candidato(s); topo h1 20.8% score 160"
+   },
+   {
+    "ts": "2026-11-08T17:33:20.178Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T17:31:53.257Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T17:31:53.257Z",
+    "bot": "bear",
+    "acao": "veto",
+    "alvo": "COGE / SOL",
+    "motivo": "bear VETOU: m5 vertical de 12% — comprar topo; boost pago + objecao tecnica = combinacao classica de distribuicao; liquidez de US$ 80k — saida apertada"
+   },
+   {
+    "ts": "2026-11-08T17:31:53.257Z",
+    "bot": "tecnico",
+    "acao": "aprova",
+    "alvo": "COGE / SOL",
+    "motivo": "tecnico (video) OK (RSI 59, dist EMA9 6.7%, tendencia confirmada, sem pullback)"
    }
   ],
   "trades": [
@@ -621,7 +621,7 @@
   }
  ],
  "real": {
-  "saldoSol": 0.023264114,
+  "saldoSol": 0.029251726,
   "gastoHojeUsd": 0.1876747497397904,
   "operacoesHoje": 18,
   "executadasTotal": 23,
