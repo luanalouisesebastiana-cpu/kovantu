@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-08T07:27:43.789Z",
+ "atualizadoEm": "2026-11-08T07:40:14.205Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.022955393,
@@ -8,84 +8,84 @@
   "posicao": null,
   "decisoes": [
    {
-    "ts": "2026-11-08T07:30:44.223Z",
+    "ts": "2026-11-08T07:40:12.251Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T07:39:08.415Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T07:38:03.679Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T07:37:00.265Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T07:37:00.264Z",
     "bot": "verificador",
     "acao": "veto",
     "alvo": "GTA6 / SOL",
-    "motivo": "verificador: FDV/liquidez 47x — liquidez fina pro tamanho"
+    "motivo": "verificador: FDV/liquidez 44x — liquidez fina pro tamanho"
    },
    {
-    "ts": "2026-11-08T07:30:44.195Z",
+    "ts": "2026-11-08T07:37:00.256Z",
     "bot": "rastreador",
     "acao": "sinal",
     "alvo": "GTA6 / SOL",
-    "motivo": "2 candidato(s); topo h1 14.0% score 250"
+    "motivo": "1 candidato(s); topo h1 9.5% score 119"
    },
    {
-    "ts": "2026-11-08T07:27:07.365Z",
+    "ts": "2026-11-08T07:35:57.263Z",
+    "bot": "chefe",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T07:35:57.263Z",
+    "bot": "verificador",
+    "acao": "veto",
+    "alvo": "GTA6 / SOL",
+    "motivo": "verificador: FDV/liquidez 44x — liquidez fina pro tamanho"
+   },
+   {
+    "ts": "2026-11-08T07:35:57.258Z",
+    "bot": "rastreador",
+    "acao": "sinal",
+    "alvo": "GTA6 / SOL",
+    "motivo": "1 candidato(s); topo h1 9.5% score 119"
+   },
+   {
+    "ts": "2026-11-08T07:34:54.414Z",
     "bot": "rastreador",
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato passou nos filtros neste ciclo"
    },
    {
-    "ts": "2026-11-08T07:25:57.838Z",
+    "ts": "2026-11-08T07:33:50.698Z",
     "bot": "rastreador",
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato passou nos filtros neste ciclo"
    },
    {
-    "ts": "2026-11-08T07:24:41.030Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T07:23:31.262Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T07:22:20.030Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T07:21:07.423Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T07:19:59.827Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T07:18:47.768Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T07:17:37.304Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T07:16:28.125Z",
+    "ts": "2026-11-08T07:32:47.461Z",
     "bot": "rastreador",
     "acao": "observa",
     "alvo": "-",
@@ -177,11 +177,11 @@
  "lucroTotalPaperUsd": 1.01,
  "lucroDoCicloUsd": 1.01,
  "splitsCompletados": 0,
- "oportunidadesAvaliadas": 13709,
+ "oportunidadesAvaliadas": 13733,
  "tradesPaper": 11,
  "melhorEdgePct": 14.51956220559042,
- "edgeMedioPct": -1.6596,
- "precoSolUsd": 88.98,
+ "edgeMedioPct": -1.6593,
+ "precoSolUsd": 89.02,
  "ultimosTrades": [
   {
    "ts": "2026-11-07T09:02:45.508Z",
@@ -465,133 +465,133 @@
  ],
  "ultimasOportunidades": [
   {
-   "ts": "2026-11-08T07:30:43.873Z",
-   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
-   "pool": "GATO / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 354276,
-   "volume24hUsd": 1837641,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.0061,
-   "netEdgePct": -0.7531,
-   "netSol": -0.001069,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-08T07:30:42.447Z",
-   "token": "8UQdy5sHMVWUWSHeA5B3ZuuAVNumjSLPXdf19MXcpump",
-   "pool": "COGE / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 89302,
-   "volume24hUsd": 2675557,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.0179,
-   "netEdgePct": -2.0769,
-   "netSol": -0.002949,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-08T07:27:42.685Z",
+   "ts": "2026-11-08T07:40:13.097Z",
    "token": "GexThZHgaswpAQ7Fi8QrHFubjPimUNSYhJiAA7XZpump",
    "pool": "WASTED / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 90301,
-   "volume24hUsd": 277049,
+   "liquidityUsd": 89588,
+   "volume24hUsd": 277031,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0094,
-   "netEdgePct": -1.1707,
-   "netSol": -0.001661,
+   "priceImpactPct": 0.0186,
+   "netEdgePct": -2.1746,
+   "netSol": -0.003084,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T07:27:26.462Z",
+   "ts": "2026-11-08T07:40:04.906Z",
    "token": "8Xg89xT8Ve34sKiYqYuMs46mycREsCA2F362UscRpump",
    "pool": "GLITCH / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 121102,
-   "volume24hUsd": 454027,
+   "liquidityUsd": 121296,
+   "volume24hUsd": 457514,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0171,
-   "netEdgePct": -1.8669,
-   "netSol": -0.002649,
+   "priceImpactPct": 0.0145,
+   "netEdgePct": -1.8667,
+   "netSol": -0.002648,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T07:27:24.673Z",
+   "ts": "2026-11-08T07:40:03.227Z",
    "token": "4kjruqGHDsSqkMdFfCjV7Vb62HPFhtXyWc2t6JpQzDnz",
    "pool": "GTA6 / SOL",
    "dex": "meteora",
-   "liquidityUsd": 106609,
-   "volume24hUsd": 1232010,
+   "liquidityUsd": 107010,
+   "volume24hUsd": 1262129,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0059,
-   "netEdgePct": -0.8104,
-   "netSol": -0.00115,
+   "priceImpactPct": 0.0037,
+   "netEdgePct": -0.5406,
+   "netSol": -0.000767,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T07:27:22.608Z",
+   "ts": "2026-11-08T07:40:01.560Z",
    "token": "BWh8q5etuPwekJ2JEDkbMxMQWy4FysoJ8LEwE3rFpump",
    "pool": "GIGAHUG / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 84379,
-   "volume24hUsd": 1743894,
+   "liquidityUsd": 84763,
+   "volume24hUsd": 1758574,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0187,
-   "netEdgePct": -1.7387,
-   "netSol": -0.002467,
+   "priceImpactPct": 0.0122,
+   "netEdgePct": -0.5648,
+   "netSol": -0.000801,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T07:26:57.037Z",
+   "ts": "2026-11-08T07:39:45.909Z",
    "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
    "pool": "GATO / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 354953,
-   "volume24hUsd": 1837685,
+   "liquidityUsd": 356198,
+   "volume24hUsd": 1835848,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0055,
+   "priceImpactPct": 0.0063,
    "netEdgePct": -0.7532,
-   "netSol": -0.001069,
+   "netSol": -0.001068,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T07:26:55.175Z",
+   "ts": "2026-11-08T07:39:44.116Z",
    "token": "8UQdy5sHMVWUWSHeA5B3ZuuAVNumjSLPXdf19MXcpump",
    "pool": "COGE / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 88711,
-   "volume24hUsd": 2683349,
+   "liquidityUsd": 90426,
+   "volume24hUsd": 2662023,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0187,
-   "netEdgePct": -2.0771,
-   "netSol": -0.002947,
+   "priceImpactPct": 0.0072,
+   "netEdgePct": -2.075,
+   "netSol": -0.002943,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T07:24:03.142Z",
+   "ts": "2026-11-08T07:37:07.785Z",
    "token": "GexThZHgaswpAQ7Fi8QrHFubjPimUNSYhJiAA7XZpump",
    "pool": "WASTED / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 89361,
-   "volume24hUsd": 276960,
+   "liquidityUsd": 89598,
+   "volume24hUsd": 277056,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0181,
+   "priceImpactPct": 0.0201,
    "netEdgePct": -2.1747,
-   "netSol": -0.003086,
+   "netSol": -0.003084,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T07:23:42.189Z",
+   "ts": "2026-11-08T07:37:06.090Z",
    "token": "8Xg89xT8Ve34sKiYqYuMs46mycREsCA2F362UscRpump",
    "pool": "GLITCH / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 119858,
-   "volume24hUsd": 451235,
+   "liquidityUsd": 121561,
+   "volume24hUsd": 457425,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0107,
-   "netEdgePct": -1.867,
-   "netSol": -0.002649,
+   "priceImpactPct": 0.0167,
+   "netEdgePct": -1.8665,
+   "netSol": -0.002647,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-08T07:36:57.756Z",
+   "token": "4kjruqGHDsSqkMdFfCjV7Vb62HPFhtXyWc2t6JpQzDnz",
+   "pool": "GTA6 / SOL",
+   "dex": "meteora",
+   "liquidityUsd": 98087,
+   "volume24hUsd": 1262492,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0039,
+   "netEdgePct": -0.7227,
+   "netSol": -0.001025,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-08T07:36:55.672Z",
+   "token": "BWh8q5etuPwekJ2JEDkbMxMQWy4FysoJ8LEwE3rFpump",
+   "pool": "GIGAHUG / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 88343,
+   "volume24hUsd": 1755357,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0115,
+   "netEdgePct": -2.2611,
+   "netSol": -0.003207,
    "verdict": "avaliada"
   }
  ],
