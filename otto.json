@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-08T18:04:03.763Z",
+ "atualizadoEm": "2026-11-08T18:17:35.225Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.029882672,
@@ -7,6 +7,48 @@
   "gastoHojeUsd": 7.271626451838,
   "posicao": null,
   "decisoes": [
+   {
+    "ts": "2026-11-08T18:16:57.694Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:15:28.433Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:13:58.345Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:12:30.894Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:11:03.272Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T18:09:35.958Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
    {
     "ts": "2026-11-08T18:08:06.750Z",
     "bot": "rastreador",
@@ -48,48 +90,6 @@
     "acao": "observa",
     "alvo": "-",
     "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:59:20.174Z",
-    "bot": "rastreador",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato passou nos filtros neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:57:50.448Z",
-    "bot": "chefe",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:57:50.447Z",
-    "bot": "tecnico",
-    "acao": "veto",
-    "alvo": "ELYSION / SOL",
-    "motivo": "tecnico (video): sem tendencia de alta confirmada (preco/EMA21 e estrutura HH/HL nao batem)"
-   },
-   {
-    "ts": "2026-11-08T17:57:15.666Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "ELYSION / SOL",
-    "motivo": "1 candidato(s); topo h1 9.2% score 113"
-   },
-   {
-    "ts": "2026-11-08T17:55:44.857Z",
-    "bot": "chefe",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T17:55:44.857Z",
-    "bot": "tecnico",
-    "acao": "veto",
-    "alvo": "ELYSION / SOL",
-    "motivo": "tecnico (video): sem tendencia de alta confirmada (preco/EMA21 e estrutura HH/HL nao batem)"
    }
   ],
   "trades": [
