@@ -1,5 +1,5 @@
 {
- "atualizadoEm": "2026-11-08T13:12:46.108Z",
+ "atualizadoEm": "2026-11-08T13:23:35.893Z",
  "mesa": {
   "ativa": true,
   "bancaVirtualSol": 0.024912718,
@@ -7,6 +7,69 @@
   "gastoHojeUsd": 4.259722411038,
   "posicao": null,
   "decisoes": [
+   {
+    "ts": "2026-11-08T13:25:51.997Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T13:24:36.710Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T13:23:18.635Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T13:22:10.793Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T13:20:54.234Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T13:19:44.087Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T13:18:32.485Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T13:17:22.715Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
+   {
+    "ts": "2026-11-08T13:16:09.805Z",
+    "bot": "rastreador",
+    "acao": "observa",
+    "alvo": "-",
+    "motivo": "nenhum candidato passou nos filtros neste ciclo"
+   },
    {
     "ts": "2026-11-08T13:14:58.511Z",
     "bot": "chefe",
@@ -27,69 +90,6 @@
     "acao": "aprova",
     "alvo": "COGE / SOL",
     "motivo": "tecnico (video) OK (RSI 46, dist EMA9 -8.0%, tendencia confirmada, sem pullback)"
-   },
-   {
-    "ts": "2026-11-08T13:14:49.293Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "COGE / SOL",
-    "motivo": "1 candidato(s); topo h1 13.3% score 131"
-   },
-   {
-    "ts": "2026-11-08T13:13:38.490Z",
-    "bot": "chefe",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T13:13:38.489Z",
-    "bot": "bear",
-    "acao": "veto",
-    "alvo": "COGE / SOL",
-    "motivo": "bear VETOU: boost pago + objecao tecnica = combinacao classica de distribuicao; liquidez de US$ 82k — saida apertada"
-   },
-   {
-    "ts": "2026-11-08T13:13:38.439Z",
-    "bot": "tecnico",
-    "acao": "aprova",
-    "alvo": "COGE / SOL",
-    "motivo": "tecnico (video) OK (RSI 46, dist EMA9 -8.0%, tendencia confirmada, sem pullback)"
-   },
-   {
-    "ts": "2026-11-08T13:13:27.993Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "COGE / SOL",
-    "motivo": "1 candidato(s); topo h1 13.9% score 111"
-   },
-   {
-    "ts": "2026-11-08T13:12:16.616Z",
-    "bot": "chefe",
-    "acao": "observa",
-    "alvo": "-",
-    "motivo": "nenhum candidato sobreviveu a mesa neste ciclo"
-   },
-   {
-    "ts": "2026-11-08T13:12:16.615Z",
-    "bot": "bear",
-    "acao": "veto",
-    "alvo": "COGE / SOL",
-    "motivo": "bear VETOU: m5 vertical de 11% — comprar topo; boost pago + objecao tecnica = combinacao classica de distribuicao; liquidez de US$ 83k — saida apertada"
-   },
-   {
-    "ts": "2026-11-08T13:12:16.606Z",
-    "bot": "tecnico",
-    "acao": "aprova",
-    "alvo": "COGE / SOL",
-    "motivo": "tecnico (video) OK (RSI 46, dist EMA9 -8.0%, tendencia confirmada, sem pullback)"
-   },
-   {
-    "ts": "2026-11-08T13:12:06.603Z",
-    "bot": "rastreador",
-    "acao": "sinal",
-    "alvo": "COGE / SOL",
-    "motivo": "1 candidato(s); topo h1 19.1% score 152"
    }
   ],
   "trades": [
@@ -202,11 +202,11 @@
  "lucroTotalPaperUsd": 1.01,
  "lucroDoCicloUsd": 1.01,
  "splitsCompletados": 0,
- "oportunidadesAvaliadas": 14292,
+ "oportunidadesAvaliadas": 14310,
  "tradesPaper": 11,
  "melhorEdgePct": 14.51956220559042,
- "edgeMedioPct": -1.6683,
- "precoSolUsd": 89.57,
+ "edgeMedioPct": -1.6688,
+ "precoSolUsd": 89.66,
  "ultimosTrades": [
   {
    "ts": "2026-11-07T09:02:45.508Z",
@@ -490,133 +490,133 @@
  ],
  "ultimasOportunidades": [
   {
-   "ts": "2026-11-08T13:15:33.397Z",
-   "token": "8UQdy5sHMVWUWSHeA5B3ZuuAVNumjSLPXdf19MXcpump",
-   "pool": "COGE / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 81677,
-   "volume24hUsd": 2283705,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.0121,
-   "netEdgePct": -2.0831,
-   "netSol": -0.002936,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-08T13:15:30.744Z",
-   "token": "BWh8q5etuPwekJ2JEDkbMxMQWy4FysoJ8LEwE3rFpump",
-   "pool": "GIGAHUG / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 81171,
-   "volume24hUsd": 2341349,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.0104,
-   "netEdgePct": -2.0858,
-   "netSol": -0.00294,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-08T13:12:39.087Z",
+   "ts": "2026-11-08T13:23:34.791Z",
    "token": "GexThZHgaswpAQ7Fi8QrHFubjPimUNSYhJiAA7XZpump",
    "pool": "WASTED / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 89850,
-   "volume24hUsd": 275537,
+   "liquidityUsd": 90833,
+   "volume24hUsd": 275811,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0109,
-   "netEdgePct": -1.2476,
-   "netSol": -0.001759,
+   "priceImpactPct": 0.0219,
+   "netEdgePct": -2.1756,
+   "netSol": -0.003064,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T13:12:22.321Z",
+   "ts": "2026-11-08T13:23:19.986Z",
    "token": "4HqpRjsRS8pjdWa2B3mBAmNNxTXUeJ9L6AfFnRgipump",
    "pool": "HOPE / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 141259,
-   "volume24hUsd": 319325,
+   "liquidityUsd": 141315,
+   "volume24hUsd": 319335,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0259,
-   "netEdgePct": -3.7471,
-   "netSol": -0.005282,
+   "priceImpactPct": 0.0288,
+   "netEdgePct": -3.7443,
+   "netSol": -0.005273,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T13:12:19.196Z",
+   "ts": "2026-11-08T13:23:17.892Z",
    "token": "8Xg89xT8Ve34sKiYqYuMs46mycREsCA2F362UscRpump",
    "pool": "GLITCH / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 122392,
-   "volume24hUsd": 475719,
+   "liquidityUsd": 125974,
+   "volume24hUsd": 477562,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0171,
-   "netEdgePct": -1.8674,
-   "netSol": -0.002632,
+   "priceImpactPct": 0.0156,
+   "netEdgePct": -1.8662,
+   "netSol": -0.002628,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T13:12:16.892Z",
+   "ts": "2026-11-08T13:23:15.804Z",
    "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
    "pool": "GATO / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 363705,
-   "volume24hUsd": 1743589,
+   "liquidityUsd": 362800,
+   "volume24hUsd": 1746509,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0016,
-   "netEdgePct": -0.5231,
-   "netSol": -0.000737,
+   "priceImpactPct": 0.0057,
+   "netEdgePct": -0.8736,
+   "netSol": -0.00123,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T13:11:48.209Z",
+   "ts": "2026-11-08T13:22:56.211Z",
    "token": "8UQdy5sHMVWUWSHeA5B3ZuuAVNumjSLPXdf19MXcpump",
    "pool": "COGE / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 81807,
-   "volume24hUsd": 2283627,
+   "liquidityUsd": 79072,
+   "volume24hUsd": 2281375,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.0116,
-   "netEdgePct": -2.0949,
-   "netSol": -0.002953,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-08T13:11:46.016Z",
-   "token": "BWh8q5etuPwekJ2JEDkbMxMQWy4FysoJ8LEwE3rFpump",
-   "pool": "GIGAHUG / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 78540,
-   "volume24hUsd": 2339031,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.0195,
-   "netEdgePct": -2.085,
-   "netSol": -0.002939,
-   "verdict": "avaliada"
-  },
-  {
-   "ts": "2026-11-08T13:08:51.885Z",
-   "token": "GexThZHgaswpAQ7Fi8QrHFubjPimUNSYhJiAA7XZpump",
-   "pool": "WASTED / SOL",
-   "dex": "pumpswap",
-   "liquidityUsd": 90686,
-   "volume24hUsd": 275566,
-   "positionUsd": 12.63,
-   "priceImpactPct": 0.02,
-   "netEdgePct": -2.1752,
+   "priceImpactPct": 0.0169,
+   "netEdgePct": -2.1817,
    "netSol": -0.003072,
    "verdict": "avaliada"
   },
   {
-   "ts": "2026-11-08T13:08:36.510Z",
+   "ts": "2026-11-08T13:22:54.030Z",
+   "token": "BWh8q5etuPwekJ2JEDkbMxMQWy4FysoJ8LEwE3rFpump",
+   "pool": "GIGAHUG / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 77676,
+   "volume24hUsd": 2349168,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0125,
+   "netEdgePct": -2.1835,
+   "netSol": -0.003075,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-08T13:20:08.297Z",
+   "token": "GexThZHgaswpAQ7Fi8QrHFubjPimUNSYhJiAA7XZpump",
+   "pool": "WASTED / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 90693,
+   "volume24hUsd": 275704,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0198,
+   "netEdgePct": -2.1755,
+   "netSol": -0.003064,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-08T13:20:06.088Z",
    "token": "4HqpRjsRS8pjdWa2B3mBAmNNxTXUeJ9L6AfFnRgipump",
    "pool": "HOPE / SOL",
    "dex": "pumpswap",
-   "liquidityUsd": 142340,
-   "volume24hUsd": 319282,
+   "liquidityUsd": 141457,
+   "volume24hUsd": 319329,
    "positionUsd": 12.63,
-   "priceImpactPct": 0.025,
-   "netEdgePct": -3.7489,
-   "netSol": -0.005294,
+   "priceImpactPct": 0.0295,
+   "netEdgePct": -3.2977,
+   "netSol": -0.004644,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-08T13:19:45.488Z",
+   "token": "8Xg89xT8Ve34sKiYqYuMs46mycREsCA2F362UscRpump",
+   "pool": "GLITCH / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 127437,
+   "volume24hUsd": 478094,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0164,
+   "netEdgePct": -1.866,
+   "netSol": -0.002628,
+   "verdict": "avaliada"
+  },
+  {
+   "ts": "2026-11-08T13:19:43.291Z",
+   "token": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
+   "pool": "GATO / SOL",
+   "dex": "pumpswap",
+   "liquidityUsd": 361097,
+   "volume24hUsd": 1745521,
+   "positionUsd": 12.63,
+   "priceImpactPct": 0.0051,
+   "netEdgePct": -0.817,
+   "netSol": -0.00115,
    "verdict": "avaliada"
   }
  ],
