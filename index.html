@@ -1606,12 +1606,13 @@ const DEPTS = [
  { id:'apps', name:'Fábrica de Apps', emoji:'📱', color:0x4f8cff, css:'#2f6de0', bubble:['📱','⚙️','🔧','🚀'] },
  { id:'farejador', name:'Prospecção', emoji:'🔍', color:0x2ee6a8, css:'#0aa873', bubble:['🔍','🐽','💎','📡'] },
  { id:'trader', name:'Trader', emoji:'📈', color:0x00e065, css:'#009e57', bubble:['📈','🕯️','💹','🪙'] },
+ { id:'fabrica', name:'Fábrica de Software', emoji:'🏭', color:0x818cf8, css:'#6366f1', bubble:['🏭','🤖','🧑‍💻','✅'] },
 ];
 /* rótulo CURTO da placa de porta: nome completo não cabe legível no vão da
    porta (correção de legibilidade 31/out) — a placa interna mantém o nome todo */
 const DOOR_LABEL = { diretoria:'Diretoria', abuelo:'Abuelo', hotmart:'Hotmart', stock:'Stock IA',
   blogs:'Blogs', trafego:'Tráfego Pago', arcade:'Games', youtube:'YouTube Dark', kdp:'KDP',
-  apps:'Apps', farejador:'Prospecção', trader:'Trader' };
+  apps:'Apps', farejador:'Prospecção', trader:'Trader', fabrica:'Software' };
 
 /* ============ LAYOUT DA TORRE (1 unidade = 1 bloco) ============
    Prédio: paredes externas em x=-34 / x=33, z=-30 (fundo) / z=21 (frente).
@@ -1633,6 +1634,7 @@ const LAYOUT = {  // retângulos INTERIORES de cada departamento [x0, x1, z0, z1
   farejador: { f:2, r:[-33,-10, -3, 21] },
   kdp:       { f:2, r:[  9, 32, -3, 21] },
   trader:    { f:3, r:[-33,-10,-29, 21] },
+  fabrica:   { f:3, r:[  9, 32,-29, 21] },
 };
 DEPTS.forEach(d=>{
   const lay = LAYOUT[d.id], [x0, x1, z0, z1] = lay.r;
@@ -1652,7 +1654,7 @@ function doorZOf(d){ return d.doorZ != null ? d.doorZ : (d.floor === 0 ? 1.5 : (
    polling (30s): se o versao.json for mais novo, ela se recarrega uma
    única vez pra URL ?v=<versão nova> — URL diferente fura o cache do
    navegador, que é o que servia a cópia velha no celular do dono. */
-const PAGE_VERSION = '2026-11-02.1';
+const PAGE_VERSION = '2026-11-09.1';
 
 /* ============ EQUIPE AO VIVO — dados fora do HTML (equipe.json) ============
    A página monta o elenco a partir dos dados: pessoa nova no JSON aparece
@@ -1661,11 +1663,10 @@ const PAGE_VERSION = '2026-11-02.1';
    embutida abaixo e o selo mostra MODO ARQUIVO. */
 const EQUIPE_EMBUTIDA = {
  "empresa": "Kovantu Digital",
- "atualizadoEm": "2026-11-02T08:22:08-03:00",
+ "atualizadoEm": "2026-11-09T16:43:02-03:00",
  "equipe": [
   {
    "id": "charlis",
-   "casa": 1,
    "nome": "Charlis",
    "cargo": "Dono / CEO",
    "depto": "diretoria",
@@ -1688,11 +1689,11 @@ const EQUIPE_EMBUTIDA = {
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "uniforme": "blazer-preto",
-   "genero": "M"
+   "genero": "M",
+   "casa": 1
   },
   {
    "id": "titiku",
-   "casa": 2,
    "nome": "Titiku",
    "cargo": "Gerente-geral",
    "depto": "diretoria",
@@ -1716,11 +1717,11 @@ const EQUIPE_EMBUTIDA = {
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "comportamento": "empe",
    "uniforme": "blazer-cinza",
-   "genero": "M"
+   "genero": "M",
+   "casa": 2
   },
   {
    "id": "baltazar",
-   "casa": 3,
    "nome": "Baltazar",
    "cargo": "O escriba",
    "depto": "abuelo",
@@ -1742,11 +1743,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 3
   },
   {
    "id": "valdo",
-   "casa": 4,
    "nome": "Valdomiro “Valdo”",
    "cargo": "O caixa",
    "depto": "hotmart",
@@ -1768,11 +1769,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 4
   },
   {
    "id": "assistente-hotmart",
-   "casa": 5,
    "nome": "Bianca",
    "cargo": "Assistente de Vendas",
    "depto": "hotmart",
@@ -1795,11 +1796,11 @@ const EQUIPE_EMBUTIDA = {
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "F",
-   "cabelo": "coque"
+   "cabelo": "coque",
+   "casa": 5
   },
   {
    "id": "iris",
-   "casa": 6,
    "nome": "Íris",
    "cargo": "O olho",
    "depto": "stock",
@@ -1822,11 +1823,11 @@ const EQUIPE_EMBUTIDA = {
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "F",
-   "cabelo": "longo"
+   "cabelo": "longo",
+   "casa": 6
   },
   {
    "id": "plinio",
-   "casa": 7,
    "nome": "Plínio",
    "cargo": "O cronista",
    "depto": "blogs",
@@ -1848,11 +1849,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 7
   },
   {
    "id": "assistente-blogs",
-   "casa": 8,
    "nome": "Marina",
    "cargo": "Redatora Assistente",
    "depto": "blogs",
@@ -1875,11 +1876,11 @@ const EQUIPE_EMBUTIDA = {
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "F",
-   "cabelo": "longo"
+   "cabelo": "longo",
+   "casa": 8
   },
   {
    "id": "vetor",
-   "casa": 9,
    "nome": "VETOR",
    "cargo": "O gestor de tráfego",
    "depto": "trafego",
@@ -1901,11 +1902,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-30",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 9
   },
   {
    "id": "fliper",
-   "casa": 10,
    "nome": "Fliper",
    "cargo": "O fliperama",
    "depto": "arcade",
@@ -1927,11 +1928,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 10
   },
   {
    "id": "otavio",
-   "casa": 11,
    "nome": "Otávio",
    "cargo": "O diretor dark",
    "depto": "youtube",
@@ -1953,11 +1954,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 11
   },
   {
    "id": "severo",
-   "casa": 12,
    "nome": "Severo",
    "cargo": "Pesquisa",
    "depto": "youtube",
@@ -1979,11 +1980,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 12
   },
   {
    "id": "rui",
-   "casa": 13,
    "nome": "Rui",
    "cargo": "Roteiro",
    "depto": "youtube",
@@ -2005,11 +2006,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 13
   },
   {
    "id": "tito",
-   "casa": 14,
    "nome": "Tito",
    "cargo": "Títulos",
    "depto": "youtube",
@@ -2031,11 +2032,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-28",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 14
   },
   {
    "id": "miro",
-   "casa": 15,
    "nome": "Miro",
    "cargo": "Thumbnails",
    "depto": "youtube",
@@ -2057,11 +2058,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-28",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 15
   },
   {
    "id": "beto",
-   "casa": 16,
    "nome": "Beto",
    "cargo": "Imagens",
    "depto": "youtube",
@@ -2083,11 +2084,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-28",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 16
   },
   {
    "id": "tom",
-   "casa": 17,
    "nome": "Tom",
    "cargo": "Áudio e voz",
    "depto": "youtube",
@@ -2109,11 +2110,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-28",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 17
   },
   {
    "id": "vitor",
-   "casa": 18,
    "nome": "Vítor",
    "cargo": "Vídeo e stock",
    "depto": "youtube",
@@ -2135,11 +2136,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-28",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 18
   },
   {
    "id": "edson",
-   "casa": 19,
    "nome": "Edson",
    "cargo": "Edição",
    "depto": "youtube",
@@ -2161,11 +2162,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-28",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 19
   },
   {
    "id": "decio",
-   "casa": 20,
    "nome": "Décio",
    "cargo": "Descrição e SEO",
    "depto": "youtube",
@@ -2187,11 +2188,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-28",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 20
   },
   {
    "id": "teodoro",
-   "casa": 21,
    "nome": "Teodoro",
    "cargo": "O editor",
    "depto": "kdp",
@@ -2214,11 +2215,11 @@ const EQUIPE_EMBUTIDA = {
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "comportamento": "dormindo",
-   "genero": "M"
+   "genero": "M",
+   "casa": 21
   },
   {
    "id": "tonhao",
-   "casa": 22,
    "nome": "Tonhão",
    "cargo": "O montador",
    "depto": "apps",
@@ -2240,11 +2241,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 22
   },
   {
    "id": "assistente-apps",
-   "casa": 23,
    "nome": "Júlia",
    "cargo": "Assistente de Apps",
    "depto": "apps",
@@ -2267,11 +2268,11 @@ const EQUIPE_EMBUTIDA = {
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
    "genero": "F",
-   "cabelo": "rabo"
+   "cabelo": "rabo",
+   "casa": 23
   },
   {
    "id": "rex",
-   "casa": 24,
    "nome": "Rex",
    "cargo": "O farejador",
    "depto": "farejador",
@@ -2293,11 +2294,11 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-27",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 24
   },
   {
    "id": "otto",
-   "casa": 25,
    "nome": "Otto",
    "cargo": "O trader",
    "depto": "trader",
@@ -2319,7 +2320,164 @@ const EQUIPE_EMBUTIDA = {
    ],
    "desde": "2026-10-31",
    "atualizadoEm": "2026-11-02T08:22:08-03:00",
-   "genero": "M"
+   "genero": "M",
+   "casa": 25
+  },
+  {
+   "id": "anselmo",
+   "nome": "Anselmo",
+   "cargo": "O designer",
+   "depto": "design",
+   "status": "ativo",
+   "fazendo": "Primeira missão no ar: auditoria visual de todas as frentes da casa e o Manual Visual da Kovantu (paleta, fontes e gabaritos) pra aprovação do CEO. O padrão visual da empresa inteira agora é dele.",
+   "tarefas": [
+    {
+     "nome": "Auditoria visual das frentes",
+     "progresso": 15
+    },
+    {
+     "nome": "Manual Visual da Kovantu",
+     "progresso": 10
+    },
+    {
+     "nome": "Gabaritos por frente/plataforma",
+     "progresso": 5
+    }
+   ],
+   "desde": "2026-11-03",
+   "atualizadoEm": "2026-11-03T13:25:00-03:00",
+   "genero": "M",
+   "casa": 26
+  },
+  {
+   "id": "heitor",
+   "nome": "Heitor",
+   "cargo": "CEO da Fábrica",
+   "depto": "fabrica",
+   "status": "ativo",
+   "fazendo": "Fábrica de Software inaugurada hoje no 3º andar: recebe a encomenda do CEO, quebra em tarefas e cobra a linha até a entrega.",
+   "tarefas": [
+    {
+     "nome": "Inauguração da Fábrica de Software",
+     "progresso": 100
+    },
+    {
+     "nome": "Primeira encomenda — app de prova da linha",
+     "progresso": 60
+    },
+    {
+     "nome": "Fila de encomendas do CEO",
+     "progresso": 20
+    }
+   ],
+   "desde": "2026-11-09",
+   "atualizadoEm": "2026-11-09T16:43:02-03:00",
+   "genero": "M",
+   "casa": 27
+  },
+  {
+   "id": "sofia",
+   "nome": "Sofia",
+   "cargo": "CTO da Fábrica",
+   "depto": "fabrica",
+   "status": "ativo",
+   "fazendo": "Desenhou a arquitetura da linha: a empresa virtual ChatDev rodando no cérebro da casa, um app por vez, sem custo de plataforma.",
+   "tarefas": [
+    {
+     "nome": "Arquitetura da linha ChatDev",
+     "progresso": 100
+    },
+    {
+     "nome": "Manual de encomendas da fábrica",
+     "progresso": 45
+    },
+    {
+     "nome": "Revisão de tecnologia do próximo app",
+     "progresso": 30
+    }
+   ],
+   "desde": "2026-11-09",
+   "atualizadoEm": "2026-11-09T16:43:02-03:00",
+   "genero": "F",
+   "casa": 28
+  },
+  {
+   "id": "kaique",
+   "nome": "Kaique",
+   "cargo": "Programador da Fábrica",
+   "depto": "fabrica",
+   "status": "ativo",
+   "fazendo": "Na linha de produção do primeiro app da fábrica: escreve o código que a Sofia desenhou e o Heitor encomendou.",
+   "tarefas": [
+    {
+     "nome": "Primeiro app da linha — código",
+     "progresso": 60
+    },
+    {
+     "nome": "Padrões de código da fábrica",
+     "progresso": 40
+    },
+    {
+     "nome": "Biblioteca de componentes da casa",
+     "progresso": 25
+    }
+   ],
+   "desde": "2026-11-09",
+   "atualizadoEm": "2026-11-09T16:43:02-03:00",
+   "genero": "M",
+   "casa": 29
+  },
+  {
+   "id": "lara",
+   "nome": "Lara",
+   "cargo": "Revisora da Fábrica",
+   "depto": "fabrica",
+   "status": "ativo",
+   "fazendo": "Revisão de código da fábrica: nada sai da linha sem passar pelo crivo dela.",
+   "tarefas": [
+    {
+     "nome": "Revisão do primeiro app da linha",
+     "progresso": 50
+    },
+    {
+     "nome": "Checklist de revisão da fábrica",
+     "progresso": 70
+    },
+    {
+     "nome": "Caça a defeitos antes do teste",
+     "progresso": 35
+    }
+   ],
+   "desde": "2026-11-09",
+   "atualizadoEm": "2026-11-09T16:43:02-03:00",
+   "genero": "F",
+   "casa": 30
+  },
+  {
+   "id": "enzo",
+   "nome": "Enzo",
+   "cargo": "Testador da Fábrica",
+   "depto": "fabrica",
+   "status": "ativo",
+   "fazendo": "Testes da fábrica: roda o app pronto do começo ao fim e só libera quando funciona de verdade.",
+   "tarefas": [
+    {
+     "nome": "Teste do primeiro app da linha",
+     "progresso": 40
+    },
+    {
+     "nome": "Roteiro de testes da fábrica",
+     "progresso": 65
+    },
+    {
+     "nome": "Prova no aparelho/ambiente real",
+     "progresso": 30
+    }
+   ],
+   "desde": "2026-11-09",
+   "atualizadoEm": "2026-11-09T16:43:02-03:00",
+   "genero": "M",
+   "casa": 31
   }
  ]
 };
@@ -3559,6 +3717,17 @@ DEPTS.forEach(d=>{
     for(let i=0;i<4;i++){ const ph = screenBox(d, .85, 1.35); ph.position.set(L.cx - 3.5 + i*3.2, 1.75, L.cz + 3.8); P.add(ph); phones.push(ph); }
     animated.push(t=>{ phones.forEach((p,i)=>{ p.position.x = L.cx - 4.5 + ((t*.85 + i*3.1) % 11); }); });
   }
+  if(d.id === 'fabrica'){
+    /* ===== FABRICA DE SOFTWARE — linha de montagem ChatDev (3o andar, estreia 09/nov) ===== */
+    P.add(box(7.4,3.4,.18, lam(0x101014), L.cx + 2, 1.6, L.z0 + .1));
+    const fc = document.createElement('canvas'); fc.width = 1024; fc.height = 256;
+    { const g = fc.getContext('2d'); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#a5b4fc'; fitFont(g, '🏭 LINHA CHATDEV', 800, 118, "'Segoe UI', sans-serif", 950); g.fillText('🏭 LINHA CHATDEV', 512, 134); }
+    const fsign = canvasPlane(fc, 6.8, 1.7); fsign.position.set(L.cx + 2, 1.6, L.z0 + .21); P.add(fsign);
+    P.add(box(11,.24,1.4, planksDarkMat, L.cx + 1, .85, L.cz + 3.8));
+    const crates = [];
+    for(let i=0;i<4;i++){ const c = box(.9,.9,.9, lam([0x818cf8,0x38bdf8,0x3ddc84,0xffd166][i]), L.cx - 3.5 + i*3.2, 1.45, L.cz + 3.8); P.add(c); crates.push(c); }
+    animated.push(t=>{ crates.forEach((c,i)=>{ c.position.x = L.cx - 4.5 + ((t*.85 + i*3.1) % 11); }); });
+  }
   if(d.id === 'farejador'){
     const dish = new THREE.Mesh(new THREE.ConeGeometry(1.05,.7,14,1,true), new THREE.MeshLambertMaterial({ color:0x2ee6a8, side:THREE.DoubleSide, emissive:0x0a5c40 }));
     dish.position.set(L.cx + 7.5, 3.3, L.cz - 2); dish.rotation.x = Math.PI/3; dish.castShadow = true; P.add(dish);
@@ -3934,6 +4103,7 @@ const AUTO_OPINIONS = {
   kdp: ['livro parado não vende', 'pra mim, capa manda na prateleira'],
   apps: ['app bom prova no aparelho', 'pra mim, teste evita vergonha', 'fila andando, chefe feliz', 'cada app é um produto'],
   farejador: ['tem oportunidade escondida aí', 'pra mim, ROI decide a fila', 'radar ligado o dia todo', 'novidade boa aparece cedo'],
+  fabrica: ['pedido virou app na linha', 'pra mim, revisão evita retrabalho', 'a linha não para', 'teste bom entrega sem vergonha'],
 };
 function autoRand(u){
   u.rngState = ((u.rngState || (hashId(u.personId || u.name || 'npc') + 17)) * 1664525 + 1013904223) >>> 0;
@@ -5357,6 +5527,7 @@ const AI_DEPT_TEMA = {
   apps: 'aplicativos Android, builds, testes e publicação',
   farejador: 'prospecção de oportunidades, pesquisa e análise de nichos',
   trader: 'mercado financeiro, cripto, operações, gráficos e gestão de risco',
+  fabrica: 'fábrica de software com agentes (ChatDev): encomenda, arquitetura, código, revisão e testes de apps',
 };
 const AI_FASE_TXT = { work: 'horário de trabalho', home: 'fora do expediente, em casa', sleep: 'hora de dormir', wake: 'começo do dia, em casa se arrumando', commute: 'no trajeto entre casa e trabalho' };
 function aiClean(s){
